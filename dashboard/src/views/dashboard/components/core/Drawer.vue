@@ -146,6 +146,32 @@
           icon: 'mdi-cog-outline',
           to: '/pages/parametres',
         },
+        {
+          title: 'Buttons',
+          icon: 'mdi-arrow-right-drop-circle-outline',
+          to: '/components/buttons',
+        },
+        {
+          title: 'Grid',
+          icon: 'mdi-apps',
+          to: '/components/grid',
+        },
+        {
+          title: 'Tabs',
+          icon: 'mdi-arrange-send-backward',
+          to: '/components/tabs',
+        },
+        {
+          title: 'Rtl',
+          icon: 'mdi-access-point',
+          to: '/pages/rtl',
+        },
+        {
+          title: 'Timeline',
+          icon: 'mdi-asterisk',
+          to: '/pages/timeline',
+        },
+
       ],
     }),
 

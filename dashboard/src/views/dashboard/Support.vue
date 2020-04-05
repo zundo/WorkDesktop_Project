@@ -5,7 +5,7 @@
     tag="section"
   >
     <v-row justify="center">
-      <v-col  cols="12" md="4">      
+      <v-col cols="12" md="4">      
         <base-material-card color="info">
           <template v-slot:heading>
             <div class="display-3 font-weight-light mb-4">
@@ -18,7 +18,7 @@
           </div>
           </template>
           <v-col cols="12">
-            <div class="display-2 font-weight-light mb-3 mt-3">
+            <div class="font-weight-light mb-3 mt-3">
               <v-chip color="secondary">ADRESSE</v-chip>
             </div>
            
@@ -27,7 +27,7 @@
             </div>
           </v-col>
           <v-col cols="12">
-            <div class="display-2 font-weight-light mb-3 mt-3">
+            <div class="font-weight-light mb-3 mt-3">
               <v-chip color="secondary">TÉLÉPHONE</v-chip>
             </div>
            
@@ -36,8 +36,8 @@
             </div>
           </v-col>
           <v-col cols="12">
-            <div class="display-2 font-weight-light mb-3 mt-3">
-              <v-chip color="secondary">Support</v-chip>
+            <div class="font-weight-light mb-3 mt-3">
+              <v-chip color="secondary">SUPPORT</v-chip>
             </div>
            
             <div class="subtitle-1 font-weight-light ">
@@ -48,18 +48,10 @@
       </v-col>
 
       <v-col cols="12" md="8">
-        <base-material-card color="success">
-          <template v-slot:heading>
-            <div class="display-3 font-weight-light mb-5">
-              Contactez le support
-            </div>
-
-            <div class="subtitle-1 font-weight-light mb-4">
-          Le formulaire ci-contre est à votre disposition pour toutes demandes d’informations. 
-          De la simple demande de renseignements ou pour une question technique, ce formulaire est fait pour vous. 
-            </div>
-          </template>
- <v-form>
+        <base-material-card icon="mdi-clipboard-text"
+                            title="Contactez le support"
+                            color="success">
+          <v-form>
             <v-container class="py-0">
               <v-row>
                 <v-col cols="12" md="6">

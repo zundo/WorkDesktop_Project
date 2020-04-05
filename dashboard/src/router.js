@@ -28,7 +28,7 @@ export default new Router({
             // Parametres
             {
                 name: 'Paramètres',
-                path: 'pages/Parametres',
+                path: 'pages/parametres',
                 component: () =>
                     import ('@/views/dashboard/pages/Parametres'),
             },
@@ -70,6 +70,41 @@ export default new Router({
                 path: 'support',
                 component: () =>
                     import ('@/views/dashboard/Support'),
+            },
+            // buttons
+            {
+                name: 'Buttons',
+                path: 'components/buttons',
+                component: () =>
+                    import ('@/views/dashboard/component/Buttons'),
+            },
+            // grid
+            {
+                name: 'Grid',
+                path: 'components/grid',
+                component: () =>
+                    import ('@/views/dashboard/component/Grid'),
+            },
+            // Tabs
+            {
+                name: 'Tabs',
+                path: 'components/tabs',
+                component: () =>
+                    import ('@/views/dashboard/component/Tabs'),
+            },
+            // Rtl
+            {
+                name: 'Rtl',
+                path: 'pages/rtl',
+                component: () =>
+                    import ('@/views/dashboard/pages/Rtl'),
+            },
+            // Timeline
+            {
+                name: 'Timeline',
+                path: 'pages/timeline',
+                component: () =>
+                    import ('@/views/dashboard/pages/Timeline'),
             },
         ],
     }],

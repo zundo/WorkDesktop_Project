@@ -228,13 +228,13 @@
 
 <script>
   // Components
-  import PagesPlanCard from '@/views/pages/components/PlanCard'
+  //import PagesPlanCard from '@/views/pages/components/PlanCard'
 
   export default {
     name: 'Widgets',
 
     components: {
-      PagesPlanCard,
+      //PagesPlanCard,
     },
 
     data: () => ({
