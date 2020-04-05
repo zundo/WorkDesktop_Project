@@ -15,8 +15,7 @@
           :responsive-options="emailsSubscriptionChart.responsiveOptions"
           color="#E91E63"
           hover-reveal
-          type="Bar"
-        >
+          type="Bar">
           <template v-slot:reveal-actions>
             <v-tooltip bottom>
               <template v-slot:activator="{ attrs, on }">
