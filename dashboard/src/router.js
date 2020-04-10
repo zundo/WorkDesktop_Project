@@ -106,6 +106,24 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/Timeline'),
                 },
+                {
+                    name: 'Wizard',
+                    path: 'pages/wizard',
+                    component: () => 
+                        import('@/views/dashboard/pages/Wizard')
+                },
+                {
+                    name: 'Login',
+                    path: 'login',
+                    component: () =>
+                        import ('@/views/dashboard/pages/Login')
+                },
+                {
+                    name: 'Register',
+                    path: 'register',
+                    component: () =>
+                        import ('@/views/dashboard/pages/Register')
+                }
             ],
         },
         {

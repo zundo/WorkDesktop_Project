@@ -32,9 +32,6 @@
             
 
             &copy;<span> L' équipe Inglorius</span>            
-            <v-icon size="18">
-              mdi-account
-            </v-icon>
           </div>
         </v-col>
       </v-row>

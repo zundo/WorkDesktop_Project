@@ -50,18 +50,14 @@
         {
           icon: 'mdi-account-multiple-plus',
           text: 'Register',
-          to: '/pages/register'
+          to: '/register'
         },
         {
-          icon: 'mdi-fingerprint',
+          icon: 'mdi-lock-outline',
           text: 'Login',
-          to: '/pages/login'
+          to: '/login'
         },
-        {
-          icon: 'mdi-lock-open-outline',
-          text: 'Lock',
-          to: '/pages/lock'
-        }
+
       ],
       titles: {
         '/pages/lock': 'Lock',

@@ -18,7 +18,6 @@
         </div>
 
         <v-btn
-          depressed
           color="success"
           to="/">
           Get me out of here!

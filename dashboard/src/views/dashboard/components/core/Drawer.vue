@@ -170,7 +170,11 @@
           icon: 'mdi-asterisk',
           to: '/pages/timeline',
         },
-
+        {
+          title: 'Wizard',
+          icon: 'mdi-account',
+          to: '/pages/wizard',
+        },
       ],
     }),
 
