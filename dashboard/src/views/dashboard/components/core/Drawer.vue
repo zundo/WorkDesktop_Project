@@ -61,7 +61,6 @@
           :key="`group-${i}`"
           :item="item"
         >
-          <!--  -->
         </base-item-group>
 
         <base-item
