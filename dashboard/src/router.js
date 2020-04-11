@@ -21,46 +21,46 @@ export default new Router({
                 // Pages
                 {
                     name: 'User Profile',
-                    path: 'pages/user',
+                    path: 'user',
                     component: () =>
                         import ('@/views/dashboard/pages/UserProfile'),
                 },
                 // Parametres
                 {
                     name: 'Paramètres',
-                    path: 'pages/parametres',
+                    path: 'parametres',
                     component: () =>
                         import ('@/views/dashboard/pages/Parametres'),
                 },
                 {
                     name: 'Notifications',
-                    path: 'components/notifications',
+                    path: 'notifications',
                     component: () =>
                         import ('@/views/dashboard/component/Notifications'),
                 },
                 {
                     name: 'Icons',
-                    path: 'components/icons',
+                    path: 'icons',
                     component: () =>
                         import ('@/views/dashboard/component/Icons'),
                 },
                 {
                     name: 'Typography',
-                    path: 'components/typography',
+                    path: 'typography',
                     component: () =>
                         import ('@/views/dashboard/component/Typography'),
                 },
                 // Tables
                 {
                     name: 'Calendrier',
-                    path: 'pages/calendar',
+                    path: 'calendar',
                     component: () =>
                         import ('@/views/dashboard/pages/Calendar'),
                 },
                 // Maps
                 {
                     name: 'Google Maps',
-                    path: 'maps/google-maps',
+                    path: 'google-maps',
                     component: () =>
                         import ('@/views/dashboard/maps/GoogleMaps'),
                 },
@@ -74,41 +74,41 @@ export default new Router({
                 // buttons
                 {
                     name: 'Buttons',
-                    path: 'components/buttons',
+                    path: 'buttons',
                     component: () =>
                         import ('@/views/dashboard/component/Buttons'),
                 },
                 // grid
                 {
                     name: 'Grid',
-                    path: 'components/grid',
+                    path: 'grid',
                     component: () =>
                         import ('@/views/dashboard/component/Grid'),
                 },
                 // Tabs
                 {
                     name: 'Tabs',
-                    path: 'components/tabs',
+                    path: 'tabs',
                     component: () =>
                         import ('@/views/dashboard/component/Tabs'),
                 },
                 // Rtl
                 {
                     name: 'Rtl',
-                    path: 'pages/rtl',
+                    path: 'rtl',
                     component: () =>
                         import ('@/views/dashboard/pages/Rtl'),
                 },
                 // Timeline
                 {
                     name: 'Projet',
-                    path: 'pages/project',
+                    path: 'project',
                     component: () =>
                         import ('@/views/dashboard/pages/Project'),
                 },
                 {
                     name: 'Wizard',
-                    path: 'pages/wizard',
+                    path: 'wizard',
                     component: () =>
                         import ('@/views/dashboard/pages/Wizard')
                 },
