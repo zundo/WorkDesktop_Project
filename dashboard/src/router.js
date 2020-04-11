@@ -129,7 +129,7 @@ export default new Router({
         {
             path: '*',
             component: () =>
-                import ('@/views/dashboard/pages/Index'),
+                import ('@/views/dashboard/Index'),
             children: [{
                 name: '404 Error',
                 path: '',
