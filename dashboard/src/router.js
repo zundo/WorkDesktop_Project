@@ -13,7 +13,7 @@ export default new Router({
             children: [
                 // Dashboard
                 {
-                    name: 'Dashboard',
+                    name: 'Accueil',
                     path: '',
                     component: () =>
                         import ('@/views/dashboard/Dashboard'),
@@ -52,7 +52,7 @@ export default new Router({
                 },
                 // Tables
                 {
-                    name: 'Calendar',
+                    name: 'Calendrier',
                     path: 'pages/calendar',
                     component: () =>
                         import ('@/views/dashboard/pages/Calendar'),
@@ -101,10 +101,10 @@ export default new Router({
                 },
                 // Timeline
                 {
-                    name: 'Timeline',
-                    path: 'pages/timeline',
+                    name: 'Projet',
+                    path: 'pages/project',
                     component: () =>
-                        import ('@/views/dashboard/pages/Timeline'),
+                        import ('@/views/dashboard/pages/Project'),
                 },
                 {
                     name: 'Wizard',

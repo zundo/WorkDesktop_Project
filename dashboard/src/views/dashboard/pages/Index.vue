@@ -22,8 +22,8 @@
       this.$vuetify.theme.dark = true
     },
 
-    beforeDestroy() {
+    /*beforeDestroy() {
       this.$vuetify.theme.dark = false
-    }
+    }*/
   }
 </script>

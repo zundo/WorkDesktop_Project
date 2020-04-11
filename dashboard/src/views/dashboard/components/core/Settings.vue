@@ -68,7 +68,7 @@
               <v-switch
                 v-model="$vuetify.theme.dark"
                 class="ma-0 pa-0"
-                color="secondary"
+                :color="color"
                 hide-details
               />
             </v-col>
@@ -90,7 +90,7 @@
               <v-switch
                 v-model="showImg"
                 class="ma-0 pa-0"
-                color="secondary"
+                :color="color"
                 hide-details
               />
             </v-col>
@@ -129,7 +129,7 @@
           <v-btn
             block
             class="mb-3"
-            color="success"
+            :color="color"
             @click="testAddAxios"
             default
             rel="noopener"
@@ -199,7 +199,7 @@
 
     watch: {
       color (val) {
-        this.$vuetify.theme.themes[this.isDark ? 'dark' : 'light'].primary = val
+        this.$vuetify.theme.themes[this.isDark ? 'light' : 'dark'].primary = val
       },
       showImg (val) {
         if (!val) {

@@ -78,6 +78,7 @@
 
     <template v-slot:append>
       <base-item
+        text
         :item="{
           title: 'Support',
           icon: 'mdi-package-up',
@@ -107,14 +108,19 @@
     data: () => ({
       items: [
         {
-          icon: 'mdi-view-dashboard',
-          title: 'dashboard',
+          icon: 'mdi-home',
+          title: 'Accueil',
           to: '/',
         },
         {
-          title: 'calendar',
+          title: 'Calendrier',
           icon: 'mdi-calendar-outline',
           to: '/pages/calendar',
+        },
+        {
+          title: 'Projet',
+          icon: 'mdi-view-quilt',
+          to: '/pages/project',
         },
         {
           icon: 'mdi-account',
@@ -166,14 +172,10 @@
           icon: 'mdi-clipboard-outline',
           to: '/pages/rtl',
         },
-        {
-          title: 'Timeline',
-          icon: 'mdi-asterisk',
-          to: '/pages/timeline',
-        },
+
         {
           title: 'Wizard',
-          icon: 'mdi-account',
+          icon: 'mdi-view-dashboard',
           to: '/pages/wizard',
         },
       ],

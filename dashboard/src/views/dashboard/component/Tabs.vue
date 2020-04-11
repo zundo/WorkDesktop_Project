@@ -6,7 +6,6 @@
   >
     <base-v-component
       heading="Tabs"
-      link="components/tabs"
     />
 
     <v-row>
