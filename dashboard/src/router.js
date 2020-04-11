@@ -16,7 +16,7 @@ export default new Router({
                     name: 'Accueil',
                     path: '',
                     component: () =>
-                        import ('@/views/dashboard/Dashboard'),
+                        import ('@/views/dashboard/pages/Dashboard'),
                 },
                 // Pages
                 {
@@ -69,7 +69,7 @@ export default new Router({
                     name: 'Support',
                     path: 'support',
                     component: () =>
-                        import ('@/views/dashboard/Support'),
+                        import ('@/views/dashboard/pages/Support'),
                 },
                 // buttons
                 {
