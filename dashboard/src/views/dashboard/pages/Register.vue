@@ -5,15 +5,23 @@
     tag="section"
   >
     <v-row justify="center">
-      <v-col cols="9">
+      <v-col cols="10">
         <v-slide-y-transition appear>
-          <v-card
-            class="pa-3 pa-md-5 mx-auto"
-            light
-          >
-            <v-card-title>
-              Register
-            </v-card-title>
+          <base-material-card
+          color="success"
+          light
+          max-width="100%"
+          class="pa-3 pa-md-5 mx-auto"
+          dark
+        >
+          <template v-slot:heading>
+            <div class="text-center">
+              <h1 class="display-3 font-weight-bold mb-2">
+                Register
+              </h1>
+            </div>
+          </template>
+
 
             <v-row>
               <v-col
@@ -58,7 +66,6 @@
                     :key="i"
                     :color="social.iconColor"
                     class="my-2 mr-1"
-                    dark
                     depressed
                     fab
                     small
@@ -92,24 +99,24 @@
                     color="secondary"
                   >
                     <template v-slot:label>
-                      <span class="text-no-wrap">I agree to the&nbsp;</span>
+                      <span class="text-no-wrap">I agree to the &nbsp;</span>
 
                       <a
                         class="secondary--text ml-6 ml-sm-0"
                         href="#"
                       >
-                        terms and conditions
+                         terms and conditions
                       </a>.
                     </template>
                   </v-checkbox>
 
                   <v-btn color="success">
-                    Get Started
+                    Inscription
                   </v-btn>
                 </div>
               </v-col>
             </v-row>
-          </v-card>
+          </base-material-card>
         </v-slide-y-transition>
       </v-col>
     </v-row>
@@ -146,6 +153,11 @@
       socials: [
         {
           href: '#',
+          icon: 'mdi-facebook',
+          iconColor: '#3B5998'
+        },
+        {
+          href: '#',
           icon: 'mdi-twitter',
           iconColor: '#1DA1F2'
         },
@@ -153,11 +165,6 @@
           href: '#',
           icon: 'mdi-google',
           iconColor: '#ea4c89'
-        },
-        {
-          href: '#',
-          icon: 'mdi-facebook',
-          iconColor: '#3B5998'
         }
 
       ]

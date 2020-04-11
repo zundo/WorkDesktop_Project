@@ -44,7 +44,7 @@
 
         <v-icon
           v-else-if="icon"
-          size="32"
+          size="35"
           v-text="icon"
         />
 

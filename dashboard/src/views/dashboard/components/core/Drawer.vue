@@ -32,13 +32,13 @@
         >
           <v-img
             src="../../../../../public/logo.jpg"
-            max-height="30"
+            max-height="auto"
           />
         </v-list-item-avatar>
 
         <v-list-item-content>
           <v-list-item-title
-            class="display-1"
+            class="display-2 pb-1"
             v-text="profile.title"
           />
         </v-list-item-content>
@@ -50,6 +50,7 @@
     <v-list
       expand
       nav
+      dense
     >
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
@@ -111,14 +112,14 @@
           to: '/',
         },
         {
+          title: 'calendar',
+          icon: 'mdi-calendar-outline',
+          to: '/pages/calendar',
+        },
+        {
           icon: 'mdi-account',
           title: 'user',
           to: '/pages/user',
-        },
-        {
-          title: 'rtables',
-          icon: 'mdi-clipboard-outline',
-          to: '/tables/regular-tables',
         },
         {
           title: 'typography',
@@ -162,7 +163,7 @@
         },
         {
           title: 'Rtl',
-          icon: 'mdi-access-point',
+          icon: 'mdi-clipboard-outline',
           to: '/pages/rtl',
         },
         {

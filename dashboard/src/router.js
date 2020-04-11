@@ -52,10 +52,10 @@ export default new Router({
                 },
                 // Tables
                 {
-                    name: 'Regular Tables',
-                    path: 'tables/regular-tables',
+                    name: 'Calendar',
+                    path: 'pages/calendar',
                     component: () =>
-                        import ('@/views/dashboard/tables/RegularTables'),
+                        import ('@/views/dashboard/pages/Calendar'),
                 },
                 // Maps
                 {
@@ -109,8 +109,8 @@ export default new Router({
                 {
                     name: 'Wizard',
                     path: 'pages/wizard',
-                    component: () => 
-                        import('@/views/dashboard/pages/Wizard')
+                    component: () =>
+                        import ('@/views/dashboard/pages/Wizard')
                 },
                 {
                     name: 'Login',
