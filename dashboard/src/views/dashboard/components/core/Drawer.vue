@@ -52,8 +52,6 @@
       nav
       dense
     >
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
 
       <template v-for="(item, i) in computedItems">
@@ -70,9 +68,6 @@
           :item="item"
         />
       </template>
-
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
     </v-list>
 
@@ -108,7 +103,7 @@
     data: () => ({
       items: [
         {
-          icon: 'mdi-home',
+          icon: 'mdi-home-outline',
           title: 'Accueil',
           to: '/',
         },
@@ -122,6 +117,11 @@
           icon: 'mdi-view-quilt',
           to: 'project',
         },
+        {
+          title: 'Clients',
+          icon: 'mdi-clipboard-outline',
+          to: 'clients',
+        },        
         {
           icon: 'mdi-account',
           title: 'user',
@@ -144,7 +144,7 @@
         },
         {
           title: 'notifications',
-          icon: 'mdi-bell',
+          icon: 'mdi-view-dashboard-outline',
           to: 'notifications',
         },
         {
@@ -166,17 +166,6 @@
           title: 'Tabs',
           icon: 'mdi-arrange-send-backward',
           to: 'tabs',
-        },
-        {
-          title: 'Rtl',
-          icon: 'mdi-clipboard-outline',
-          to: 'rtl',
-        },
-
-        {
-          title: 'Wizard',
-          icon: 'mdi-view-dashboard',
-          to: 'wizard',
         },
       ],
     }),

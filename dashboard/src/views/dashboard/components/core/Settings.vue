@@ -32,7 +32,7 @@
         width="300"
       >
         <v-card-text>
-          <strong class="mb-3 d-inline-block">SIDEBAR FILTERS</strong>
+          <strong class="primary--text mb-3 d-inline-block">SIDEBAR FILTERS</strong>
 
           <v-item-group v-model="color">
             <v-item

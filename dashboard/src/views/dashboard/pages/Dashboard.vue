@@ -452,7 +452,12 @@ export default {
   mounted() {
     var url = "http://localhost:5000/api/users";
 
-    axios.get(url).then(response => console.log(JSON.stringify(response)));
+    axios.get(url)
+      .then(response => {
+        console.log(JSON.stringify(response.data))
+      })
+      .catch(error => console.log(error))
+      .finally(() => console.log("API USER BON !"))
   },
   methods: {
     complete(index) {

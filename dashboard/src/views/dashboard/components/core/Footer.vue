@@ -15,7 +15,7 @@
         >
           <a
             :href="link.href"
-            class="mr-0 grey--text text--darken-3"
+            class="mr-0 primary--text text--darken-3"
             rel="noopener"
             target="_blank"
             v-text="link.text"
@@ -28,7 +28,7 @@
           cols="12"
           md="auto"
         >
-          <div class="body-1 font-weight-light pt-6 pt-md-0 text-center">
+          <div class="body-1 font-weight-light pt-6 pt-md-0 text-center primary--text">
             
 
             &copy;<span> L' équipe Inglorius</span>            

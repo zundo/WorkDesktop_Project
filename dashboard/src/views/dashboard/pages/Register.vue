@@ -56,26 +56,24 @@
                     <v-icon v-text="social.icon" />
                   </v-btn>
 
-                  <v-text-field color="secondary" label="First Name..." prepend-icon="mdi-face" />
+                  <v-text-field color="primary" label="First Name..." prepend-icon="mdi-face" />
 
-                  <v-text-field color="secondary" label="Email..." prepend-icon="mdi-email" />
+                  <v-text-field color="primary" label="Email..." prepend-icon="mdi-email" />
 
                   <v-text-field
                     class="mb-8"
-                    color="secondary"
+                    color="primary"
                     label="Password..."
                     prepend-icon="mdi-lock-outline"
                   />
 
                   <v-checkbox :input-value="true" color="secondary">
                     <template v-slot:label>
-                      <span class="text-no-wrap">I agree to the &nbsp;</span>
-
-                      <a class="secondary--text ml-6 ml-sm-0" href="#">terms and conditions</a>.
+                      <span class="text-no-wrap">I agree to the terms and conditions</span>
                     </template>
                   </v-checkbox>
 
-                  <v-btn color="success">
+                  <v-btn color="success" @click="connexionPage">
                     <v-icon left>mdi-account-multiple-plus</v-icon>Inscription
                   </v-btn>
                 </div>
@@ -133,7 +131,14 @@ export default {
         iconColor: "#ea4c89"
       }
     ]
-  })
+  }),
+  methods: {
+    connexionPage: function(){
+      //Verification des données a aplliquer
+
+      this.$router.push({ name: 'Connexion' });
+    }
+  },
 };
 </script>
 

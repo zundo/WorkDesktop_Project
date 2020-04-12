@@ -94,10 +94,10 @@ export default new Router({
                 },
                 // Rtl
                 {
-                    name: 'Rtl',
-                    path: 'rtl',
+                    name: 'Clients',
+                    path: 'clients',
                     component: () =>
-                        import ('@/views/dashboard/pages/Rtl'),
+                        import ('@/views/dashboard/pages/Clients'),
                 },
                 // Timeline
                 {
@@ -107,19 +107,19 @@ export default new Router({
                         import ('@/views/dashboard/pages/Project'),
                 },
                 {
-                    name: 'Wizard',
-                    path: 'wizard',
+                    name: 'Informations', //infos clients
+                    path: 'infosclient',
                     component: () =>
-                        import ('@/views/dashboard/pages/Wizard')
+                        import ('@/views/dashboard/pages/InfosClient')
                 },
                 {
-                    name: 'Login',
+                    name: 'Connexion',
                     path: 'login',
                     component: () =>
                         import ('@/views/dashboard/pages/Login')
                 },
                 {
-                    name: 'Register',
+                    name: 'Inscription',
                     path: 'register',
                     component: () =>
                         import ('@/views/dashboard/pages/Register')

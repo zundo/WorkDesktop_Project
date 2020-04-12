@@ -6,7 +6,7 @@
   >
 <base-material-card icon="mdi-calendar-outline"
                     title="Calendrier"
-                    color="primary">
+                    color="blue">
     <v-row>
       <v-col
         cols="12"
@@ -48,7 +48,7 @@
               v-model="calendar"
               :events="events"
               :type="type"
-              event-color="success"
+              event-color="primary"
               now="2019-01-08"
             />
           </v-sheet>
@@ -73,7 +73,7 @@
         props: {
           color: {
             type: String,
-            default: 'secondary'
+            default: 'blue'
           },
           minWidth: {
             type: Number,

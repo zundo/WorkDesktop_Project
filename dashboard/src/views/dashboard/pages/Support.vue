@@ -2,7 +2,7 @@
   <v-container id="upgrade" fluid tag="section">
     <v-row justify="center">
       <v-col cols="12" md="4">
-        <base-material-card color="info">
+        <base-material-card color="indigo">
           <template v-slot:heading>
             <div class="display-3 font-weight-light mb-4">Equipe Inglorius</div>
 
@@ -13,7 +13,7 @@
           </template>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="secondary">ADRESSE</v-chip>
+              <v-chip color="indigo">ADRESSE</v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
@@ -22,7 +22,7 @@
           </v-col>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="secondary">TÉLÉPHONE</v-chip>
+              <v-chip color="indigo">TÉLÉPHONE</v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
@@ -31,7 +31,7 @@
           </v-col>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="secondary">SUPPORT</v-chip>
+              <v-chip color="indigo">SUPPORT</v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
@@ -82,7 +82,7 @@
                 </v-col>
 
                 <v-col cols="12" class="text-right">
-                  <v-btn color="success" class="mr-0">Envoyer</v-btn>
+                  <v-btn color="primary" class="mr-0">Envoyer</v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -100,6 +100,9 @@ export default {
     return {
       content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
     }
+  },
+  mounted() {
+
   },
 };
 </script>
