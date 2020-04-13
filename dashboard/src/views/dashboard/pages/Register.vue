@@ -12,7 +12,7 @@
           >
             <template v-slot:heading>
               <div class="text-center">
-                <h1 class="display-3 font-weight-bold mb-2">Register</h1>
+                <h1 class="display-3 font-weight-bold mb-2">Inscription</h1>
               </div>
             </template>
 

@@ -13,7 +13,7 @@
           >
             <template v-slot:heading>
               <div class="text-center">
-                <h1 class="display-3 font-weight-bold mb-2">Login</h1>
+                <h1 class="display-3 font-weight-bold mb-2">Connexion</h1>
               </div>
             </template>
 

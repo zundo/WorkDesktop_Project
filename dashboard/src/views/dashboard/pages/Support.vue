@@ -2,9 +2,9 @@
   <v-container id="upgrade" fluid tag="section">
     <v-row justify="center">
       <v-col cols="12" md="4">
-        <base-material-card color="indigo">
+        <base-material-card color="primary">
           <template v-slot:heading>
-            <div class="display-3 font-weight-light mb-4">Equipe Inglorius</div>
+            <div class="display-3 font-weight-light mb-4"><v-icon large>mdi-account-group</v-icon> L' équipe Inglorius</div>
 
             <div class="subtitle-1 font-weight-light">
               Le formulaire ci-contre est à votre disposition pour toutes demandes d’informations.
@@ -13,29 +13,29 @@
           </template>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="indigo">ADRESSE</v-chip>
+              <v-chip color="primary"><v-icon left>mdi-walk</v-icon>ADRESSE</v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
-              <base-card>17 rue Inglorius 75000 Paris, France</base-card>
+              <base-card class="pa-1">17 rue Inglorius 75000 Paris, France</base-card>
             </div>
           </v-col>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="indigo">TÉLÉPHONE</v-chip>
+              <v-chip color="primary"><v-icon left>mdi-deskphone</v-icon>TÉLÉPHONE</v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
-              <base-card>01.23.45.67.78</base-card>
+              <base-card class="pa-1">01.23.45.67.78</base-card>
             </div>
           </v-col>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="indigo">SUPPORT</v-chip>
+              <v-chip color="primary"><v-icon left>mdi-account-check</v-icon>SUPPORT</v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
-              <base-card>support@inglorius.fr</base-card>
+              <base-card class="pa-1">support@inglorius.fr</base-card>
             </div>
           </v-col>
         </base-material-card>

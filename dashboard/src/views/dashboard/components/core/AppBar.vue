@@ -1,21 +1,21 @@
 <template>
   <v-app-bar id="app-bar" absolute app color="transparent" flat height="75">
     <v-btn class="mr-3" elevation="1" fab small color="dark" @click="setDrawer(!drawer)">
-      <v-icon  v-if="value">mdi-view-quilt</v-icon>
+      <v-icon v-if="value">mdi-view-quilt</v-icon>
 
-      <v-icon  v-else>mdi-dots-vertical</v-icon>
+      <v-icon v-else>mdi-dots-vertical</v-icon>
     </v-btn>
 
     <v-toolbar-title class="hidden-sm-and-down font-weight-light" v-text="$route.name" />
     <v-spacer />
 
-    <v-text-field :label="$t('search')" color="secondary" hide-details style="max-width: 165px;">
+    <!--<v-text-field :label="$t('search')" color="secondary" hide-details style="max-width: 165px;">
       <template v-if="$vuetify.breakpoint.mdAndUp" v-slot:append-outer>
         <v-btn class="mt-n2" elevation="1" fab small>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
       </template>
-    </v-text-field>
+    </v-text-field>-->
 
     <div class="mx-3" />
 
@@ -26,28 +26,19 @@
     <v-menu bottom left offset-y origin="top right" transition="scale-transition">
       <template v-slot:activator="{ attrs, on }">
         <v-btn class="ml-2" min-width="0" text v-bind="attrs" v-on="on">
-          <v-badge color="red" overlap bordered>
-            <template v-slot:badge>
-              <span>5</span>
-            </template>
-
-            <v-icon>mdi-bell</v-icon>
-          </v-badge>
+          <v-icon>mdi-account-cog</v-icon>
         </v-btn>
       </template>
 
       <v-list :tile="false" nav>
-        <div>
-          <app-bar-item v-for="(n, i) in notifications" :key="`item-${i}`">
-            <v-list-item-title v-text="n" />
-          </app-bar-item>
-        </div>
+        <app-bar-item :to="setting.to" v-for="(setting, i) in settings" :key="`item-${i}`">
+          <v-list-item-icon>
+            <v-icon v-text="setting.icon"></v-icon>
+          </v-list-item-icon>
+          <v-list-item-title to="/login" v-text="setting.title" />
+        </app-bar-item>
       </v-list>
     </v-menu>
-
-    <v-btn class="ml-2" min-width="0" text to="/login">
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
   </v-app-bar>
 </template>
 
@@ -73,7 +64,7 @@ export default {
                   attrs: this.$attrs,
                   class: {
                     "black--text": !hover,
-                    "white--text secondary elevation-12": hover
+                    "white--text primary elevation-12": hover
                   },
                   props: {
                     activeClass: "",
@@ -99,12 +90,27 @@ export default {
   },
 
   data: () => ({
-    notifications: [
-      "Mike John Responded to your email",
-      "You have 5 new tasks",
-      "You're now friends with Andrew",
-      "Another Notification",
-      "Another one"
+    settings: [
+      {
+        icon: "mdi-account-lock",
+        title: "Se connecter",
+        to: 'login'
+      },
+      {
+        icon: "mdi-account-plus",
+        title: "Inscription",
+        to: 'register'
+      },
+      {
+        icon: "mdi-cogs",
+        title: "Paramètres",
+        to: 'parametres'
+      },
+      {
+        icon: "mdi-logout",
+        title: "Déconnexion",
+        to: '/'
+      }
     ]
   }),
 

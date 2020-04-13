@@ -172,7 +172,7 @@
     mixins: [Proxyable],
 
     data: () => ({
-      color: '#E91E63',
+      color: '#4CAF50',
       colors: [
         '#9C27b0',
         '#00CAE3',

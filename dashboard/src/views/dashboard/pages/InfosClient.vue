@@ -188,11 +188,6 @@ export default {
         text: "Website",
         value: "website"
       },
-      {
-        sortable: false,
-        text: "Actions",
-        value: "actions"
-      }
     ],
     person: [
       {

@@ -1,6 +1,10 @@
 <template>
-  <v-container fluid>
-    <v-row>
+  <v-container id="project" tag="section" fluid>
+  <base-material-card color="error" icon="mdi-clipboard-text-multiple" inline class="px-5 py-3">
+    <template v-slot:after-heading>
+      <div class="display-2 font-weight-light">Projet</div>
+    </template>
+    <v-row justify="center">
       <v-col
         cols="12"
         lg="4"
@@ -51,7 +55,7 @@
         <base-material-chart-card
           :data="dataCompletedTasksChart.data"
           :options="dataCompletedTasksChart.options"
-          color="info"
+          color="indigo"
           type="Bar"
           class="px-4 py-3"
         >
@@ -93,7 +97,7 @@
         <div class="py-3" />
         <base-material-card
           id="coloured-line"
-          color="warning"
+          color="error"
           icon="mdi-chart-timeline-variant"
           class="px-4 py-3"
         >
@@ -120,7 +124,7 @@
       >
         <base-material-card
           id="multiple-bar"
-          color="success"
+          color="secondary"
           icon="mdi-poll-box"
           class="px-4 py-3"
         >
@@ -143,7 +147,7 @@
 
         <base-material-card
           id="pie"
-          color="success"
+          color="#E91E63"
           icon="mdi-chart-pie"
           title="Pie Chart"
           class="px-4 py-3"
@@ -194,6 +198,7 @@
         </base-material-card>
       </v-col>
     </v-row>
+  </base-material-card>
   </v-container>
 </template>
 
@@ -207,7 +212,7 @@
             labels: ["'06", "'07", "'08", "'09", "'10", "'11", "'12", "'13", "'14", "'15"],
             series: [
               [275, 500, 290, 55, 700, 700, 500, 750, 630, 900, 930]
-            ]
+            ],
           },
           options: {
             low: 0,

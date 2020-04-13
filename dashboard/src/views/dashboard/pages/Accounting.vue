@@ -1,11 +1,11 @@
 <template>
-  <v-container id="clients" tag="section" fluid>
-    <v-dialog v-model="isDialogNewClient" persistent max-width="1000px">
+  <v-container id="accounting" tag="section" fluid>
+    <v-dialog v-model="isDialogNewFacture" persistent max-width="1000px">
       <v-card class="px-6">
         <v-card-title class="orange--text">
           Créer une facture
           <v-divider class="my-5" />
-          <v-icon aria-label="Close" @click="isDialogNewClient = false">mdi-close</v-icon>
+          <v-icon aria-label="Close" @click="isDialogNewFacture = false">mdi-close</v-icon>
         </v-card-title>
         <v-form>
           <v-container>
@@ -52,47 +52,48 @@
                   outlined
                   color="error"
                   text
-                  @click="isDialogNewClient = false"
+                  @click="isDialogNewFacture = false"
                 >Close</v-btn>
-                <v-btn outlined color="success" text @click="saveNewClient">Sauvegarder</v-btn>
+                <v-btn outlined color="success" text @click="saveNewFacture">Sauvegarder</v-btn>
               </v-col>
             </v-row>
           </v-container>
         </v-form>
       </v-card>
     </v-dialog>
-    <v-dialog dark v-model="isDialogDeleteClient" width="500" overlay-opacity="0.8">
+    <v-dialog dark v-model="isDialogDeleteFacture" width="500" overlay-opacity="0.8">
       <v-card>
-        <v-card-title>Supprimer la facture {{ clientToDelete.name }} ?</v-card-title>
+        <v-card-title>Supprimer la facture {{ factureToDelete.name }} ?</v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="isDialogDeleteClient=false" class="mx-2" fab dark>
+          <v-btn @click="isDialogDeleteFacture=false" class="mx-2" fab dark>
             <v-icon dark>mdi-close</v-icon>
           </v-btn>
-          <v-btn @click="deleteClient" class="mx-2" fab color="green darken-1">
+          <v-btn @click="deleteFacture" class="mx-2" fab color="green darken-1">
             <v-icon dark>mdi-check-bold</v-icon>
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <base-material-card color="orange" icon="mdi-account-outline" inline class="px-5 py-3">
+    <base-material-card color="orange" icon="mdi-bank" inline class="px-5 py-3">
       <template v-slot:after-heading>
         <div class="display-2 font-weight-light">Factures</div>
       </template>
 
-      <v-row class="mt-8">
-        <v-btn color="orange" @click="openDialogNewClient" class="ml-3">
-          <v-icon left>mdi-plus-circle-outline</v-icon>Créer une facture
+      <v-row class="mt-8 mr-1">
+        <v-btn color="orange" @click="openDialogNewFacture" class="ml-3">
+          <v-icon left>mdi-bank-plus</v-icon>Créer une facture
         </v-btn>
         <v-text-field
           v-model="search"
-          append-icon="mdi-magnify"
+          prepend-icon="mdi-magnify"
           class="ml-auto"
           label="Recherche"
           color="primary"
           hide-details
           single-line
           style="max-width: 250px;"
+          clearable
         />
       </v-row>
       <v-divider class="mt-6" />
@@ -113,11 +114,11 @@
       >
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
-            <v-btn small color="info" @click="PageInfosClient(item)">
-              <v-icon left>mdi-card-account-details-outline</v-icon>
+            <v-btn small color="info" @click="PageInfosFacture(item)">
+              <v-icon left>mdi-information-outline</v-icon>
               Informations {{ item.name }}
             </v-btn>
-            <v-btn small color="red" @click="dialogDeleteClient(item)" class="ml-3">
+            <v-btn small color="red" @click="dialogDeleteFacture(item)" class="ml-3">
               <v-icon left>mdi-delete-circle-outline</v-icon>
               Supprimer {{ item.name }}
             </v-btn>
@@ -143,45 +144,40 @@
 
 <script>
 export default {
-  name: "Clients",
+  name: "Comptabilité",
 
   data: () => ({
     isSuccess: false,
     isSnackbarOpened: false,
     snackbarMessage: "",
     /*-------------------------- */
-    isDialogNewClient: false,
-    isDialogDeleteClient: false,
-    clientToDelete: [],
+    isDialogNewFacture: false,
+    isDialogDeleteFacture: false,
+    factureToDelete: [],
     expanded: [],
     loading: true,
     firstLoad: true,
     headers: [
       {
-        text: "Name",
+        text: "Facture",
         value: "name"
       },
       {
-        text: "Username",
+        text: "Nom Client",
         value: "username"
       },
       {
-        text: "Email",
+        text: "Statut",
         value: "email"
       },
       {
-        text: "Phone",
+        text: "Date d'échéance",
         value: "phone"
       },
       {
-        text: "Website",
+        text: "Montant",
         value: "website"
       },
-      {
-        sortable: false,
-        text: "Actions",
-        value: "actions"
-      }
     ],
     items: [],
     search: undefined
@@ -209,26 +205,26 @@ export default {
       });
   },
   methods: {
-    saveNewClient: function() {
-      this.isDialogNewClient = false;
-      console.log("Sauvegarder new client");
+    saveNewFacture: function() {
+      this.isDialogNewFacture = false;
+      console.log("Sauvegarder new facture");
     },
-    openDialogNewClient: function() {
-      this.isDialogNewClient = true;
+    openDialogNewFacture: function() {
+      this.isDialogNewFacture = true;
       //mettre les valeurs des inputs du dialog a vide
     },
-    deleteClient: function() {
-      this.isDialogDeleteClient = false;
-      console.log("Le client " + this.clientToDelete.name + " a été supprimé");
+    deleteFacture: function() {
+      this.isDialogDeleteFacture = false;
+      console.log("La facture " + this.factureToDelete.name + " a été supprimé");
     },
-    dialogDeleteClient: function(infos_client) {
-      this.isDialogDeleteClient = true;
-      this.clientToDelete = infos_client;
+    dialogDeleteFacture: function(infos_facture) {
+      this.isDialogDeleteFacture = true;
+      this.factureToDelete = infos_facture;
     },
-    PageInfosClient: function(infos_client) {
+    PageInfosFacture: function(infos_facture) {
       this.$router.push({
-        name: "Informations",
-        params: { userId: infos_client.id }
+        name: "Informations-Facture",
+        params: { userId: infos_facture.id }
       });
     },
 

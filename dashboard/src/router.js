@@ -107,7 +107,7 @@ export default new Router({
                         import ('@/views/dashboard/pages/Project'),
                 },
                 {
-                    name: 'Informations', //infos clients
+                    name: 'Informations-Client', //infos clients
                     path: 'infosclient',
                     component: () =>
                         import ('@/views/dashboard/pages/InfosClient')

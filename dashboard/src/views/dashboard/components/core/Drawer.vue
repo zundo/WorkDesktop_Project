@@ -73,10 +73,9 @@
 
     <template v-slot:append>
       <base-item
-        text
         :item="{
           title: 'Support',
-          icon: 'mdi-package-up',
+          icon: 'mdi-handshake',
           to: '/support',
         }" 
       />

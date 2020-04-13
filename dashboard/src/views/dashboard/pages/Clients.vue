@@ -75,24 +75,25 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <base-material-card color="indigo" icon="mdi-account-outline" inline class="px-5 py-3">
+    <base-material-card color="indigo" icon="mdi-account-group-outline" inline class="px-5 py-3">
       <template v-slot:after-heading>
         <div class="display-2 font-weight-light">Clients</div>
       </template>
 
-      <v-row class="mt-8">
+      <v-row class="mt-8 mr-1">
         <v-btn color="indigo" @click="openDialogNewClient" class="ml-3">
-          <v-icon left>mdi-plus-circle-outline</v-icon>Nouveau Client
+          <v-icon left>mdi-account-plus-outline</v-icon>Nouveau Client
         </v-btn>
         <v-text-field
           v-model="search"
-          append-icon="mdi-magnify"
+          prepend-icon="mdi-magnify"
           class="ml-auto"
           label="Recherche"
           color="primary"
           hide-details
           single-line
           style="max-width: 250px;"
+          clearable
         />
       </v-row>
       <v-divider class="mt-6" />
@@ -227,7 +228,7 @@ export default {
     },
     PageInfosClient: function(infos_client) {
       this.$router.push({
-        name: "Informations",
+        name: "Informations-Client",
         params: { userId: infos_client.id }
       });
     },
