@@ -45,10 +45,10 @@ export default new Router({
                         import ('@/views/dashboard/component/Icons'),
                 },
                 {
-                    name: 'Typography',
-                    path: 'typography',
+                    name: 'Comptabilité',
+                    path: 'accounting',
                     component: () =>
-                        import ('@/views/dashboard/component/Typography'),
+                        import ('@/views/dashboard/pages/Accounting'),
                 },
                 // Tables
                 {

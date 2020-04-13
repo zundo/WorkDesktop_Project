@@ -53,7 +53,8 @@
             <div class="display-2 font-weight-light">{{ person[0].name }}</div>
             <div class="subtitle-1 font-weight-light">{{ person[0].username }}</div>
           </template>
-          <v-simple-table dense>
+          <v-skeleton-loader v-if="firstLoad" :loading="loading" type="table"></v-skeleton-loader>
+          <v-simple-table dense v-else>
             <template v-slot:default>
               <tbody>
                 <tr>
@@ -92,7 +93,6 @@
                   <td>Pays</td>
                   <td>Unknown</td>
                 </tr>
-
               </tbody>
             </template>
           </v-simple-table>
@@ -106,7 +106,9 @@
         >
           <v-row>
             <v-col cols="12">
-              <h4 class="display-3 font-weight-light mb-2 text-md-center indigo--text">{{ person[0].name }}</h4>
+              <h4
+                class="display-3 font-weight-light mb-2 text-md-center indigo--text"
+              >{{ person[0].name }}</h4>
             </v-col>
             <v-card-text>
               <v-col cols="12">
@@ -144,6 +146,13 @@
         </base-material-card>
       </v-col>
     </v-row>
+    <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
+      <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+      {{snackbarMessage}}
+      <v-btn dark icon @click="isSnackbarOpened = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -152,6 +161,12 @@ export default {
   name: "InfosClient",
 
   data: () => ({
+    isSuccess: false,
+    isSnackbarOpened: false,
+    snackbarMessage: "",
+    /*-------------------------- */
+    loading: true,
+    firstLoad: true,
     headers: [
       {
         text: "Name",
@@ -184,7 +199,7 @@ export default {
         name: "",
         username: "",
         email: "",
-        adresse: {
+        address: {
           street: "",
           suite: "",
           city: "",
@@ -208,17 +223,45 @@ export default {
     if (this.$route.params.userId != null && this.$route.params.userId != 0) {
       console.log("UserID: " + this.$route.params.userId);
       var userId = this.$route.params.userId;
-    } else this.$router.push({ name: "Clients" });
+    } else return this.$router.push({ name: "Clients" });
 
     axios
       .get("https://jsonplaceholder.typicode.com/users/" + userId)
       .then(response => {
-        //this.person.push(response.data);
-        this.person.splice(0, 1, response.data);
+        if (this.verifyResponseOk(response.data)) {
+          //this.person.push(response.data);
+          this.person.splice(0, 1, response.data);
+        }
       })
-      .catch(error => console.log(error))
-      .finally(() => console.log("OK"));
+      .catch(error => this.errorMessage("Network ERROR: " + error))
+      .finally(() => {
+        setTimeout(() => {
+          this.loading = false;
+          this.firstLoad = false;
+        }, 1000);
+        console.log("OK");
+      });
   },
-  methods: {}
+  methods: {
+    /*------------------------------------------------------ */
+    verifyResponseOk: function(responseData) {
+      var tmpStr = JSON.stringify(responseData);
+      if (tmpStr.startsWith('"Error:')) {
+        this.errorMessage(responseData.substring(7)); // suppress "Error:
+        return false;
+      }
+      return true;
+    },
+    successMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isSuccess = true;
+      this.isSnackbarOpened = true;
+    },
+    errorMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isSuccess = false;
+      this.isSnackbarOpened = true;
+    }
+  }
 };
 </script>

@@ -114,23 +114,23 @@
         },
         {
           title: 'Projet',
-          icon: 'mdi-view-quilt',
+          icon: 'mdi-clipboard-text-multiple-outline',
           to: 'project',
         },
         {
           title: 'Clients',
-          icon: 'mdi-clipboard-outline',
+          icon: 'mdi-clipboard-account-outline',
           to: 'clients',
-        },        
+        }, 
+        {
+          title: 'Comptabilité',
+          icon: 'mdi-bank-outline',
+          to: 'accounting',
+        },       
         {
           icon: 'mdi-account',
           title: 'user',
           to: 'user',
-        },
-        {
-          title: 'typography',
-          icon: 'mdi-format-font',
-          to: 'typography',
         },
         {
           title: 'icons',
@@ -159,7 +159,7 @@
         },
         {
           title: 'Grid',
-          icon: 'mdi-apps',
+          icon: 'mdi-view-quilt',
           to: 'grid',
         },
         {

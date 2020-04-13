@@ -2,8 +2,8 @@
   <v-container id="clients" tag="section" fluid>
     <v-dialog v-model="isDialogNewClient" persistent max-width="1000px">
       <v-card class="px-6">
-        <v-card-title class="indigo--text">
-          Nouveau Client
+        <v-card-title class="orange--text">
+          Créer une facture
           <v-divider class="my-5" />
           <v-icon aria-label="Close" @click="isDialogNewClient = false">mdi-close</v-icon>
         </v-card-title>
@@ -11,36 +11,36 @@
           <v-container>
             <v-row>
               <v-col cols="12" md="6">
-                <v-text-field outlined label="Nom" class="mt-n3" color="blue" />
+                <v-text-field outlined label="Nom" class="mt-n3" color="orange" />
               </v-col>
 
               <v-col cols="12" md="6">
-                <v-text-field outlined label="Prénom" class="mt-n3" color="blue" />
+                <v-text-field outlined label="Prénom" class="mt-n3" color="orange" />
               </v-col>
 
               <v-col cols="12" md="6">
-                <v-text-field outlined label="Adresse E-mail" class="mt-n3" color="blue" />
+                <v-text-field outlined label="Adresse E-mail" class="mt-n3" color="orange" />
               </v-col>
 
               <v-col cols="12" md="6">
-                <v-text-field outlined label="Numero de téléphone" class="mt-n3" color="blue" />
+                <v-text-field outlined label="Numero de téléphone" class="mt-n3" color="orange" />
               </v-col>
 
               <v-col cols="12" md="6">
-                <v-text-field outlined label="Société" class="mt-n3" color="blue" />
+                <v-text-field outlined label="Société" class="mt-n3" color="orange" />
               </v-col>
               <v-col cols="12" md="6">
-                <v-text-field outlined label="Poste occupé" class="mt-n3" color="blue" />
+                <v-text-field outlined label="Poste occupé" class="mt-n3" color="orange" />
               </v-col>
 
               <v-col cols="12">
-                <v-text-field outlined label="Objet" class="mt-n3" color="blue" />
+                <v-text-field outlined label="Objet" class="mt-n3" color="orange" />
               </v-col>
 
               <v-col cols="12">
                 <v-textarea
                   outlined
-                  color="blue"
+                  color="orange"
                   class="mt-n3"
                   label="Comment pouvons-nous vous aider ?*"
                 />
@@ -63,7 +63,7 @@
     </v-dialog>
     <v-dialog dark v-model="isDialogDeleteClient" width="500" overlay-opacity="0.8">
       <v-card>
-        <v-card-title>Supprimer le client {{ clientToDelete.name }} ?</v-card-title>
+        <v-card-title>Supprimer la facture {{ clientToDelete.name }} ?</v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="isDialogDeleteClient=false" class="mx-2" fab dark>
@@ -75,14 +75,14 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <base-material-card color="indigo" icon="mdi-account-outline" inline class="px-5 py-3">
+    <base-material-card color="orange" icon="mdi-account-outline" inline class="px-5 py-3">
       <template v-slot:after-heading>
-        <div class="display-2 font-weight-light">Clients</div>
+        <div class="display-2 font-weight-light">Factures</div>
       </template>
 
       <v-row class="mt-8">
-        <v-btn color="indigo" @click="openDialogNewClient" class="ml-3">
-          <v-icon left>mdi-plus-circle-outline</v-icon>Nouveau Client
+        <v-btn color="orange" @click="openDialogNewClient" class="ml-3">
+          <v-icon left>mdi-plus-circle-outline</v-icon>Créer une facture
         </v-btn>
         <v-text-field
           v-model="search"
@@ -113,7 +113,7 @@
       >
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
-            <v-btn small color="blue" @click="PageInfosClient(item)">
+            <v-btn small color="info" @click="PageInfosClient(item)">
               <v-icon left>mdi-card-account-details-outline</v-icon>
               Informations {{ item.name }}
             </v-btn>

@@ -60,7 +60,7 @@
         </v-slide-y-transition>
       </v-col>
     </v-row>
-    <v-snackbar v-model="isSnackbarOpened"  :color="isSuccess ? 'success' : 'error'">
+    <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
       <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
       {{snackbarMessage}}
       <v-btn dark icon @click="isSnackbarOpened = false">
@@ -80,7 +80,7 @@ export default {
     isSuccess: false,
     isSnackbarOpened: false,
     snackbarMessage: "",
-
+    /*-------------------------- */
     socials: [
       {
         href: "#",
@@ -100,36 +100,19 @@ export default {
     ],
     login: "",
     password: "",
-    username: [],
-    email: [],
-    passwordTab: []
   }),
   mounted() {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then(response => {
-        if (this.verifyResponseOk(response.data)) {
-          var users = response.data;
-          console.log(users);
-          //console.log(JSON.stringify(users))
-          for (var i = 0; i < users.length; i++) {
-            this.email.push(users[i].email);
-            this.username.push(users[i].username);
-            this.passwordTab.push(users[i].id);
-          }
-        }
-      })
-      .catch(error => this.errorMessage("Network ERROR: " + error))
-      .finally(() => console.log("OK"));
+
   },
   methods: {
     inscription: function() {
       this.$router.push({ name: "Inscription" });
     },
     connexion: function(login, password) {
-
-      if (login == null || login == "") return this.errorMessage("Identifiant vide !");
-      if (password == null || password == "") return this.errorMessage("Mot de passe vide !");
+      if (login == null || login == "")
+        return this.errorMessage("Identifiant vide !");
+      if (password == null || password == "")
+        return this.errorMessage("Mot de passe vide !");
 
       //Axios teste connexion
       this.successMessage("Bienvenue " + login);

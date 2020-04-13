@@ -231,6 +231,13 @@
         </base-material-card>
       </v-col>
     </v-row>
+    <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
+      <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+      {{snackbarMessage}}
+      <v-btn dark icon @click="isSnackbarOpened = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -239,6 +246,10 @@ export default {
   name: "DashboardDashboard",
   data() {
     return {
+      isSuccess: false,
+      isSnackbarOpened: false,
+      snackbarMessage: "",
+      /*-------------------------- */
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -452,16 +463,38 @@ export default {
   mounted() {
     var url = "http://localhost:5000/api/users";
 
-    axios.get(url)
+    axios
+      .get(url)
       .then(response => {
-        console.log(JSON.stringify(response.data))
+        if (this.verifyResponseOk(response.data)) {
+          console.log(JSON.stringify(response.data));
+        }
       })
-      .catch(error => console.log(error))
-      .finally(() => console.log("API USER BON !"))
+      .catch(error => this.errorMessage("Network ERROR: " + error))
+      .finally(() => console.log("API USER BON !"));
   },
   methods: {
     complete(index) {
       this.list[index] = !this.list[index];
+    },
+    /*------------------------------------------------------ */
+    verifyResponseOk: function(responseData) {
+      var tmpStr = JSON.stringify(responseData);
+      if (tmpStr.startsWith('"Error:')) {
+        this.errorMessage(responseData.substring(7)); // suppress "Error:
+        return false;
+      }
+      return true;
+    },
+    successMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isSuccess = true;
+      this.isSnackbarOpened = true;
+    },
+    errorMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isSuccess = false;
+      this.isSnackbarOpened = true;
     }
   }
 };
