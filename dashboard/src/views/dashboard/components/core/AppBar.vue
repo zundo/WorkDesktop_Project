@@ -1,7 +1,7 @@
 <template>
   <v-app-bar id="app-bar" absolute app color="transparent" flat height="75">
     <v-btn class="mr-3" elevation="1" fab small color="dark" @click="setDrawer(!drawer)">
-      <v-icon v-if="value">mdi-view-quilt</v-icon>
+      <v-icon v-if="!drawer">mdi-view-quilt</v-icon>
 
       <v-icon v-else>mdi-dots-vertical</v-icon>
     </v-btn>
@@ -26,7 +26,7 @@
     <v-menu bottom left offset-y origin="top right" transition="scale-transition">
       <template v-slot:activator="{ attrs, on }">
         <v-btn class="ml-2" min-width="0" text v-bind="attrs" v-on="on">
-          <v-icon>mdi-account-cog</v-icon>
+          <v-icon>mdi-account-cog-outline</v-icon>
         </v-btn>
       </template>
 

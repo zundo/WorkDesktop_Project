@@ -25,12 +25,26 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/UserProfile'),
                 },
-                // Parametres
+                // Parametres généraux
                 {
-                    name: 'Paramètres',
-                    path: 'parametres',
+                    name: 'Paramètres-généraux',
+                    path: 'parametres/parametres-generaux',
                     component: () =>
-                        import ('@/views/dashboard/pages/Parametres'),
+                        import ('@/views/dashboard/pages/parametres/ParametresG'),
+                },
+                // Parametres systeme
+                {
+                    name: 'Paramètres-système',
+                    path: 'parametres/parametres-systeme',
+                    component: () =>
+                        import ('@/views/dashboard/pages/parametres/ParametresS'),
+                },
+                // Parametres email
+                {
+                    name: 'Paramètres-email',
+                    path: 'parametres/parametres-email',
+                    component: () =>
+                        import ('@/views/dashboard/pages/parametres/ParametresE'),
                 },
                 {
                     name: 'Notifications',
@@ -56,13 +70,6 @@ export default new Router({
                     path: 'calendar',
                     component: () =>
                         import ('@/views/dashboard/pages/Calendar'),
-                },
-                // Maps
-                {
-                    name: 'Google Maps',
-                    path: 'google-maps',
-                    component: () =>
-                        import ('@/views/dashboard/maps/GoogleMaps'),
                 },
                 // Upgrade
                 {
@@ -108,7 +115,7 @@ export default new Router({
                 },
                 {
                     name: 'Informations-Client', //infos clients
-                    path: 'infosclient',
+                    path: 'clients/infosclient',
                     component: () =>
                         import ('@/views/dashboard/pages/InfosClient')
                 },
@@ -134,7 +141,7 @@ export default new Router({
                 name: '404 Error',
                 path: '',
                 component: () =>
-                    import ('@/views/dashboard/pages/Error')
+                    import ('@/views/dashboard/Error')
             }]
         }
     ],

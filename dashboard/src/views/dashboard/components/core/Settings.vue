@@ -54,6 +54,28 @@
 
           <v-divider class="my-4 secondary" />
 
+          <strong class="mb-3 d-inline-block">SIDEBAR BACKGROUND</strong>
+
+          <v-item-group v-model="scrim">
+            <v-item
+              v-for="scrim in scrims"
+              :key="scrim"
+              :value="scrim"
+              class="mx-1"
+            >
+              <template v-slot="{ active, toggle }">
+                <v-avatar
+                  :class="active && 'v-settings__item--active'"
+                  :color="scrim"
+                  class="v-settings__item"
+                  size="24"
+                  @click="toggle"
+                />
+              </template>
+            </v-item>
+          </v-item-group>
+
+          <v-divider class="my-4 secondary" />
           <v-row
             align="center"
             no-gutters
@@ -73,7 +95,6 @@
               />
             </v-col>
           </v-row>
-
           <v-divider class="my-4 secondary" />
 
           <v-row
@@ -172,6 +193,12 @@
     mixins: [Proxyable],
 
     data: () => ({
+      scrim: 'rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)',
+      scrims: [
+        'rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)',
+        'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)',
+        'rgba(244, 67, 54, .8), rgba(244, 67, 54, .8)'
+      ],
       color: '#4CAF50',
       colors: [
         '#9C27b0',
@@ -215,6 +242,9 @@
       image (val) {
         this.setBarImage(val)
       },
+      scrim(val) {
+        this.$store.commit('SET_SCRIM', val)
+      }
     },
 
     methods: {

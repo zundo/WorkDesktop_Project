@@ -109,62 +109,74 @@
         {
           title: 'Calendrier',
           icon: 'mdi-calendar-outline',
-          to: 'calendar',
+          to: '/calendar',
         },
         {
           title: 'Projet',
           icon: 'mdi-clipboard-text-multiple-outline',
-          to: 'project',
+          to: '/project',
         },
         {
           title: 'Clients',
           icon: 'mdi-clipboard-account-outline',
-          to: 'clients',
+          to: '/clients',
         }, 
         {
           title: 'Comptabilité',
           icon: 'mdi-bank-outline',
-          to: 'accounting',
+          to: '/accounting',
+        },
+        {
+          group: '/parametres',
+          icon: 'mdi-cog-outline',
+          title: 'Paramètres',
+          children: [
+            {
+              title: 'Paramètres généraux',
+              icon: 'mdi-cogs',
+              to: 'parametres-generaux',
+            },
+            {
+              title: 'Paramètres système',
+              icon: 'mdi-cog-transfer',
+              to: 'parametres-systeme',
+            },
+            {
+              title: 'Paramètres email',
+              icon: 'mdi-account-cog',
+              to: 'parametres-email',
+            }
+          ]
         },       
         {
           icon: 'mdi-account',
           title: 'user',
-          to: 'user',
+          to: '/user',
         },
         {
           title: 'icons',
           icon: 'mdi-chart-bubble',
-          to: 'icons',
-        },
-        {
-          title: 'google',
-          icon: 'mdi-map-marker',
-          to: 'google-maps',
+          to: '/icons',
         },
         {
           title: 'notifications',
           icon: 'mdi-view-dashboard-outline',
-          to: 'notifications',
-        },
-        {
-          title: 'Paramètres',
-          icon: 'mdi-cog-outline',
-          to: 'parametres',
+          to: '/notifications',
         },
         {
           title: 'Buttons',
           icon: 'mdi-arrow-right-drop-circle-outline',
-          to: 'buttons',
+          to: '/buttons',
         },
         {
           title: 'Grid',
           icon: 'mdi-view-quilt',
-          to: 'grid',
+          to: '/grid',
         },
         {
           title: 'Tabs',
           icon: 'mdi-arrange-send-backward',
-          to: 'tabs',
+          to: '/tabs',
         },
       ],
     }),
@@ -189,7 +201,12 @@
         }
       },
     },
-
+    watch: {
+      '$vuetify.breakpoint.smAndDown' (val) {
+        this.$emit('update:expandOnHover', !val)
+      }
+    },
+    
     methods: {
       mapItem (item) {
         return {

@@ -35,13 +35,18 @@
       />
 
       <base-item
+      class="ml-4"
         v-else
         :key="`item-${i}`"
         :item="child"
-        text
+        
       />
+      <!-- attribut text pour le base-item pour afficher les initiales a la place du logo -->
     </template>
+    <v-divider/>
+
   </v-list-group>
+  
 </template>
 
 <script>
