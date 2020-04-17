@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <dashboard-core-app-bar />
+    <dashboard-core-app-bar v-model="expandOnHover"/>
 
-    <dashboard-core-drawer />
+    <dashboard-core-drawer :expand-on-hover.sync="expandOnHover" />
 
     <dashboard-core-view />
 
-    <dashboard-core-settings />
+    <dashboard-core-settings v-model="expandOnHover" />
   </v-app>
 </template>
 

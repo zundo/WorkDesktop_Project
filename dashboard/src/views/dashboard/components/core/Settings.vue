@@ -119,6 +119,28 @@
 
           <v-divider class="my-4 secondary" />
 
+          <v-row
+            align="center"
+            no-gutters
+          >
+            <v-col cols="auto">
+              Sidebar Mini
+            </v-col>
+
+            <v-spacer />
+
+            <v-col cols="auto">
+              <v-switch
+                v-model="internalValue"
+                class="ma-0 pa-0"
+                color="primary"
+                hide-details
+              />
+            </v-col>
+          </v-row>
+
+          <v-divider class="my-4 secondary" />
+
           <strong class="mb-3 d-inline-block">IMAGES</strong>
 
           <v-item-group
@@ -253,11 +275,11 @@
       }),
 
       testAddAxios: function(){
-      var url='http://localhost:5000/api/users/Add'
-      //var url='http://localhost:8892/auth/register'
+      var url='http://localhost:3000/login'
+      //var url='http://localhost:8892/auth/login'
 
         axios
-          .post(url,{ email: "axios1@axios1.axios1",password:"axios1",username:"axios1"})
+          .post(url,{ email: "mou@mou.mou", password:"mou"})
           .then(response => (
             console.log("Test ok")
           ))
