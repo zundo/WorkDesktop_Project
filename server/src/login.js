@@ -5,7 +5,6 @@ const express = require('express'),
 
 exports.login = (req, res) => {
     const data = req.body;
-    console.log(JSON.stringify(data))
     if (index.exist(data.email) == false || index.exist(data.password) == false) {
         index.sendReturn(res, 403, { error: true, message: "L'email/password est manquant" })
     }
