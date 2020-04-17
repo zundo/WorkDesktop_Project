@@ -27,5 +27,5 @@ dashboard/*.sw?
 #Electron-builder output
 dashboard/dist_electron
 
-dashboard_server/node_modules
-dashboard_server/package-lock.json
+server/node_modules
+server/package-lock.json

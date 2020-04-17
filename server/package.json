@@ -1,0 +1,23 @@
+{
+    "name": "rest_api_projet",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "initBdd": "/Applications/MAMP/Library/bin/mysql --host=localhost -ulicenceCDA -pCTpWtq0wuVwhNVFf < data.sql ",
+        "start": "pm2 kill && pm2 start index.js --watch && pm2 logs",
+        "stop": "pm2 kill",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Sébastien et Mounir",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^3.0.6",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "express-rate-limit": "^5.0.0",
+        "mysql": "^2.17.1",
+        "pm2": "^4.1.2"
+    }
+}

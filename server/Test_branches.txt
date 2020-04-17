@@ -1,0 +1,20 @@
+Branche/Route 6: 
+- Succes 200 a verifier si tu renvoie bien l'id cette fois car il a fallu le delete sur les branches précedentes
+
+Branche/Route 7: 
+"L' utilisateur a été déconnecté avec succès" (il y a un espace en trop, il faut enlever l'espace avant utilisateur)
+"L' id envoyé n'existe pas" (il y a un espace en trop, il faut enlever l'espace avant id)
+
+Branche/Route 8: 
+- Dans la recuperation des données il faut que tu retire createdAt ainsi que updateAt de school(faut delete sur le code)
+
+Branche/Route 9: 
+- Fonctionne Correctement
+
+Branche/Route 10: 
+- "L'une ou plusieurs données obligatoire sont manquante" (il manque un 's' a manquante)
+- Le succés doit etre a 201 et pas 200
+
+Branche/Route 11: 
+PS: (Petit soucis du cote de son plan il n'a pas mis de 's' a la table schools alors que dans les autres branches il l'as mis,donc il est preferable de le laisser avec le 's')
+- Il y a un probleme lorsque je met un id qui se trouve pas dans la BDD il m'affiche un SUCCES alors qu'il faut afficher "L'id envoyé n'existe pas" en CODE 409

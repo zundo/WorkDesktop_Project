@@ -461,17 +461,7 @@ export default {
     };
   },
   mounted() {
-    var url = "http://localhost:5000/api/users";
 
-    axios
-      .get(url)
-      .then(response => {
-        if (this.verifyResponseOk(response.data)) {
-          console.log(JSON.stringify(response.data));
-        }
-      })
-      .catch(error => this.errorMessage("Network ERROR: " + error))
-      .finally(() => console.log("API USER BON !"));
   },
   methods: {
     complete(index) {

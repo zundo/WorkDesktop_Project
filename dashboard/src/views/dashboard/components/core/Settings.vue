@@ -177,19 +177,19 @@
             default
             rel="noopener"
           >
-            Axios
+            Axios post
           </v-btn>
 
           <v-btn
             block
             class="mb-3"
-            color="grey darken-1"
+            color="warning darken-1"
             dark
             default
             rel="noopener"
             @click="testDeleteAxios"          
             >
-            Delete
+            Axios get
           </v-btn>
 
           <div class="my-12" />
@@ -208,6 +208,7 @@
   // Mixins
   import Proxyable from 'vuetify/lib/mixins/proxyable'
   import { mapMutations, mapState } from 'vuex'
+  import qs from 'qs'
 
   export default {
     name: 'DashboardCoreSettings',
@@ -241,7 +242,7 @@
       saveImage: '',
       showImg: true,
     }),
-
+    mounted() {},
     computed: {
       ...mapState(['barImage']),
     },
@@ -275,19 +276,54 @@
       }),
 
       testAddAxios: function(){
-      var url='http://localhost:3000/login'
-      //var url='http://localhost:8892/auth/login'
-
+        const config = {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        }      
+        const url = 'http://localhost:3000/login'
+        
         axios
-          .post(url,{ email: "mou@mou.mou", password:"mou"})
+          .post('http://localhost:3000/login',qs.stringify({ email: "mou@mou.mou", password:"mou" }),config)
+          .then(response => {
+            console.log(JSON.stringify(response.data))
+          })
+          .catch((error) => { 
+            console.log(error);
+            console.log("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message)); 
+          });
+
+          /*axios({
+            method: 'post',
+            url: 'http://localhost:3000/login',
+            data: qs.stringify({
+              email: 'mou@mou.mou',
+              password: 'mou'
+            }),
+            headers: {
+              'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+            }
+          })          
           .then(response => (
-            console.log("Test ok")
+            console.log(JSON.stringify(response.data))
           ))
-          .catch(error => { console.log("Network ERROR: " + error); });
+          .catch((error) => { 
+            console.log(error);
+            console.log("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message)); 
+          })*/
       },
 
       testDeleteAxios: function(){
-        alert("testDeleteAxios")
+        axios
+          .get("http://localhost:3000/user")
+          .then(response => {
+              console.log(JSON.stringify(response.data));
+          })
+          .catch((error) => { 
+            console.log(error);
+            console.log("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message)); 
+          })
+          //.finally(() => console.log("API USER BON !"));
       }
 
     },
