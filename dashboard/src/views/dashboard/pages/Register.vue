@@ -1,10 +1,10 @@
 <template>
-  <v-container id="register" fill-height tag="section">
+  <v-container id="register" fluid tag="section">
     <v-row justify="center">
       <v-col cols="10">
         <v-slide-y-transition appear>
           <base-material-card
-            color="success"
+            color="primary"
             light
             max-width="100%"
             class="pa-3 pa-md-5 mx-auto"
@@ -12,7 +12,7 @@
           >
             <template v-slot:heading>
               <div class="text-center">
-                <h1 class="display-3 font-weight-bold mb-2">Inscription</h1>
+                <h1 class="display-3 font-weight-bold mb-2"><v-icon large left>mdi-account-plus</v-icon>Inscription</h1>
               </div>
             </template>
 
@@ -73,7 +73,7 @@
                     </template>
                   </v-checkbox>
 
-                  <v-btn color="success" @click="connexionPage">
+                  <v-btn color="primary" @click="connexionPage">
                     <v-icon left>mdi-account-multiple-plus</v-icon>Inscription
                   </v-btn>
                 </div>
@@ -81,18 +81,31 @@
             </v-row>
           </base-material-card>
         </v-slide-y-transition>
+        <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
+          <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+          {{snackbarMessage}}
+          <v-btn dark icon @click="isSnackbarOpened = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-snackbar>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import qs from 'qs'
+
 export default {
   name: "PagesRegister",
 
   components: {},
 
   data: () => ({
+    isSuccess: false,
+    isSnackbarOpened: false,
+    snackbarMessage: "",
+    /*-------------------------- */
     sections: [
       {
         icon: "mdi-chart-timeline-variant",
@@ -134,9 +147,60 @@ export default {
   }),
   methods: {
     connexionPage: function(){
-      //Verification des données a aplliquer
+        const config = {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        }      
 
-      this.$router.push({ name: 'Connexion' });
+        let payload={
+          email:"mou8@mou8.mou8",
+          password:"mou8",
+          lastname:"nirkos8",
+          firstname:"mounir8",
+          date_naissance:"17-05-1998",
+          sexe:"Homme",
+          rue:"17 rue alexandre",
+          ville:"Gonesse",
+          codePostal:"95500",
+          pays:"France",
+          phone:"0614587425",
+          poste:"Developpeur"
+        };
+
+        let id_user;
+        axios
+          .post('http://localhost:3000/register',qs.stringify(payload),config)
+          .then(response => {
+            //console.log(JSON.stringify(response.data))
+            id_user = response.data.id_user;
+            //console.log("id_user: "+id_user)
+            if(id_user != undefined && id_user.trim().length != 0)
+              this.$router.push({ name: 'Accueil',params: { userId: id_user } }); 
+          })
+          .catch((error) => { 
+            console.log("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message));
+            this.errorMessage("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message)); 
+          })
+    },
+    /*------------------------------------------------------ */
+    verifyResponseOk: function(responseData) {
+      var tmpStr = JSON.stringify(responseData);
+      if (tmpStr.startsWith('"Error:')) {
+        this.errorMessage(responseData.substring(7)); // suppress "Error:
+        return false;
+      }
+      return true;
+    },
+    successMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isSuccess = true;
+      this.isSnackbarOpened = true;
+    },
+    errorMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isSuccess = false;
+      this.isSnackbarOpened = true;
     }
   },
 };

@@ -7,6 +7,9 @@ const express = require('express'),
     facultyCtrl_old = require('./src/Controllers_old/faculty'),
     userCtrl_old = require('./src/Controllers_old/user'),
     loginCtrl_old = require('./src/Controllers_old/login'),
+    /*---------------------------------------------------------- */
+    registerCtrl = require('./src/Controllers/register'),
+    /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
 
@@ -35,9 +38,13 @@ app.use((err, req, res, next) => {
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/index.html'))
-})
+});
 
-app.post('/register', registerCtrl_old.register)
+/*------------------------------------------------------------- */
+app.post('/register', registerCtrl.register); //Inscription Utilisateur (entreprise aussi TO DO plus tard)
+/*------------------------------------------------------------- */
+
+app.post('/register_old', registerCtrl_old.register)
 
 app.post('/login', loginCtrl_old.login)
 

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+//import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -9,6 +10,7 @@ export default new Vuex.Store({
         barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
         drawer: null,
     },
+    //plugins: [createPersistedState()], //plugin permettant d'utiliser le localstorage
     mutations: {
         SET_BAR_IMAGE(state, payload) {
             state.barImage = payload

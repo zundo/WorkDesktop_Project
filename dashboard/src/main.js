@@ -11,7 +11,7 @@ import qs from 'qs'
 
 Vue.config.productionTip = false
 
-Vue.use(qs)
+Vue.use(qs) // querystringify
 
 new Vue({
     router,

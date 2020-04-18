@@ -69,7 +69,7 @@ exports.updateUser = async(req, res) => {
         if (index.exist(data.type))
             toUpdate.type = data.type
             // modification de la date d'update
-        toUpdate.updateAt = new Date()
+        toUpdate.updateAt = new Date();
         bdd.query("UPDATE `users` SET ? WHERE `users`.`id` = '" + req.params.id + "'", toUpdate, (error, results) => {
             if (results.affectedRows != 0) {
                 index.sendReturn(res, 200, { error: false, message: "L'utilisateur a été modifiée avec succès" })

@@ -1,10 +1,10 @@
 <template>
-  <v-container id="login" fill-height tag="section">
+  <v-container id="login" tag="section">
     <v-row justify="center">
       <v-col cols="10">
         <v-slide-y-transition appear>
           <base-material-card
-            color="success"
+            color="primary"
             light
             max-width="100%"
             width="600"
@@ -13,7 +13,7 @@
           >
             <template v-slot:heading>
               <div class="text-center">
-                <h1 class="display-3 font-weight-bold mb-2">Connexion</h1>
+                <h1 class="display-3 font-weight-bold mb-2"><v-icon large left>mdi-account-lock</v-icon>Connexion</h1>
               </div>
             </template>
 
@@ -35,7 +35,7 @@
               <v-col cols="12" class="py-2">
                 <v-text-field
                   color="primary"
-                  label="Email/Username"
+                  label="Email"
                   v-model="login"
                   prepend-icon="mdi-face"
                 />
@@ -49,7 +49,7 @@
                   prepend-icon="mdi-lock-outline"
                 />
               </v-col>
-              <v-btn color="success" @click="connexion(login,password)">
+              <v-btn color="primary" @click="connexion(login,password)">
                 <v-icon left>mdi-lock-outline</v-icon>Connexion
               </v-btn>
             </v-card-text>

@@ -94,22 +94,32 @@ export default {
       {
         icon: "mdi-account-lock",
         title: "Se connecter",
-        to: 'login'
+        to: '/login'
       },
       {
         icon: "mdi-account-plus",
         title: "Inscription",
-        to: 'register'
+        to: '/register'
+      },
+      {
+        icon: "mdi-account",
+        title: "Edit Profile",
+        to: '/user'
+      },
+      {
+        icon: "mdi-handshake",
+        title: "Support",
+        to: '/support'
       },
       {
         icon: "mdi-cogs",
         title: "Paramètres",
-        to: 'parametres'
+        to: '/parametres/parametres-generaux'
       },
       {
         icon: "mdi-logout",
         title: "Déconnexion",
-        to: '/'
+        to: '/login'
       }
     ]
   }),

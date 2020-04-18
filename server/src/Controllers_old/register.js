@@ -19,16 +19,25 @@ exports.register = async(req, res) => {
         error = true
     if (index.exist(data.sexe) == false)
         error = true
-    if (error == true)
-        index.sendReturn(res, 403, { error: true, message: "L'une ou plusieurs données obligatoire sont manquantes" })
-    else {
+    if (error == true) {
+        index.sendReturn(res, 403, {
+            error: true,
+            message: "L'une ou plusieurs données obligatoire sont manquantes"
+        })
+    } else {
         // Vérification du format de la date, de l'email et du sexe
         if (index.dateFormat(data.date_naissance) == false || index.emailFormat(data.email) == false || (data.sexe != "Homme" && data.sexe != "Femme"))
-            index.sendReturn(res, 409, { error: true, message: "L'une des données obligatoire ne sont pas conformes" })
+            index.sendReturn(res, 409, {
+                error: true,
+                message: "L'une des données obligatoire ne sont pas conformes"
+            })
         else {
             // Vérification de si l'email existe déjà
             if (await index.emailExist(data.email))
-                index.sendReturn(res, 422, { error: true, message: "Votre email n'est pas correct" })
+                index.sendReturn(res, 422, {
+                    error: true,
+                    message: "Votre email n'est pas correct"
+                })
                 //^^Message d'erreur requête verif email
             else {
 
@@ -55,14 +64,20 @@ exports.register = async(req, res) => {
                     if (data.type == "Studiant" && data.type == "Intervenant") {
                         toInsert.type = data.type
                     } else {
-                        index.sendReturn(res, 409, { error: true, message: "Le type n'est pas conforme" })
+                        index.sendReturn(res, 409, {
+                            error: true,
+                            message: "Le type n'est pas conforme"
+                        })
                     }
                 }
 
                 bdd.query("INSERT INTO users SET ?", toInsert, (error, results) => {
                     if (error) {
                         console.log(error)
-                        index.sendReturn(res, 401, { error: true, message: "La requête d'inscription en base de donnée n'a pas fonctionné" })
+                        index.sendReturn(res, 401, {
+                            error: true,
+                            message: "La requête d'inscription en base de donnée n'a pas fonctionné"
+                        })
                     } else
                         index.getUsers(res, " WHERE id = " + results.insertId, 201, "L' utilisateur a bien été crée avec succès")
                 });

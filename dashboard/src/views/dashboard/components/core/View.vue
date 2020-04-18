@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <router-view />
+    <router-view class='mb-10' />
 
     <dashboard-core-footer />
   </v-content>
