@@ -4,7 +4,7 @@ mysql = require('mysql'),
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'dashboard_mou',
+        database: 'bdd_rest_api',
         port: '3308'
     })
 

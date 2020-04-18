@@ -1,6 +1,6 @@
 const express = require('express'),
-    index = require('../index'),
-    bdd = require('./modele/index'),
+    index = require('../middleware/filter/index_old'),
+    bdd = require('../modele/index_old'),
     bcrypt = require('bcrypt')
 
 
