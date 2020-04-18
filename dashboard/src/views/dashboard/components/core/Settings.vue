@@ -119,28 +119,6 @@
 
           <v-divider class="my-4 secondary" />
 
-          <v-row
-            align="center"
-            no-gutters
-          >
-            <v-col cols="auto">
-              Sidebar Mini
-            </v-col>
-
-            <v-spacer />
-
-            <v-col cols="auto">
-              <v-switch
-                v-model="internalValue"
-                class="ma-0 pa-0"
-                color="primary"
-                hide-details
-              />
-            </v-col>
-          </v-row>
-
-          <v-divider class="my-4 secondary" />
-
           <strong class="mb-3 d-inline-block">IMAGES</strong>
 
           <v-item-group
@@ -281,8 +259,7 @@
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
           }
         }      
-        const url = 'http://localhost:3000/login'
-        
+
         axios
           .post('http://localhost:3000/login',qs.stringify({ email: "mou@mou.mou", password:"mou" }),config)
           .then(response => {
@@ -292,25 +269,6 @@
             console.log(error);
             console.log("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message)); 
           });
-
-          /*axios({
-            method: 'post',
-            url: 'http://localhost:3000/login',
-            data: qs.stringify({
-              email: 'mou@mou.mou',
-              password: 'mou'
-            }),
-            headers: {
-              'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            }
-          })          
-          .then(response => (
-            console.log(JSON.stringify(response.data))
-          ))
-          .catch((error) => { 
-            console.log(error);
-            console.log("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message)); 
-          })*/
       },
 
       testDeleteAxios: function(){

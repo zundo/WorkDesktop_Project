@@ -2,7 +2,7 @@
   <v-app>
     <dashboard-core-app-bar v-model="expandOnHover"/>
 
-    <dashboard-core-drawer :expand-on-hover.sync="expandOnHover" />
+    <dashboard-core-drawer />
 
     <dashboard-core-view />
 
