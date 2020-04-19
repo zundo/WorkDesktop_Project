@@ -29,9 +29,3 @@ dashboard/dist_electron
 
 server/node_modules
 server/package-lock.json
-
-server/Controllers_old
-server/middleware/filter/index_old.js
-server/modele/index_old.js
-server/data.sql
-server/Test_branches.txt
