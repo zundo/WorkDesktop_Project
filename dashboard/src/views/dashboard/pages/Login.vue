@@ -4,8 +4,7 @@
       <v-col cols="10">
         <v-slide-y-transition appear>
           <base-material-card
-            color="primary"
-            light
+            color="blue"
             max-width="100%"
             width="600"
             class="px-5 py-3 mx-auto"
@@ -34,7 +33,7 @@
               </v-btn>
               <v-col cols="12" class="py-2">
                 <v-text-field
-                  color="primary"
+                  color="blue"
                   label="Email"
                   v-model="login"
                   prepend-icon="mdi-face"
@@ -43,18 +42,18 @@
 
               <v-col cols="12" class="py-2">
                 <v-text-field
-                  color="primary"
+                  color="blue"
                   label="Password"
                   v-model="password"
                   prepend-icon="mdi-lock-outline"
                 />
               </v-col>
-              <v-btn color="primary" @click="connexion(login,password)">
+              <v-btn color="blue" @click="connexion(login,password)">
                 <v-icon left>mdi-lock-outline</v-icon>Connexion
               </v-btn>
             </v-card-text>
-            <a @click="inscription" color="primary">
-              <span class="display-1">Inscription</span>
+            <a @click="inscription">
+              <span @click="inscription" color="blue" class="display-1">Inscription</span>
             </a>
           </base-material-card>
         </v-slide-y-transition>
