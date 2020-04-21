@@ -114,7 +114,7 @@ exports.register = async(req, res) => {
                                 phone: data.phone.trim(),
                                 poste: data.poste.trim(),
                                 id_entreprise: data.id_entreprise,
-                                isAdmin: data.isAdmin
+                                isAdmin: true
                             };
 
                             bdd.query("INSERT INTO utilisateur SET ?", toInsert, (error, results) => {
@@ -125,8 +125,8 @@ exports.register = async(req, res) => {
                                         message: "La requête d'inscription en base de donnée n'a pas fonctionné"
                                     })
                                 } else {
-                                    console.log("L'utilisateur a bien été ajouté")
-                                    index.sendReturn(res, 201, { error: false, message: "L' utilisateur a bien été crée avec succès", id_user: results.insertId })
+                                    console.log("L'utilisateur admin a bien été ajouté")
+                                    index.sendReturn(res, 201, { error: false, message: "L' utilisateur admin a bien été crée avec succès", id_user: results.insertId })
                                 }
                             });
                         }

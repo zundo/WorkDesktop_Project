@@ -1,5 +1,5 @@
 <template>
-  <v-container id="clients" fluid tag="section">
+  <v-container id="collaborateurs" fluid tag="section">
     <v-row>
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
@@ -48,10 +48,10 @@
     </v-row>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <base-material-card color="indigo">
+        <base-material-card color="info">
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">{{ person[0].name }}</div>
-            <div class="subtitle-1 font-weight-light">{{ person[0].username }}</div>
+            <div class="display-2 font-weight-light">{{ collaborateur.firstname }} {{ collaborateur.lastname }}</div>
+            <div class="subtitle-1 font-weight-light">{{ collaborateur.id }}</div>
           </template>
           <v-skeleton-loader v-if="firstLoad" :loading="loading" type="table"></v-skeleton-loader>
           <v-simple-table dense v-else>
@@ -59,39 +59,43 @@
               <tbody>
                 <tr>
                   <td>Nom de l'entreprise</td>
-                  <td>{{ person[0].company.name }}</td>
+                  <td>{{ collaborateur.id_entreprise }}</td>
                 </tr>
                 <tr>
                   <td>Personne à contacter</td>
-                  <td>06.06.06.06.06</td>
+                  <td>{{ collaborateur.personne_contacter }}</td>
                 </tr>
                 <tr>
                   <td>Email</td>
-                  <td>{{ person[0].email }}</td>
+                  <td>{{ collaborateur.email }}</td>
                 </tr>
                 <tr>
                   <td>Numéro de téléphone</td>
-                  <td>{{ person[0].phone }}</td>
+                  <td>{{ collaborateur.phone }}</td>
                 </tr>
                 <tr>
-                  <td>Fax</td>
-                  <td>01.02.03.04.05</td>
+                  <td>Sexe</td>
+                  <td>{{ collaborateur.sexe }}</td>
+                </tr>
+                <tr>
+                  <td>Date de naissance</td>
+                  <td>{{ collaborateur.date_naissance }}</td>
+                </tr>
+                <tr>
+                  <td>Poste</td>
+                  <td>{{ collaborateur.poste }}</td>
                 </tr>
                 <tr>
                   <td>Adresse</td>
-                  <td>{{ person[0].address.street }}, {{ person[0].address.suite }}</td>
-                </tr>
-                <tr>
-                  <td>Ville</td>
-                  <td>{{ person[0].address.city }}</td>
+                  <td>{{ collaborateur.rue }}, {{ collaborateur.ville }}</td>
                 </tr>
                 <tr>
                   <td>Code postal</td>
-                  <td>{{ person[0].address.zipcode }}</td>
+                  <td>{{ collaborateur.codePostal }}</td>
                 </tr>
                 <tr>
                   <td>Pays</td>
-                  <td>Unknown</td>
+                  <td>{{ collaborateur.pays }}</td>
                 </tr>
               </tbody>
             </template>
@@ -107,38 +111,38 @@
           <v-row>
             <v-col cols="12">
               <h4
-                class="display-3 font-weight-light mb-2 text-md-center indigo--text"
-              >{{ person[0].name }}</h4>
+                class="display-3 font-weight-light mb-2 text-md-center info--text"
+              >{{ collaborateur.firstname }} {{ collaborateur.lastname }}</h4>
             </v-col>
             <v-card-text>
               <v-col cols="12">
                 <h6 class="display-2 mb- grey--text">
                   <v-icon large left color="info">mdi-web</v-icon>Site Web:
-                  <a href="person[0].website">{{ person[0].website }}</a>
+                  <a href="collaborateur.site_web">{{ collaborateur.site_web }}</a>
                 </h6>
               </v-col>
               <v-col cols="12">
                 <p class="font-weight-light mb-n3 grey--text">
                   <v-icon large left color="blue">mdi-skype</v-icon>
-                  Skype: {{ person[0].username }}.skype
+                  Skype: {{ collaborateur.firstname }}.skype
                 </p>
               </v-col>
               <v-col cols="12">
                 <p class="font-weight-light mb-n3 grey--text">
                   <v-icon large left color="indigo">mdi-linkedin</v-icon>
-                  Linkedin: {{ person[0].username }}.linkedin
+                  Linkedin: {{ collaborateur.firstname }}.linkedin
                 </p>
               </v-col>
               <v-col cols="12">
                 <p class="font-weight-light mb-n3 grey--text">
                   <v-icon large left color="indigo">mdi-facebook</v-icon>
-                  Facebook: {{ person[0].username }}.facebook
+                  Facebook: {{ collaborateur.firstname }}.facebook
                 </p>
               </v-col>
               <v-col cols="12">
                 <p class="font-weight-light grey--text">
                   <v-icon large left color="blue">mdi-twitter</v-icon>
-                  Twitter: {{ person[0].username }}.twitter
+                  Twitter: {{ collaborateur.firstname }}.twitter
                 </p>
               </v-col>
             </v-card-text>
@@ -167,43 +171,30 @@ export default {
     /*-------------------------- */
     loading: true,
     firstLoad: true,
-    person: [
-      {
-        name: "",
-        username: "",
-        email: "",
-        address: {
-          street: "",
-          suite: "",
-          city: "",
-          zipcode: "",
-          geo: {
-            lat: "",
-            lng: ""
-          }
-        },
-        phone: "",
-        website: "",
-        company: {
-          name: "",
-          catchPhrase: "",
-          bs: ""
-        }
-      }
-    ]
+    collaborateur:{}
   }),
   mounted() {
-    if (this.$route.params.userId != null && this.$route.params.userId != 0) {
-      console.log("UserID: " + this.$route.params.userId);
-      var userId = this.$route.params.userId;
-    } else return this.$router.push({ name: "Clients" });
+    if (this.$route.params.infos_collaborateur != null && this.$route.params.infos_collaborateur != 0) {
+      //console.log("UserID: " + this.$route.params.infos_collaborateur.id);
+      this.collaborateur = this.$route.params.infos_collaborateur;
+      var userId = this.collaborateur.id;
+      /*recuperation du nom de l entreprise */
+      //console.log(JSON.stringify(this.collaborateur))
+      setTimeout(() => {
+        this.loading = false;
+        this.firstLoad = false;
+      }, 1000);
+      console.log("OK");
+    } else return this.$router.push({ name: "Collaborateurs" });
 
-    axios
+    
+    /*axios
       .get("https://jsonplaceholder.typicode.com/users/" + userId)
       .then(response => {
         if (this.verifyResponseOk(response.data)) {
           //this.person.push(response.data);
-          this.person.splice(0, 1, response.data);
+          //this.person.splice(0, 1, response.data);
+
         }
       })
       .catch(error => this.errorMessage("Network ERROR: " + error))
@@ -213,7 +204,7 @@ export default {
           this.firstLoad = false;
         }, 1000);
         console.log("OK");
-      });
+      });*/
   },
   methods: {
     /*------------------------------------------------------ */

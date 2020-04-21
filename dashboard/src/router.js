@@ -130,7 +130,19 @@ export default new Router({
                     path: 'register',
                     component: () =>
                         import ('@/views/dashboard/pages/Register')
-                }
+                },
+                {
+                    name: 'Collaborateurs',
+                    path: 'collaborateurs',
+                    component: () =>
+                        import ('@/views/dashboard/pages/Collaborateurs')
+                },
+                {
+                    name: 'Informations-Collaborateur', //infos Collaborateurs
+                    path: 'clients/collaborateur',
+                    component: () =>
+                        import ('@/views/dashboard/pages/InfosCollaborateur')
+                },
             ],
         },
         {

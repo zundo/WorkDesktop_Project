@@ -116,6 +116,11 @@
           to: '/project',
         },
         {
+          title: 'Collaborateurs',
+          icon: 'mdi-clipboard-account',
+          to: '/collaborateurs',
+        }, 
+        {
           title: 'Clients',
           icon: 'mdi-clipboard-account-outline',
           to: '/clients',

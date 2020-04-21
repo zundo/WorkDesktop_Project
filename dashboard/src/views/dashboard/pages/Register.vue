@@ -356,9 +356,9 @@ export default {
     isinfo: false,
     isSnackbarOpened: false,
     snackbarMessage: "",
+    /*-------------------------- */
     isDialogDateNaissanceOpen: false,
     showPassword: false,
-    /*-------------------------- */
     strep: 1,
     items_Sexe: ["Homme", "Femme"],
     user: {
@@ -376,7 +376,7 @@ export default {
       personne_contacter: "",
       phone: "",
       poste: "",
-      isAdmin:true
+      isAdmin: ""
     },
     entreprise: {
       numSiret_ent: "",
@@ -436,7 +436,7 @@ export default {
         }
       };
 
-      let userDateNaissance = this.user.date_naissance.substring(8, 10) +'-' + this.user.date_naissance.substring(5, 7) +'-'+this.user.date_naissance.substring(0, 4);
+      let userDateNaissance = this.user.date_naissance;
       this.user.date_naissance = this.user.date_naissance.substring(8, 10) +'-' + this.user.date_naissance.substring(5, 7) +'-'+this.user.date_naissance.substring(0, 4);
 
       let payload = Object.assign(this.user, this.entreprise);
@@ -446,10 +446,7 @@ export default {
       axios
         .post("http://localhost:3000/register", qs.stringify(payload), config)
         .then(response => {
-          //if (this.verifyResponseOk(response.data)) {
-          //console.log(JSON.stringify(response.data))
           id_user = response.data.id_user;
-          //}
         })
         .catch(error => {
           console.log(

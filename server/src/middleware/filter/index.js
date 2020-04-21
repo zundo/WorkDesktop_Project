@@ -83,6 +83,65 @@ exports.emailExist = async(data) => {
 
 // Function qui change le format de la date pour l'insertion en base de donnée
 exports.changeDateForSQL = (data) => {
-    data = data.substr(6, 4) + "-" + data.substr(3, 2) + "-" + data.substr(0, 2) + " 12:00:00";
+        data = data.substr(6, 4) + "-" + data.substr(3, 2) + "-" + data.substr(0, 2) + " 12:00:00";
+        return data
+    }
+    // Function qui change le format de la date pour le renvoi de la requête
+exports.changeDateForSend = (data) => {
+    data = data.substr(9, 2) + "-" + data.substr(6, 2) + "-" + data.substr(1, 4);
     return data
+}
+
+const changeDateForSend = (data) => {
+    data = data.substr(9, 2) + "-" + data.substr(6, 2) + "-" + data.substr(1, 4);
+    return data
+}
+
+// Function qui vérifie si l'id existe et si il est conforme
+exports.verifId = (data, res) => {
+    if (data === undefined)
+        this.sendReturn(res, 403, { error: true, message: "Veuillez insérer un id" })
+    else if (data.match(/^[0-9]*$/gm) == null)
+        this.sendReturn(res, 400, { error: true, message: "L'id envoyé n'est pas conforme" })
+}
+
+// Function qui récupère tous les collabrateurs de l'entreprise dans la table utilisateurs
+exports.getCollaborateursByEnt = (res, where = "", port = 200, messageSend = "") => {
+    bdd.query("SELECT * FROM utilisateur" + where, (error, results, fields) => {
+        // Si erreur dans la requête
+        if (error) {
+            console.log(error)
+            sendReturn(res, port, { error: false, message: "Erreur dans la requête" });
+        }
+        // Si le resultat n'existe pas
+        else if (results === undefined)
+            sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
+        // Si la liste des utilises est vide
+        else if (results.length == 0)
+            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+        else {
+            if (results.length > 1) {
+                results.map(item => {
+                    // Array.map => Foreach()
+                    //delete item.id; // Suppression d'un elements
+                    item.date_naissance = changeDateForSend(JSON.stringify(item.date_naissance))
+                    delete item.password;
+                    delete item.createdAt;
+                    delete item.updateAt;
+                    delete item.lastLogin;
+                    delete item.attempt;
+                    return item; // Retour le nouvel element item => results[i] = item
+                })
+                sendReturn(res, port, {
+                    error: false,
+                    collaborateurs: results
+                })
+            } else {
+                sendReturn(res, 401, {
+                    error: true,
+                    message: "La requête d'inscription en base de donnée n'a pas fonctionné"
+                })
+            }
+        }
+    });
 }

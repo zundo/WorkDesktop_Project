@@ -9,6 +9,7 @@ const express = require('express'),
     loginCtrl_old = require('./src/Controllers_old/login'),
     /*---------------------------------------------------------- */
     registerCtrl = require('./src/Controllers/register'),
+    CollaborateurCtrl = require("./src/Controllers/Collaborateur"),
     /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
@@ -41,7 +42,11 @@ app.get('/', (req, res) => {
 });
 
 /*------------------------------------------------------------- */
-app.post('/register', registerCtrl.register); //Inscription Utilisateur
+app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
+
+app.post('/addcollaborateur', CollaborateurCtrl.addCollaborateur); //Inscription collaborateurs
+app.get('/collaborateurs/:id', CollaborateurCtrl.CollaborateursByEnt); //recuperation des collaborateurs de l'entreprise
+
 /*------------------------------------------------------------- */
 
 app.post('/register_old', registerCtrl_old.register)
