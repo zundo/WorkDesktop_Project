@@ -113,7 +113,8 @@ exports.register = async(req, res) => {
                                 personne_contacter: data.personne_contacter.trim(),
                                 phone: data.phone.trim(),
                                 poste: data.poste.trim(),
-                                id_entreprise: data.id_entreprise
+                                id_entreprise: data.id_entreprise,
+                                isAdmin: data.isAdmin
                             };
 
                             bdd.query("INSERT INTO utilisateur SET ?", toInsert, (error, results) => {

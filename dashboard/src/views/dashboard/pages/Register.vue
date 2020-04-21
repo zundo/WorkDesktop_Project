@@ -375,7 +375,8 @@ export default {
       website: "",
       personne_contacter: "",
       phone: "",
-      poste: ""
+      poste: "",
+      isAdmin:true
     },
     entreprise: {
       numSiret_ent: "",
@@ -435,21 +436,6 @@ export default {
         }
       };
 
-      /*let payload={
-          email:"mou24@mou24.mou27",
-          password:"mou8",
-          lastname:"nirkos8",
-          firstname:"mounir8",
-          date_naissance:"17-05-1998",
-          sexe:"Homme",
-          rue:"17 rue alexandre",
-          ville:"Gonesse",
-          codePostal:"95500",
-          pays:"France",
-          phone:"0614587425",
-          poste:"Developpeur"
-        };*/
-
       let userDateNaissance = this.user.date_naissance.substring(8, 10) +'-' + this.user.date_naissance.substring(5, 7) +'-'+this.user.date_naissance.substring(0, 4);
       this.user.date_naissance = this.user.date_naissance.substring(8, 10) +'-' + this.user.date_naissance.substring(5, 7) +'-'+this.user.date_naissance.substring(0, 4);
 
@@ -481,7 +467,7 @@ export default {
           //throw error;
           this.user.date_naissance = userDateNaissance;
         })
-        .then(() => {
+        .finally(() => {
           if (id_user != undefined && id_user.length != 0){
             return this.$router.push({
               name: "Accueil",

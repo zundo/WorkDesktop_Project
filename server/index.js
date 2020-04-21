@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 });
 
 /*------------------------------------------------------------- */
-app.post('/register', registerCtrl.register); //Inscription Utilisateur (entreprise aussi TO DO plus tard)
+app.post('/register', registerCtrl.register); //Inscription Utilisateur
 /*------------------------------------------------------------- */
 
 app.post('/register_old', registerCtrl_old.register)
