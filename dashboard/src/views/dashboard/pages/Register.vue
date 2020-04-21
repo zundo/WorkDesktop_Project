@@ -458,7 +458,7 @@ export default {
               " : " +
               JSON.stringify(error.response.data.message)
           );
-          return this.errorMessage(
+          this.errorMessage(
             "ERROR " +
               JSON.stringify(error.response.status) +
               " : " +
