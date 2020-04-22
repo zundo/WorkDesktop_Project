@@ -59,7 +59,7 @@
               <tbody>
                 <tr>
                   <td>Nom de l'entreprise</td>
-                  <td>{{ collaborateur.id_entreprise }}</td>
+                  <td>{{ collaborateur.nom }}</td>
                 </tr>
                 <tr>
                   <td>Personne à contacter</td>

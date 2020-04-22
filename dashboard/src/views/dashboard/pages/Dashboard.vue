@@ -461,6 +461,12 @@ export default {
     };
   },
   mounted() {
+    //Appliquer sur toutes les pages du drawer
+    console.log('idUser: '+this.$route.params.userId)
+    
+    /*if(this.$route.params.userId != undefined && this.$route.params.userId !== 0){
+      console.log('idUser: '+this.$route.params.userId)
+    }else return this.$router.push({ name: "Connexion" });*/
 
   },
   methods: {

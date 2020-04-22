@@ -12,7 +12,9 @@
           >
             <template v-slot:heading>
               <div class="text-center">
-                <h1 class="display-3 font-weight-bold mb-2"><v-icon large left>mdi-account-lock</v-icon>Connexion</h1>
+                <h1 class="display-3 font-weight-bold mb-2">
+                  <v-icon large left>mdi-account-lock</v-icon>Connexion
+                </h1>
               </div>
             </template>
 
@@ -37,6 +39,7 @@
                   label="Email"
                   v-model="login"
                   prepend-icon="mdi-face"
+                  clearable
                 />
               </v-col>
 
@@ -46,6 +49,10 @@
                   label="Password"
                   v-model="password"
                   prepend-icon="mdi-lock-outline"
+                  :type="showPassword ? 'text' : 'password'"
+                  @click:append="showPassword = !showPassword"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  clearable
                 />
               </v-col>
               <v-btn color="blue" @click="connexion(login,password)">
@@ -53,7 +60,7 @@
               </v-btn>
             </v-card-text>
             <a @click="inscription">
-              <span @click="inscription" color="blue" class="display-1">Inscription</span>
+              <span @click="inscription" color="blue" class="display-1">Inscription Administrateur</span>
             </a>
           </base-material-card>
         </v-slide-y-transition>
@@ -70,6 +77,8 @@
 </template>
 
 <script>
+import qs from "qs";
+
 export default {
   name: "PagesLogin",
 
@@ -80,6 +89,7 @@ export default {
     isSnackbarOpened: false,
     snackbarMessage: "",
     /*-------------------------- */
+    showPassword: false,
     socials: [
       {
         href: "#",
@@ -98,11 +108,9 @@ export default {
       }
     ],
     login: "",
-    password: "",
+    password: ""
   }),
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     inscription: function() {
       this.$router.push({ name: "Inscription" });
@@ -113,8 +121,47 @@ export default {
       if (password == null || password == "")
         return this.errorMessage("Mot de passe vide !");
 
-      //Axios teste connexion
-      this.successMessage("Bienvenue " + login);
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }
+      };
+
+
+      let payload = {
+        email:login,
+        password:password
+      };
+      //return console.log(JSON.stringify(payload));
+
+      let id_user;
+      axios
+        .post("http://localhost:3000/login", qs.stringify(payload), config)
+        .then(response => {
+          id_user = response.data.id_user;
+        })
+        .catch(error => {
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+        })
+        .finally(() => {
+          if (id_user != undefined && id_user.length != 0) {
+            return this.$router.push({
+              name: "Accueil",
+              params: { userId: id_user }
+            });
+          } else return;
+        });
     },
     /*------------------------------------------------------ */
     verifyResponseOk: function(responseData) {

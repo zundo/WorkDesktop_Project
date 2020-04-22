@@ -10,6 +10,7 @@ const express = require('express'),
     /*---------------------------------------------------------- */
     registerCtrl = require('./src/Controllers/register'),
     CollaborateurCtrl = require("./src/Controllers/Collaborateur"),
+    loginCtrl = require('./src/Controllers/login'),
     /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
@@ -47,11 +48,12 @@ app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
 app.post('/addcollaborateur', CollaborateurCtrl.addCollaborateur); //Inscription collaborateurs
 app.get('/collaborateurs/:id', CollaborateurCtrl.CollaborateursByEnt); //recuperation des collaborateurs de l'entreprise
 
+app.post('/login', loginCtrl.login); //Login
 /*------------------------------------------------------------- */
 
 app.post('/register_old', registerCtrl_old.register)
 
-app.post('/login', loginCtrl_old.login)
+app.post('/login_old', loginCtrl_old.login)
 
 app.get('/user', userCtrl_old.getUsers)
 

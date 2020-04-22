@@ -2,10 +2,12 @@ const express = require('express'),
     index = require('../middleware/filter/index'),
     bdd = require('../modele/index'),
     bcrypt = require('bcrypt')
+
 exports.CollaborateursByEnt = async(req, res) => {
-    index.verifId(req.params.id, res);
+    index.verifId(req.params.id, res); //id_entreprise
     // Récupération des collaborateurs de l'entreprise
     index.getCollaborateursByEnt(res, " WHERE id_entreprise = '" + req.params.id + "'")
+        //SELECT utilisateur.*,entreprise.nom FROM `entreprise` LEFT JOIN `utilisateur` ON `utilisateur`.`id_entreprise` = `entreprise`.`id`
 }
 
 exports.addCollaborateur = async(req, res) => {

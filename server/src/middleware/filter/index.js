@@ -107,7 +107,7 @@ exports.verifId = (data, res) => {
 
 // Function qui récupère tous les collabrateurs de l'entreprise dans la table utilisateurs
 exports.getCollaborateursByEnt = (res, where = "", port = 200, messageSend = "") => {
-    bdd.query("SELECT * FROM utilisateur" + where, (error, results, fields) => {
+    bdd.query("SELECT utilisateur.*,entreprise.nom FROM `entreprise` LEFT JOIN `utilisateur` ON `utilisateur`.`id_entreprise` = `entreprise`.`id`" + where, (error, results, fields) => {
         // Si erreur dans la requête
         if (error) {
             console.log(error)

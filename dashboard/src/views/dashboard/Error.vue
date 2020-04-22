@@ -7,7 +7,7 @@
 
         <div class="display-4 mb-5">Page not found :(</div>
 
-        <v-btn color="success" to="/">Get me out of here!</v-btn>
+        <v-btn color="success" to="/Accueil">Get me out of here!</v-btn>
       </v-col>
     </v-row>
   </v-container>

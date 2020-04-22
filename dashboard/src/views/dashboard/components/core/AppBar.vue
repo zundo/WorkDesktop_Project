@@ -19,7 +19,7 @@
 
     <div class="mx-3" />
 
-    <v-btn class="ml-2" min-width="0" text to="/">
+    <v-btn class="ml-2" min-width="0" text to="/accueil">
       <v-icon>mdi-view-dashboard</v-icon>
     </v-btn>
 
@@ -94,12 +94,7 @@ export default {
       {
         icon: "mdi-account-lock",
         title: "Se connecter",
-        to: '/login'
-      },
-      {
-        icon: "mdi-account-plus",
-        title: "Inscription",
-        to: '/register'
+        to: '/'
       },
       {
         icon: "mdi-account",
@@ -119,7 +114,7 @@ export default {
       {
         icon: "mdi-logout",
         title: "Déconnexion",
-        to: '/login'
+        to: '/'
       }
     ]
   }),

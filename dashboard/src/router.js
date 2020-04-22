@@ -14,7 +14,7 @@ export default new Router({
                 // Dashboard
                 {
                     name: 'Accueil',
-                    path: '',
+                    path: 'accueil',
                     component: () =>
                         import ('@/views/dashboard/pages/Dashboard'),
                 },
@@ -121,7 +121,7 @@ export default new Router({
                 },
                 {
                     name: 'Connexion',
-                    path: 'login',
+                    path: '',
                     component: () =>
                         import ('@/views/dashboard/pages/Login')
                 },

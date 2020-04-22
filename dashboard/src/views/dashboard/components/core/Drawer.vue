@@ -103,7 +103,7 @@
         {
           icon: 'mdi-home-outline',
           title: 'Accueil',
-          to: '/',
+          to: '/accueil',
         },
         {
           title: 'Calendrier',
