@@ -192,7 +192,19 @@ export default {
       }
     ]
   }),
+  computed: {
+    id_user() {
+        return this.$store.state.id_user
+    },
+  },
   mounted() {
+    //id_user de l'utilisateur connecter
+    if(this.id_user != undefined && this.id_user !== 0){
+      console.log('idUser: '+this.id_user)
+    }else return this.$router.push({ name: "Connexion" });
+    /*--------------------------------------------------- */
+    
+    //userId du client choisi
     if (this.$route.params.userId != null && this.$route.params.userId != 0) {
       console.log("UserID: " + this.$route.params.userId);
       var userId = this.$route.params.userId;

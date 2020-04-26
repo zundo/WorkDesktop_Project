@@ -5,8 +5,7 @@
         <v-col cols="12" md="10" class="mx-auto">
           <v-card>
             <v-toolbar flat>
-              <v-toolbar-title>August 2019</v-toolbar-title>
-
+              <v-toolbar-title>{{ dateDuJour }}</v-toolbar-title>
               <v-spacer />
 
               <calendar-btn v-for="(t, i) in types" :key="i" @click="type = t">{{ t }}</calendar-btn>
@@ -29,7 +28,7 @@
                 :events="events"
                 :type="type"
                 event-color="blue"
-                now="2019-01-08"
+                :now="dateDuJour"
               />
             </v-sheet>
           </v-card>
@@ -76,9 +75,20 @@ export default {
       }
     }
   },
+  mounted() {
+    if(this.id_user != undefined && this.id_user !== 0){
+      console.log('idUser: '+this.id_user)
+    }else return this.$router.push({ name: "Connexion" });
 
+  },
+  computed: {
+    id_user() {
+        return this.$store.state.id_user
+    },
+  },
   data: () => ({
-    calendar: "2019-01-08",
+    calendar: new Date().toISOString().substr(0, 10),
+    dateDuJour: new Date().toISOString().substr(0, 10),
     disabled: true,
     events: [
       {

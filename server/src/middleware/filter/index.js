@@ -106,7 +106,7 @@ exports.verifId = (data, res) => {
 }
 
 // Function qui récupère tous les collabrateurs de l'entreprise dans la table utilisateurs
-exports.getCollaborateursByEnt = (res, where = "", port = 200, messageSend = "") => {
+exports.getUsersByEnt = (res, where = "", port = 200, messageSend = "") => {
     bdd.query("SELECT utilisateur.*,entreprise.nom FROM `entreprise` LEFT JOIN `utilisateur` ON `utilisateur`.`id_entreprise` = `entreprise`.`id`" + where, (error, results, fields) => {
         // Si erreur dans la requête
         if (error) {
@@ -120,7 +120,7 @@ exports.getCollaborateursByEnt = (res, where = "", port = 200, messageSend = "")
         else if (results.length == 0)
             sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
         else {
-            if (results.length > 1) {
+            if (results.length > 0) {
                 results.map(item => {
                     // Array.map => Foreach()
                     //delete item.id; // Suppression d'un elements
@@ -134,12 +134,12 @@ exports.getCollaborateursByEnt = (res, where = "", port = 200, messageSend = "")
                 })
                 sendReturn(res, port, {
                     error: false,
-                    collaborateurs: results
+                    users: results
                 })
             } else {
                 sendReturn(res, 401, {
                     error: true,
-                    message: "La requête d'inscription en base de donnée n'a pas fonctionné"
+                    message: "La requête en base de donnée n'a pas fonctionné"
                 })
             }
         }

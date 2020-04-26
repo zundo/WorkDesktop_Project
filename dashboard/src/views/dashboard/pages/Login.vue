@@ -156,9 +156,10 @@ export default {
         })
         .finally(() => {
           if (id_user != undefined && id_user.length != 0) {
+            this.$store.commit('SET_ID_USER', id_user)
             return this.$router.push({
               name: "Accueil",
-              params: { userId: id_user }
+              //params: { userId: id_user }
             });
           } else return;
         });

@@ -32,7 +32,7 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">Website Views</h4>
+          <h4 class="card-title font-weight-light mt-2 ml-2">Website Views:</h4>
 
           <p class="d-inline-flex font-weight-light ml-2 mt-1">Last Campaign Performance</p>
 
@@ -462,12 +462,15 @@ export default {
   },
   mounted() {
     //Appliquer sur toutes les pages du drawer
-    console.log('idUser: '+this.$route.params.userId)
-    
-    /*if(this.$route.params.userId != undefined && this.$route.params.userId !== 0){
-      console.log('idUser: '+this.$route.params.userId)
-    }else return this.$router.push({ name: "Connexion" });*/
-
+    //console.log('idUser: '+this.id_user)
+    if(this.id_user != undefined && this.id_user !== 0){
+      console.log('idUser: '+this.id_user)
+    }else return this.$router.push({ name: "Connexion" });
+  },
+  computed: {
+    id_user() {
+        return this.$store.state.id_user
+    },
   },
   methods: {
     complete(index) {

@@ -71,7 +71,20 @@
 
 <script>
 export default {
-  name: "Parametres email"
+  name: "Parametres email",
+  data:()=>({
+
+  }),
+  mounted() {
+    if(this.id_user != undefined && this.id_user !== 0){
+      console.log('idUser: '+this.id_user)
+    }else return this.$router.push({ name: "Connexion" });
+  },
+  computed: {
+    id_user() {
+        return this.$store.state.id_user
+    },
+  },
 };
 </script>
 

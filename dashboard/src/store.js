@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-//import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -9,6 +9,7 @@ export default new Vuex.Store({
         barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
         barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
         drawer: null,
+        id_user: null
     },
     //plugins: [createPersistedState()], //plugin permettant d'utiliser le localstorage
     mutations: {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
         },
         SET_SCRIM(state, payload) {
             state.barColor = payload
+        },
+        SET_ID_USER(state, payload) {
+            state.id_user = payload
         }
     },
     actions: {

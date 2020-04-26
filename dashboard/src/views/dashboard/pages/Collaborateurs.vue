@@ -347,7 +347,16 @@ export default {
     items: [],
     search: undefined
   }),
+  computed: {
+    id_user() {
+        return this.$store.state.id_user
+    },
+  },
   mounted() {
+      if(this.id_user != undefined && this.id_user !== 0){
+        console.log('idUser: '+this.id_user)
+      }else return this.$router.push({ name: "Connexion" });
+      /*--------------------------------------------------- */
     const config = {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
@@ -355,17 +364,16 @@ export default {
     };
     //https://jsonplaceholder.typicode.com/users
 
-    var id_entreprise = 1;
     axios
-      .get("http://localhost:3000/collaborateurs/"+id_entreprise)
+      .get("http://localhost:3000/users/"+this.id_user)//tous les users de l entreprise
       .then(response => {
         if (this.verifyResponseOk(response.data)) {
-          var collaborateurs = response.data.collaborateurs;
-          console.log(collaborateurs);
-          //console.log(JSON.stringify(users))
-          collaborateurs.forEach(collaborateur => {
-            this.items.push(collaborateur);
+          console.log(response.data);
+          var users = response.data.users;
+          users.forEach(user => {
+            this.items.push(user);
           });
+          //console.log("data: "+JSON.stringify(this.items))
         }
 
         setTimeout(() => {
@@ -392,7 +400,7 @@ export default {
       if (this.collaborateur.isAdmin == true) this.collaborateur.isAdmin = 1;
       else this.collaborateur.isAdmin = 0;
 
-      this.collaborateur.id_entreprise = 1;
+      this.collaborateur.id_entreprise = 1;//recuperer l'id_entreprise en fonction de l utilisateur TODO
       let payload = this.collaborateur;
       //return console.log(JSON.stringify(payload));
       

@@ -139,7 +139,7 @@ export default new Router({
                 },
                 {
                     name: 'Informations-Collaborateur', //infos Collaborateurs
-                    path: 'clients/collaborateur',
+                    path: 'collaborateurs/collaborateur',
                     component: () =>
                         import ('@/views/dashboard/pages/InfosCollaborateur')
                 },

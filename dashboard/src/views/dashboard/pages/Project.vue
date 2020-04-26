@@ -459,6 +459,16 @@
         }
       }
     },
+    mounted() {
+      if(this.id_user != undefined && this.id_user !== 0){
+        console.log('idUser: '+this.id_user)
+      }else return this.$router.push({ name: "Connexion" });
+    },
+    computed: {
+      id_user() {
+          return this.$store.state.id_user
+      },
+    },
     methods: {
       complete(index) {
         this.list[index] = !this.list[index]

@@ -173,13 +173,23 @@ export default {
     firstLoad: true,
     collaborateur:{}
   }),
+  computed: {
+    id_user() {
+        return this.$store.state.id_user
+    },
+  },
   mounted() {
+    //id_user de l'utilisateur connecter
+    if(this.id_user != undefined && this.id_user !== 0){
+      console.log('idUser: '+this.id_user)
+    }else return this.$router.push({ name: "Connexion" });
+    /*--------------------------------------------------- */
+
+    //infos du collaborateur choisi
     if (this.$route.params.infos_collaborateur != null && this.$route.params.infos_collaborateur != 0) {
       //console.log("UserID: " + this.$route.params.infos_collaborateur.id);
       this.collaborateur = this.$route.params.infos_collaborateur;
       var userId = this.collaborateur.id;
-      /*recuperation du nom de l entreprise */
-      //console.log(JSON.stringify(this.collaborateur))
       setTimeout(() => {
         this.loading = false;
         this.firstLoad = false;
@@ -187,24 +197,6 @@ export default {
       console.log("OK");
     } else return this.$router.push({ name: "Collaborateurs" });
 
-    
-    /*axios
-      .get("https://jsonplaceholder.typicode.com/users/" + userId)
-      .then(response => {
-        if (this.verifyResponseOk(response.data)) {
-          //this.person.push(response.data);
-          //this.person.splice(0, 1, response.data);
-
-        }
-      })
-      .catch(error => this.errorMessage("Network ERROR: " + error))
-      .finally(() => {
-        setTimeout(() => {
-          this.loading = false;
-          this.firstLoad = false;
-        }, 1000);
-        console.log("OK");
-      });*/
   },
   methods: {
     /*------------------------------------------------------ */
