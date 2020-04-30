@@ -9,7 +9,7 @@ export default new Vuex.Store({
         barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
         barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
         drawer: null,
-        id_user: null
+        id_user: 1 //mettre a null plus tard //id_user: null
     },
     //plugins: [createPersistedState()], //plugin permettant d'utiliser le localstorage
     mutations: {

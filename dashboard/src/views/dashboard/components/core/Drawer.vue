@@ -137,7 +137,7 @@
           children: [
             {
               title: 'Paramètres généraux',
-              icon: 'mdi-cogs',
+              icon: 'mdi-account-cog',
               to: 'parametres-generaux',
             },
             {
@@ -147,16 +147,11 @@
             },
             {
               title: 'Paramètres email',
-              icon: 'mdi-account-cog',
+              icon: 'mdi-cogs',
               to: 'parametres-email',
             }
           ]
         },       
-        {
-          icon: 'mdi-account',
-          title: 'user',
-          to: '/user',
-        },
         {
           title: 'icons',
           icon: 'mdi-chart-bubble',

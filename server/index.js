@@ -47,7 +47,8 @@ app.get('/', (req, res) => {
 app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
 app.post('/login', loginCtrl.login); //Login
 
-app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation des users de l'entreprise
+app.get('/user/:id', userCtrl.getUtilisateur); //recuperation l'utilisateur unique (user connecte)
+app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation les utilisateurs de l'entreprise
 
 app.post('/addcollaborateur', collaborateurCtrl.addCollaborateur); //Inscription collaborateurs
 /*------------------------------------------------------------- */

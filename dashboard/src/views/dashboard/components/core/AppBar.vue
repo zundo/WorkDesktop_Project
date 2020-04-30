@@ -97,11 +97,6 @@ export default {
         to: '/'
       },
       {
-        icon: "mdi-account",
-        title: "Edit Profile",
-        to: '/user'
-      },
-      {
         icon: "mdi-handshake",
         title: "Support",
         to: '/support'

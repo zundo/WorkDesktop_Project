@@ -152,7 +152,7 @@
                         </v-col>
                       </v-row>
                       <v-row class="mt-n4">
-                        <v-col cols="12" md="4">
+                        <v-col cols="12" md="3">
                           <v-text-field
                             color="info"
                             label="Rue*"
@@ -170,7 +170,7 @@
                             clearable
                           />
                         </v-col>
-                        <v-col cols="12" md="2">
+                        <v-col cols="12" md="3">
                           <v-text-field
                             color="info"
                             label="Code Postal*"
@@ -353,13 +353,13 @@ export default {
   components: {},
 
   data: () => ({
+    strep: 1,
     isinfo: false,
     isSnackbarOpened: false,
     snackbarMessage: "",
     /*-------------------------- */
     isDialogDateNaissanceOpen: false,
     showPassword: false,
-    strep: 1,
     items_Sexe: ["Homme", "Femme"],
     user: {
       email: "",

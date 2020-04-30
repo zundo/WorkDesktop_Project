@@ -83,10 +83,10 @@ exports.emailExist = async(data) => {
 
 // Function qui change le format de la date pour l'insertion en base de donnée
 exports.changeDateForSQL = (data) => {
-        data = data.substr(6, 4) + "-" + data.substr(3, 2) + "-" + data.substr(0, 2) + " 12:00:00";
-        return data
-    }
-    // Function qui change le format de la date pour le renvoi de la requête
+    data = data.substr(6, 4) + "-" + data.substr(3, 2) + "-" + data.substr(0, 2) + " 12:00:00";
+    return data
+};
+// Function qui change le format de la date pour le renvoi de la requête
 exports.changeDateForSend = (data) => {
     data = data.substr(9, 2) + "-" + data.substr(6, 2) + "-" + data.substr(1, 4);
     return data
@@ -105,8 +105,48 @@ exports.verifId = (data, res) => {
         this.sendReturn(res, 400, { error: true, message: "L'id envoyé n'est pas conforme" })
 }
 
-// Function qui récupère tous les collabrateurs de l'entreprise dans la table utilisateurs
-exports.getUsersByEnt = (res, where = "", port = 200, messageSend = "") => {
+//Function qui recupere l'utilisateur courant
+exports.getUser = (res, where = "", port = 200, messageSend = "") => {
+    bdd.query("SELECT * FROM utilisateur" + where, (error, results, fields) => {
+        // Si erreur dans la requête
+        if (error) {
+            console.log(error)
+            sendReturn(res, port, { error: false, message: "Erreur dans la requête" });
+        }
+        // Si le resultat n'existe pas
+        else if (results === undefined)
+            sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
+        // Si la liste des utilises est vide
+        else if (results.length == 0)
+            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+        else {
+            if (results.length > 0) {
+                results.map(item => {
+                    //delete item.id; // Suppression d'un elements
+                    item.date_naissance = changeDateForSend(JSON.stringify(item.date_naissance));
+                    delete item.password;
+                    delete item.createdAt;
+                    delete item.updateAt;
+                    delete item.lastLogin;
+                    delete item.attempt;
+                    return item; // Retour le nouvel element item => results[i] = item
+                })
+                sendReturn(res, port, {
+                    error: false,
+                    user: results[0]
+                })
+            } else {
+                sendReturn(res, 401, {
+                    error: true,
+                    message: "La requête en base de donnée n'a pas fonctionné"
+                })
+            }
+        }
+    });
+}
+
+// Function qui récupère tous les users de l'entreprise dans la table utilisateurs
+exports.getUsersByEntreprise = (res, where = "", port = 200, messageSend = "") => {
     bdd.query("SELECT utilisateur.*,entreprise.nom FROM `entreprise` LEFT JOIN `utilisateur` ON `utilisateur`.`id_entreprise` = `entreprise`.`id`" + where, (error, results, fields) => {
         // Si erreur dans la requête
         if (error) {

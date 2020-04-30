@@ -18,13 +18,6 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/Dashboard'),
                 },
-                // Pages
-                {
-                    name: 'User Profile',
-                    path: 'user',
-                    component: () =>
-                        import ('@/views/dashboard/pages/UserProfile'),
-                },
                 // Parametres généraux
                 {
                     name: 'Paramètres-généraux',
