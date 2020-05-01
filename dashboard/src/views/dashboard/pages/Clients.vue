@@ -119,7 +119,7 @@
               Informations {{ item.name }}
             </v-btn>
             <v-btn small color="red" @click="dialogDeleteClient(item)" class="ml-3">
-              <v-icon left>mdi-delete-circle-outline</v-icon>
+              <v-icon left>mdi-account-remove-outline</v-icon>
               Supprimer {{ item.name }}
             </v-btn>
           </td>

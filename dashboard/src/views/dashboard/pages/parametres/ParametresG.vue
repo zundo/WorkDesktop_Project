@@ -18,7 +18,7 @@
       </v-date-picker>
     </v-dialog>
 
-    <v-dialog v-model="isChangePassword" width="400px" overlay-opacity="0.8" persistent>
+    <v-dialog v-model="isChangePasswordDialog" width="400px" overlay-opacity="0.8" persistent>
       <v-card class="px-6">
         <v-card-title class="secondary--text">
           Modifier le mot de passe
@@ -26,6 +26,16 @@
         </v-card-title>
         <v-divider class="my-2" />
         <v-row>
+          <v-text-field
+            color="secondary"
+            label="Mot de passe actuel"
+            v-model="old_passwordUser"
+            prepend-inner-icon="mdi-lock-outline"
+            clearable
+            :type="showPassword ? 'text' : 'password'"
+            @click:append="showPassword = !showPassword"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          />
           <v-text-field
             color="secondary"
             label="Nouveau mot de passe"
@@ -38,7 +48,12 @@
           />
           <v-col cols="12" class="text-right">
             <v-btn class="mr-1" outlined color="error" text @click="deletePassword()">Annuler</v-btn>
-            <v-btn outlined color="success" text @click="savePassword(passwordUser)">Sauvegarder</v-btn>
+            <v-btn
+              outlined
+              color="success"
+              text
+              @click="savePassword(old_passwordUser,passwordUser)"
+            >Sauvegarder</v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -47,8 +62,12 @@
       <v-col cols="12" md="8">
         <base-material-card color="secondary">
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">Profil Utilisateur</div>
-            <div class="subtitle-1 font-weight-light">Complete ton profil</div>
+            <div class="display-2 font-weight-light">
+              <v-icon left>mdi-cog</v-icon>Profil Utilisateur
+            </div>
+            <div class="subtitle-1 font-weight-light">
+              <v-icon left>mdi-cogs</v-icon>Complete ton profil
+            </div>
           </template>
           <v-form>
             <v-container class="py-0">
@@ -94,8 +113,7 @@
                           label="Email"
                           v-model="user.email"
                           prepend-inner-icon="mdi-email-outline"
-                          :clearable="isUpdateUser"
-                          :disabled="!isUpdateUser"
+                          disabled
                         />
                       </v-col>
                       <v-col cols="12" md="3">
@@ -197,29 +215,46 @@
                   </div>
                 </v-col>
                 <v-row>
-                  <v-col cols="12" md="8">
+                  <v-col md="3">
                     <v-btn
-                      @click="isChangePassword = true"
+                      @click="isChangePasswordDialog = true"
                       class="mx-2"
                       color="secondary"
                       text
                       outlined
                       :disabled="!isUpdateUser"
-                    >Changer le password</v-btn>
+                      small
+                    >
+                      <v-icon left>mdi-cog-outline</v-icon>Changer le password
+                    </v-btn>
                   </v-col>
-                  <v-col cols="12" md="4">
+                  <v-col md="4" class="ml-auto" v-if="!isUpdateUser">
                     <v-btn
+                      small
                       color="secondary"
-                      v-if="!isUpdateUser"
-                      class="ml-4"
                       @click="isUpdateUser = true"
-                    >Modifier le Profil</v-btn>
+                      class="mx-2"
+                    >
+                      <v-icon left>mdi-account-edit-outline</v-icon>Modifier le Profil
+                    </v-btn>
+                  </v-col>
+                  <v-col md="5" class="ml-auto" v-else>
                     <v-btn
+                      small
+                      color="error"
+                      class="mx-2"
+                      @click="annulerUpdate"
+                    >
+                      <v-icon left>mdi-close-circle-outline</v-icon>Annuler
+                    </v-btn>
+                    <v-btn
+                      small
                       color="success"
-                      v-else
-                      class="ml-n3"
+                      class="mx-2"
                       @click="saveUpdate"
-                    >Sauvegarder le Profil</v-btn>
+                    >
+                      <v-icon left>mdi-content-save-outline</v-icon>Sauvegarder
+                    </v-btn>
                   </v-col>
                 </v-row>
               </v-card>
@@ -233,8 +268,8 @@
           avatar="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
         >
           <v-card-text class="text-center">
-            <h6 class="display-1 mb-1 grey--text">{{ user.poste }}</h6>
-            <h4 class="display-2 mb-3 black--text">{{ user.firstname }} {{ user.lastname }}</h4>
+            <h6 class="display-2 mb-1 grey--text">{{ user.poste }}</h6>
+            <h4 class="display-3 mb-3 black--text">{{ user.firstname }} {{ user.lastname }}</h4>
           </v-card-text>
         </base-material-card>
       </v-col>
@@ -250,6 +285,8 @@
 </template>
 
 <script>
+import qs from "qs";
+
 export default {
   name: "Parametres-generaux",
   data: () => ({
@@ -262,7 +299,6 @@ export default {
     items_Sexe: ["Homme", "Femme"],
     user: {
       email: "",
-      password: "",
       lastname: "",
       firstname: "",
       date_naissance: new Date().toISOString().substr(0, 10),
@@ -278,8 +314,9 @@ export default {
       isAdmin: ""
     },
     isUpdateUser: false,
-    isChangePassword: false,
-    passwordUser: ""
+    isChangePasswordDialog: false,
+    passwordUser: null,
+    old_passwordUser: null
   }),
   computed: {
     id_user() {
@@ -292,12 +329,6 @@ export default {
     } else return this.$router.push({ name: "Connexion" });
 
     /*--------------------------------------------------- */
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-      }
-    };
-
     axios
       .get("http://localhost:3000/user/" + this.id_user) //tous les users de l entreprise
       .then(response => {
@@ -312,26 +343,138 @@ export default {
             user.date_naissance.substr(0, 2);
           this.user = user;
         }
-
-        setTimeout(() => {
-          console.log("OK");
-        }, 1000);
+        console.log("OK");
       })
-      .catch(error => this.errorMessage("Network ERROR: " + error));
+      .catch(error => {
+        console.log(
+          "ERROR " +
+            JSON.stringify(error.response.status) +
+            " : " +
+            JSON.stringify(error.response.data.message)
+        );
+        this.errorMessage(
+          "ERROR " +
+            JSON.stringify(error.response.status) +
+            " : " +
+            JSON.stringify(error.response.data.message)
+        );
+        this.user.date_naissance = userDateNaissance;
+      });
   },
   methods: {
     saveUpdate: function() {
       this.isUpdateUser = false;
-      console.log("Save !");
+      /*--------------------------------------------------- */
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }
+      };
+      let userDateNaissance = this.user.date_naissance;
+      this.user.date_naissance =
+        this.user.date_naissance.substring(8, 10) +
+        "-" +
+        this.user.date_naissance.substring(5, 7) +
+        "-" +
+        this.user.date_naissance.substring(0, 4);
+
+      let payload = this.user;
+      axios
+        .put(
+          "http://localhost:3000/user/" + this.id_user,
+          qs.stringify(payload),
+          config
+        ) //update de l'user
+        .then(response => {
+          if (this.verifyResponseOk(response.data)) {
+            //console.log(response.data);
+            if (response.data.error == false)
+              this.successMessage("Sauvegarde des modifications effectuée !");
+            setTimeout(() => {
+              document.location.reload(true);
+            }, 2000);
+          }
+        })
+        .catch(error => {
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.user.date_naissance = userDateNaissance;
+        });
     },
-    savePassword: function(password) {
-      this.isChangePassword = false;
-      this.user.password = password;
-      console.log(this.user.password);
+    annulerUpdate: function() {
+      this.isUpdateUser = false;
+      document.location.reload(true);
+    },
+    savePassword: function(old_passwordUser, passwordUser) {
+      this.isChangePasswordDialog = false;
+
+      if (old_passwordUser == null || old_passwordUser == "")
+        return this.errorMessage("Mot de passe actuel vide !");
+      if (passwordUser == null || passwordUser == "")
+        return this.errorMessage("Nouveau mot de passe vide !");
+
+      /*--------------------------------------------------- */
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }
+      };
+
+      let payload = {
+        old_password: old_passwordUser,
+        new_password: passwordUser
+      };
+
+      axios
+        .put(
+          "http://localhost:3000/userEditPass/" + this.id_user,
+          qs.stringify(payload),
+          config
+        ) //edit password de l'user
+        .then(response => {
+          if (this.verifyResponseOk(response.data)) {
+            console.log(response.data);
+            if (response.data.error == false)
+              this.successMessage("Le mot de passe a bien été modifié !");
+
+            setTimeout(() => {
+              document.location.reload(true);
+            }, 2000);
+          }
+        })
+        .catch(error => {
+          this.passwordUser = "";
+          this.old_passwordUser = "";
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+        });
     },
     deletePassword: function() {
-      this.isChangePassword = false;
+      this.isChangePasswordDialog = false;
+      this.showPassword = false;
       this.passwordUser = "";
+      this.old_passwordUser = "";
+      this.confirm_passwordUser = "";
     },
     /*------------------------------------------------------ */
     verifyResponseOk: function(responseData) {

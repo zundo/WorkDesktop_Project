@@ -5,8 +5,7 @@ const express = require('express'),
 
 exports.register = async(req, res) => {
     const data = req.body
-    data.id_entreprise = 0;
-    //console.log(JSON.stringify(data))
+    data.id_entreprise = 0; // par default on le initialise a 0
 
     // Vérification de si les données sont bien présentes dans le body
     let error = false

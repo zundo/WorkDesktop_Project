@@ -32,10 +32,10 @@ exports.login = (req, res) => {
                                     index.sendReturn(res, 401, { error: true, message: "Requête impossible" })
                                 } else {
                                     //console.log("L'utilisateur a été authentifié succès")
-                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur a été authentifié succès", id_user: idUser })
-                                        //index.getUsers(res, ' WHERE id = ' + idUser, 200, "L'utilisateur a été authentifié succès");
+                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur a été authentifié succès", id_user: idUser });
+                                    //index.getUsers(res, ' WHERE id = ' + idUser, 200, "L'utilisateur a été authentifié succès");
                                 }
-                            })
+                            });
                         }
                     } else {
                         if (results[0].attempt >= 5 && ((new Date() - results[0].lastLogin) / 1000 / 60) <= 3) {

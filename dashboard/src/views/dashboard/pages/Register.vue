@@ -389,27 +389,6 @@ export default {
       email_ent: "",
       telephone_ent: ""
     },
-    sections: [
-      {
-        icon: "mdi-chart-timeline-variant",
-        iconColor: "info",
-        title: "Marketing",
-        text: `We've created the marketing campaign of the website. It was a very interesting collaboration.`
-      },
-      {
-        icon: "mdi-code-tags",
-        iconColor: "secondary",
-        title: "Fully Coded in HTML5",
-        text: `We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.`
-      },
-      {
-        icon: "mdi-account-multiple",
-        iconColor: "cyan",
-        title: "Built Audience",
-        text:
-          "There is also a Fully Customizable CMS Admin Dashboard for this product."
-      }
-    ],
     socials: [
       {
         href: "#",

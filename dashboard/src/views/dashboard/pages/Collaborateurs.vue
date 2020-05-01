@@ -256,7 +256,7 @@
               Informations {{ item.firstname }}
             </v-btn>
             <v-btn small color="red" @click="dialogDeleteCollaborateur(item)" class="ml-3">
-              <v-icon left>mdi-delete-circle-outline</v-icon>
+              <v-icon left>mdi-account-remove-outline</v-icon>
               Supprimer {{ item.firstname }}
             </v-btn>
           </td>

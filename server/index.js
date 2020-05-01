@@ -48,6 +48,8 @@ app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
 app.post('/login', loginCtrl.login); //Login
 
 app.get('/user/:id', userCtrl.getUtilisateur); //recuperation l'utilisateur unique (user connecte)
+app.put('/user/:id', userCtrl.updateUtilisateur) // Update de l'utilisateur
+app.put('/userEditPass/:id', userCtrl.editPasswordUtilisateur) // modifier le mdp de l'utilisateur
 app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation les utilisateurs de l'entreprise
 
 app.post('/addcollaborateur', collaborateurCtrl.addCollaborateur); //Inscription collaborateurs
