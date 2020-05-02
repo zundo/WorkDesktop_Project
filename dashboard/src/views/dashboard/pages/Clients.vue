@@ -81,7 +81,7 @@
       </template>
 
       <v-row class="mt-8 mr-1">
-        <v-btn color="indigo" @click="openDialogNewClient" class="ml-3">
+        <v-btn :disabled="!isAdmin" color="indigo" @click="openDialogNewClient" class="ml-3">
           <v-icon left>mdi-account-plus-outline</v-icon>Nouveau Client
         </v-btn>
         <v-text-field
@@ -118,7 +118,7 @@
               <v-icon left>mdi-card-account-details-outline</v-icon>
               Informations {{ item.name }}
             </v-btn>
-            <v-btn small color="red" @click="dialogDeleteClient(item)" class="ml-3">
+            <v-btn :disabled="!isAdmin" small color="red" @click="dialogDeleteClient(item)" class="ml-3">
               <v-icon left>mdi-account-remove-outline</v-icon>
               Supprimer {{ item.name }}
             </v-btn>
@@ -191,10 +191,14 @@ export default {
     id_user() {
         return this.$store.state.id_user
     },
+    isAdmin() {
+        return this.$store.state.isAdmin
+    },    
   },
   mounted() {
-    if(this.id_user != undefined && this.id_user !== 0){
+    if((this.id_user != undefined && this.id_user !== 0) || (this.isAdmin != undefined && this.isAdmin !== 0)){
       console.log('idUser: '+this.id_user)
+      console.log(this.isAdmin)
     }else return this.$router.push({ name: "Connexion" });
 
     axios

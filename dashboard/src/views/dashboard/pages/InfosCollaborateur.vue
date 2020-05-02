@@ -50,8 +50,13 @@
       <v-col cols="12" md="8">
         <base-material-card color="info">
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">{{ collaborateur.firstname }} {{ collaborateur.lastname }}</div>
-            <div class="subtitle-1 font-weight-light">{{ collaborateur.id }}</div>
+            <div
+              class="display-2 font-weight-light"
+            >{{ collaborateur.firstname }} {{ collaborateur.lastname }}</div>
+            <div class="subtitle-1 font-weight-light">
+              <span v-if="collaborateur.isAdmin">Administrateur</span>
+              <span v-else>Utilisateur</span>
+            </div>
           </template>
           <v-skeleton-loader v-if="firstLoad" :loading="loading" type="table"></v-skeleton-loader>
           <v-simple-table dense v-else>
@@ -171,22 +176,25 @@ export default {
     /*-------------------------- */
     loading: true,
     firstLoad: true,
-    collaborateur:{}
+    collaborateur: {}
   }),
   computed: {
     id_user() {
-        return this.$store.state.id_user
-    },
+      return this.$store.state.id_user;
+    }
   },
   mounted() {
     //id_user de l'utilisateur connecter
-    if(this.id_user != undefined && this.id_user !== 0){
-      console.log('idUser: '+this.id_user)
-    }else return this.$router.push({ name: "Connexion" });
+    if (this.id_user != undefined && this.id_user !== 0) {
+      console.log("idUser: " + this.id_user);
+    } else return this.$router.push({ name: "Connexion" });
     /*--------------------------------------------------- */
 
     //infos du collaborateur choisi
-    if (this.$route.params.infos_collaborateur != null && this.$route.params.infos_collaborateur != 0) {
+    if (
+      this.$route.params.infos_collaborateur != null &&
+      this.$route.params.infos_collaborateur != 0
+    ) {
       //console.log("UserID: " + this.$route.params.infos_collaborateur.id);
       this.collaborateur = this.$route.params.infos_collaborateur;
       var userId = this.collaborateur.id;
@@ -196,7 +204,6 @@ export default {
       }, 1000);
       console.log("OK");
     } else return this.$router.push({ name: "Collaborateurs" });
-
   },
   methods: {
     /*------------------------------------------------------ */

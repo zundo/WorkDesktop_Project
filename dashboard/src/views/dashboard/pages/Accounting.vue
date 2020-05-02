@@ -186,10 +186,14 @@ export default {
     id_user() {
         return this.$store.state.id_user
     },
+    isAdmin() {
+        return this.$store.state.isAdmin
+    },
   },
   mounted() {
-    if(this.id_user != undefined && this.id_user !== 0){
+    if((this.id_user != undefined && this.id_user !== 0) || (this.isAdmin != undefined && this.isAdmin !== 0)){
       console.log('idUser: '+this.id_user)
+      console.log(this.isAdmin)
     }else return this.$router.push({ name: "Connexion" });
 
     axios

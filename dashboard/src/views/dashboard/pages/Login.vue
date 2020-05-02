@@ -135,10 +135,12 @@ export default {
       //return console.log(JSON.stringify(payload));
 
       let id_user;
+      let isAdmin = null;
       axios
         .post("http://localhost:3000/login", qs.stringify(payload), config)
         .then(response => {
           id_user = response.data.id_user;
+          isAdmin = response.data.isAdmin;
         })
         .catch(error => {
           console.log(
@@ -156,12 +158,13 @@ export default {
         })
         .finally(() => {
           if (id_user != undefined && id_user.length != 0) {
-            this.$store.commit('SET_ID_USER', id_user)
+            this.$store.commit('SET_ID_USER', id_user);
+            this.$store.commit('SET_IS_ADMIN', isAdmin);
             return this.$router.push({
               name: "Accueil",
               //params: { userId: id_user }
             });
-          } else return;
+          } else return this.errorMessage("Erreur !");
         });
     },
     /*------------------------------------------------------ */

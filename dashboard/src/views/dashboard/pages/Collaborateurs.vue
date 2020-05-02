@@ -23,7 +23,7 @@
       max-width="1000px"
       overlay-opacity="0.8"
     >
-      <v-card class="px-6">
+      <v-card class="px-6" outlined>
         <v-card-title class="info--text">
           Nouveau Collaborateur
           <v-icon aria-label="Close" @click="isDialogNewCollaborateur = false">mdi-close</v-icon>
@@ -182,7 +182,7 @@
             class="ml-n3 my-n2"
             v-model="collaborateur.isAdmin"
             label="Super Admin ?"
-            :color="collaborateur.isAdmin ? 'success' : 'error'"
+            :color="collaborateur.isAdmin ? 'info' : 'error'"
           ></v-switch>
           </v-col>
           <small>*Veuillez remplir les champs</small>
@@ -200,8 +200,9 @@
       </v-card>
     </v-dialog>
     <v-dialog dark v-model="isDialogDeleteCollaborateur" width="500" overlay-opacity="0.8">
-      <v-card>
-        <v-card-title>Supprimer le collaborateur {{ collaborateurToDelete.firstname }} {{ collaborateurToDelete.lastname }}?</v-card-title>
+      <v-card outlined>
+        <v-card-title>Supprimer le collaborateur {{ collaborateurToDelete.firstname }} {{ collaborateurToDelete.lastname }} ?<v-divider class="my-2"/></v-card-title>
+        
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="isDialogDeleteCollaborateur=false" class="mx-2" fab dark>
@@ -219,7 +220,7 @@
       </template>
 
       <v-row class="mt-8 mr-1">
-        <v-btn color="info" @click="openDialogNewCollaborateur" class="ml-3">
+        <v-btn color="info" @click="openDialogNewCollaborateur" class="ml-3" :disabled="!isAdmin">
           <v-icon left>mdi-account-plus-outline</v-icon>Nouveau Collaborateur
         </v-btn>
         <v-text-field
@@ -242,20 +243,23 @@
         :headers="headers"
         :items="items"
         :search.sync="search"
-        :sort-by="['firstname']"
+        :sort-by="['lastname']"
         :sort-desc="[false]"
         show-expand
         single-expand
-        item-key="firstname"
+        item-key="lastname"
         :expanded.sync="expanded"
       >
         <template v-slot:expanded-item="{ headers, item }">
+          <th class="pr-1">
+            <v-chip  color="purple lighten-1" v-if="item.isAdmin">Admin</v-chip>
+          </th>
           <td :colspan="headers.length">
             <v-btn small color="blue" @click="PageInfosCollaborateur(item)">
               <v-icon left>mdi-card-account-details-outline</v-icon>
               Informations {{ item.firstname }}
             </v-btn>
-            <v-btn small color="red" @click="dialogDeleteCollaborateur(item)" class="ml-3">
+            <v-btn :disabled="!isAdmin || item.isAdmin == 1" small color="red" @click="dialogDeleteCollaborateur(item)" class="ml-3">
               <v-icon left>mdi-account-remove-outline</v-icon>
               Supprimer {{ item.firstname }}
             </v-btn>
@@ -319,12 +323,12 @@ export default {
     firstLoad: true,
     headers: [
       {
-        text: "Prénom",
-        value: "firstname"
-      },
-      {
         text: "Nom",
         value: "lastname"
+      },
+      {
+        text: "Prénom",
+        value: "firstname"
       },
       {
         text: "Email",
@@ -351,10 +355,14 @@ export default {
     id_user() {
         return this.$store.state.id_user
     },
+    isAdmin() {
+        return this.$store.state.isAdmin
+    },
   },
   mounted() {
-      if(this.id_user != undefined && this.id_user !== 0){
+      if((this.id_user != undefined && this.id_user !== 0) || (this.isAdmin != undefined && this.isAdmin !== 0)){
         console.log('idUser: '+this.id_user)
+        console.log(this.isAdmin)
       }else return this.$router.push({ name: "Connexion" });
       /*--------------------------------------------------- */
     const config = {
@@ -373,7 +381,7 @@ export default {
           users.forEach(user => {
             this.items.push(user);
           });
-          //console.log("data: "+JSON.stringify(this.items))
+          //console.log("data: "+JSON.stringify(this.items))         
         }
 
         setTimeout(() => {
@@ -405,7 +413,7 @@ export default {
       //return console.log(JSON.stringify(payload));
       
       axios
-        .post("http://localhost:3000/addcollaborateur", qs.stringify(payload), config)
+        .post("http://localhost:3000/addCollaborateur", qs.stringify(payload), config)
         .then(response => {
           this.successMessage("Le collabrateur a bien été ajouté !");
           console.log("Le collaborateur a bien été ajouté !");
@@ -424,11 +432,26 @@ export default {
     },
     deleteCollaborateur: function() {
       this.isDialogDeleteCollaborateur = false;
-      console.log(
-        "Le collaborateur " +
-          this.collaborateurToDelete.firstname +' '+this.collaborateurToDelete.lastname+
-          " a été supprimé"
-      );
+
+      axios
+        .delete("http://localhost:3000/deleteCollaborateur/"+this.collaborateurToDelete.id)
+        .then(response => {
+          if(response.data.error == false){
+            console.log(response.data.message)
+            this.successMessage(
+              "Le collaborateur " +
+                this.collaborateurToDelete.firstname +' '+this.collaborateurToDelete.lastname+
+                " a été supprimé avec succès"
+            );
+            setTimeout(() => {
+              document.location.reload(true);            
+            }, 1500);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+          this.errorMessage("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+        })
     },
     dialogDeleteCollaborateur: function(infos_collaborateur) {
       this.isDialogDeleteCollaborateur = true;

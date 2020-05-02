@@ -92,7 +92,7 @@ exports.register = async(req, res) => {
                             //index.sendReturn(res, 201, { error: false, message: "L' utilisateur a bien été crée avec succès", id_user: results.insertId })
                             console.log("L'entreprise a bien été ajouté")
                             data.id_entreprise = resultsEnt.insertId;
-                            console.log(data.id_entreprise)
+                            //console.log(data.id_entreprise)
 
                             if (data.id_entreprise == 0) index.sendReturn(res, 401, { error: true, message: "L'id entreprise n'existe pas" })
 
@@ -125,7 +125,7 @@ exports.register = async(req, res) => {
                                     })
                                 } else {
                                     console.log("L'utilisateur admin a bien été ajouté")
-                                    index.sendReturn(res, 201, { error: false, message: "L' utilisateur admin a bien été crée avec succès", id_user: results.insertId })
+                                    index.sendReturn(res, 201, { error: false, message: "L' utilisateur admin a bien été crée avec succès", id_user: results.insertId, isAdmin: true })
                                 }
                             });
                         }

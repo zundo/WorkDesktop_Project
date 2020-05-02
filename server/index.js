@@ -52,7 +52,8 @@ app.put('/user/:id', userCtrl.updateUtilisateur) // Update de l'utilisateur
 app.put('/userEditPass/:id', userCtrl.editPasswordUtilisateur) // modifier le mdp de l'utilisateur
 app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation les utilisateurs de l'entreprise
 
-app.post('/addcollaborateur', collaborateurCtrl.addCollaborateur); //Inscription collaborateurs
+app.post('/addCollaborateur', collaborateurCtrl.addCollaborateur); //Inscription collaborateurs
+app.delete('/deleteCollaborateur/:id', collaborateurCtrl.deleteCollaborateur);
 /*------------------------------------------------------------- */
 
 app.post('/register_old', registerCtrl_old.register)
