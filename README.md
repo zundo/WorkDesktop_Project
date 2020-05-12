@@ -1,7 +1,6 @@
-# Inglorius_Project
+# Inglorius_Project ==> Flutter project
 # Mounir_Khalil_El-Hadji
 
-A new Flutter project.
 
 ## Getting Started
 
