@@ -1,4 +1,4 @@
-# Inglorius_Projetc
+# Inglorius_Project
 # Mounir_Khalil_El-Hadji
 
 A new Flutter project.
