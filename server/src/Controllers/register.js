@@ -125,7 +125,7 @@ exports.register = async(req, res) => {
                                     })
                                 } else {
                                     console.log("L'utilisateur admin a bien été ajouté")
-                                    index.sendReturn(res, 201, { error: false, message: "L' utilisateur admin a bien été crée avec succès", id_user: results.insertId, isAdmin: true })
+                                    index.sendReturn(res, 201, { error: false, message: "L' utilisateur admin a bien été crée avec succès", id_user: results.insertId, isAdmin: true, id_entreprise: data.id_entreprise })
                                 }
                             });
                         }

@@ -1,5 +1,21 @@
 <template>
   <v-container id="login" tag="section">
+    <v-dialog v-model="isDialogForgotPassword" width="400px" overlay-opacity="0.9">
+      <v-card class="px-6" outlined>
+        <v-card-title class="info--text">
+          Mot de passe oublié ?
+          <v-icon aria-label="Close" @click="isDialogForgotPassword = false">mdi-close</v-icon>
+        </v-card-title>
+                <v-col cols="12">
+          <div class="text-center">
+            <v-divider />
+            <v-row>
+              TODO
+            </v-row>
+          </div>
+        </v-col>
+      </v-card>
+    </v-dialog>
     <v-row justify="center">
       <v-col cols="10">
         <v-slide-y-transition appear>
@@ -55,13 +71,14 @@
                   clearable
                 />
               </v-col>
+              <v-col cols="12" class="py-2">
+                <span @click="isDialogForgotPassword = true" style="cursor: pointer;" class="info--text display-1">Mot de passe oublié ?</span>
+              </v-col>
               <v-btn color="blue" @click="connexion(login,password)">
                 <v-icon left>mdi-lock-outline</v-icon>Connexion
               </v-btn>
             </v-card-text>
-            <a @click="inscription">
-              <span @click="inscription" color="blue" class="display-1">Inscription Administrateur</span>
-            </a>
+              <span @click="inscription" style="cursor: pointer;" class="blue--text display-1">Inscription Administrateur</span>
           </base-material-card>
         </v-slide-y-transition>
       </v-col>
@@ -90,6 +107,7 @@ export default {
     snackbarMessage: "",
     /*-------------------------- */
     showPassword: false,
+    isDialogForgotPassword:false,
     socials: [
       {
         href: "#",
@@ -134,13 +152,16 @@ export default {
       };
       //return console.log(JSON.stringify(payload));
 
-      let id_user;
+      let id_user = null;
       let isAdmin = null;
+      let id_entreprise = null;
+      
       axios
         .post("http://localhost:3000/login", qs.stringify(payload), config)
         .then(response => {
           id_user = response.data.id_user;
           isAdmin = response.data.isAdmin;
+          id_entreprise = response.data.id_entreprise;
         })
         .catch(error => {
           console.log(
@@ -157,14 +178,16 @@ export default {
           );
         })
         .finally(() => {
-          if (id_user != undefined && id_user.length != 0) {
+          if ((id_user != undefined && id_user.length != 0) || (id_entreprise != undefined && id_entreprise.length != 0) || (isAdmin != undefined && isAdmin.length != 0)){
+            //console.log(id_user)
+            this.$store.commit('SET_ID_ENTREPRISE', id_entreprise);
             this.$store.commit('SET_ID_USER', id_user);
             this.$store.commit('SET_IS_ADMIN', isAdmin);
             return this.$router.push({
               name: "Accueil",
               //params: { userId: id_user }
             });
-          } else return this.errorMessage("Erreur !");
+          };
         });
     },
     /*------------------------------------------------------ */

@@ -167,7 +167,7 @@
 
 <script>
 export default {
-  name: "InfosClient",
+  name: "InfosCollaborateur",
 
   data: () => ({
     isSuccess: false,
@@ -195,14 +195,12 @@ export default {
       this.$route.params.infos_collaborateur != null &&
       this.$route.params.infos_collaborateur != 0
     ) {
-      //console.log("UserID: " + this.$route.params.infos_collaborateur.id);
       this.collaborateur = this.$route.params.infos_collaborateur;
-      var userId = this.collaborateur.id;
+      //var userId = this.collaborateur.id;
       setTimeout(() => {
         this.loading = false;
         this.firstLoad = false;
       }, 1000);
-      console.log("OK");
     } else return this.$router.push({ name: "Collaborateurs" });
   },
   methods: {

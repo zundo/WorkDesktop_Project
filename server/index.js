@@ -12,6 +12,7 @@ const express = require('express'),
     loginCtrl = require('./src/Controllers/login'),
     collaborateurCtrl = require("./src/Controllers/collaborateur"),
     userCtrl = require("./src/Controllers/user"),
+    clientCtrl = require("./src/Controllers/client"),
     /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
@@ -52,8 +53,10 @@ app.put('/user/:id', userCtrl.updateUtilisateur) // Update de l'utilisateur
 app.put('/userEditPass/:id', userCtrl.editPasswordUtilisateur) // modifier le mdp de l'utilisateur
 app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation les utilisateurs de l'entreprise
 
+app.get('/clients/:id', clientCtrl.getClientsByEnt); //recuperation des clients de l'entreprise
+
 app.post('/addCollaborateur', collaborateurCtrl.addCollaborateur); //Inscription collaborateurs
-app.delete('/deleteCollaborateur/:id', collaborateurCtrl.deleteCollaborateur);
+app.delete('/deleteCollaborateur/:id', collaborateurCtrl.deleteCollaborateur); //Supprimer le collaborateur
 /*------------------------------------------------------------- */
 
 app.post('/register_old', registerCtrl_old.register)

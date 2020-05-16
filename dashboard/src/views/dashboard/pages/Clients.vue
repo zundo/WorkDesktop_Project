@@ -10,41 +10,6 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col cols="12" md="6">
-                <v-text-field outlined label="Nom" class="mt-n3" color="blue" />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-text-field outlined label="Prénom" class="mt-n3" color="blue" />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-text-field outlined label="Adresse E-mail" class="mt-n3" color="blue" />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-text-field outlined label="Numero de téléphone" class="mt-n3" color="blue" />
-              </v-col>
-
-              <v-col cols="12" md="6">
-                <v-text-field outlined label="Société" class="mt-n3" color="blue" />
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-text-field outlined label="Poste occupé" class="mt-n3" color="blue" />
-              </v-col>
-
-              <v-col cols="12">
-                <v-text-field outlined label="Objet" class="mt-n3" color="blue" />
-              </v-col>
-
-              <v-col cols="12">
-                <v-textarea
-                  outlined
-                  color="blue"
-                  class="mt-n3"
-                  label="Comment pouvons-nous vous aider ?*"
-                />
-              </v-col>
 
               <v-col cols="12" class="text-right">
                 <v-btn
@@ -151,6 +116,25 @@ export default {
     isSnackbarOpened: false,
     snackbarMessage: "",
     /*-------------------------- */
+    isDialogDateNaissanceOpen: false,
+    items_Sexe: ["Homme", "Femme"],
+    client: {
+      email: "",
+      lastname: "",
+      firstname: "",
+      date_naissance: new Date().toISOString().substr(0, 10),
+      sexe: "",
+      rue: "",
+      ville: "",
+      codePostal: "",
+      pays: "",
+      site_web: "",
+      personne_contacter: "",
+      phone: "",
+      poste: "",
+      id_entreprise_client: "",
+      id_entreprise_utilisateur: ""
+    },
     isDialogNewClient: false,
     isDialogDeleteClient: false,
     clientToDelete: [],
@@ -159,12 +143,16 @@ export default {
     firstLoad: true,
     headers: [
       {
-        text: "Name",
-        value: "name"
+        text: "Entreprise",
+        value: "nom"//nom entreprise
       },
       {
-        text: "Username",
-        value: "username"
+        text: "Nom",
+        value: "lastname"
+      },
+      {
+        text: "Prénom",
+        value: "firstname"
       },
       {
         text: "Email",
@@ -175,13 +163,9 @@ export default {
         value: "phone"
       },
       {
-        text: "Website",
-        value: "website"
-      },
-      {
-        sortable: false,
-        text: "Actions",
-        value: "actions"
+        //sortable: false,
+        text: "Poste",
+        value: "poste"
       }
     ],
     items: [],
@@ -193,33 +177,33 @@ export default {
     },
     isAdmin() {
         return this.$store.state.isAdmin
-    },    
+    },
+    id_entreprise() {
+        return this.$store.state.id_entreprise
+    },
   },
   mounted() {
-    if((this.id_user != undefined && this.id_user !== 0) || (this.isAdmin != undefined && this.isAdmin !== 0)){
-      console.log('idUser: '+this.id_user)
-      console.log(this.isAdmin)
-    }else return this.$router.push({ name: "Connexion" });
-
+    this.verifUserConnected();
+    /*----------------------*/    
     axios
-      .get("https://jsonplaceholder.typicode.com/users")
+      .get("http://localhost:3000/clients/"+this.id_entreprise)
       .then(response => {
         if (this.verifyResponseOk(response.data)) {
-          var users = response.data;
-          console.log(users);
-          //console.log(JSON.stringify(users))
-          users.forEach(user => {
-            this.items.push(user);
+          //console.log(response.data)
+          var clients = response.data.clients
+          clients.forEach(client => {
+            this.items.push(client);
           });
+
+          setTimeout(() => {
+            this.loading = false;
+            this.firstLoad = false;
+          }, 1000);
         }
       })
-      .catch(error => this.errorMessage("Network ERROR: " + error))
-      .finally(() => {
-        setTimeout(() => {
-          this.loading = false;
-          this.firstLoad = false;
-        }, 1000);
-        console.log("OK");
+      .catch(error => {
+        console.log("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+        this.errorMessage("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
       });
   },
   methods: {
@@ -242,11 +226,16 @@ export default {
     PageInfosClient: function(infos_client) {
       this.$router.push({
         name: "Informations-Client",
-        params: { userId: infos_client.id }
+        params: { infos_client: infos_client }
       });
     },
 
     /*------------------------------------------------------ */
+    verifUserConnected: function(){
+      if((this.id_user != undefined && this.id_user !== 0) || (this.isAdmin != undefined && this.isAdmin !== 0) || (this.id_entreprise != undefined && this.id_entreprise !== 0)){
+        //console.log(this.id_user + " " + this.isAdmin)
+      }else return this.$router.push({ name: "Connexion" });
+    },
     verifyResponseOk: function(responseData) {
       var tmpStr = JSON.stringify(responseData);
       if (tmpStr.startsWith('"Error:')) {

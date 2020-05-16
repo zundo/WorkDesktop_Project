@@ -28,12 +28,13 @@ exports.login = (req, res) => {
                             }
                             idUser = results[0].id;
                             isAdmin = results[0].isAdmin;
+                            id_entreprise = results[0].id_entreprise;
                             bdd.query("UPDATE `utilisateur` SET ? WHERE `utilisateur`.`id` = '" + results[0].id + "'", toUpdate, (error, results) => {
                                 if (error != null) {
                                     index.sendReturn(res, 401, { error: true, message: "Requête impossible" })
                                 } else {
                                     //console.log("L'utilisateur a été authentifié succès")
-                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur a été authentifié succès", id_user: idUser, isAdmin: isAdmin });
+                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur a été authentifié succès", id_user: idUser, isAdmin: isAdmin, id_entreprise: id_entreprise });
                                     //index.getUsers(res, ' WHERE id = ' + idUser, 200, "L'utilisateur a été authentifié succès");
                                 }
                             });

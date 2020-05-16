@@ -421,13 +421,16 @@ export default {
       let payload = Object.assign(this.user, this.entreprise);
       //return console.log(JSON.stringify(payload));
 
-      let id_user;
+      let id_user = null;
       let isAdmin = null;
+      let id_entreprise = null;
+
       axios
         .post("http://localhost:3000/register", qs.stringify(payload), config)
         .then(response => {
           id_user = response.data.id_user;
           isAdmin = response.data.isAdmin;
+          id_entreprise = response.data.id_entreprise;
         })
         .catch(error => {
           console.log(
@@ -446,8 +449,9 @@ export default {
           this.user.date_naissance = userDateNaissance;
         })
         .finally(() => {
-          if (id_user != undefined && id_user.length != 0){
-            console.log(id_user)
+          if ((id_user != undefined && id_user.length != 0) || (id_entreprise != undefined && id_entreprise.length != 0) || (isAdmin != undefined && isAdmin.length != 0)){
+            //console.log(id_user)
+            this.$store.commit('SET_ID_ENTREPRISE', id_entreprise);
             this.$store.commit('SET_ID_USER', id_user);
             this.$store.commit('SET_IS_ADMIN', isAdmin);
             return this.$router.push({

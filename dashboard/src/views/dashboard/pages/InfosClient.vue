@@ -48,10 +48,11 @@
     </v-row>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <base-material-card color="indigo">
+        <base-material-card color="indigo" >
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">{{ person[0].name }}</div>
-            <div class="subtitle-1 font-weight-light">{{ person[0].username }}</div>
+            <div
+              class="display-2 font-weight-light"
+            ><v-icon large>mdi-account-box-outline</v-icon> {{ client.firstname }} {{ client.lastname }}</div>
           </template>
           <v-skeleton-loader v-if="firstLoad" :loading="loading" type="table"></v-skeleton-loader>
           <v-simple-table dense v-else>
@@ -59,39 +60,43 @@
               <tbody>
                 <tr>
                   <td>Nom de l'entreprise</td>
-                  <td>{{ person[0].company.name }}</td>
+                  <td>{{ client.nom }}</td>
                 </tr>
                 <tr>
                   <td>Personne à contacter</td>
-                  <td>06.06.06.06.06</td>
+                  <td>{{ client.personne_contacter }}</td>
                 </tr>
                 <tr>
                   <td>Email</td>
-                  <td>{{ person[0].email }}</td>
+                  <td>{{ client.email }}</td>
                 </tr>
                 <tr>
                   <td>Numéro de téléphone</td>
-                  <td>{{ person[0].phone }}</td>
+                  <td>{{ client.phone }}</td>
                 </tr>
                 <tr>
-                  <td>Fax</td>
-                  <td>01.02.03.04.05</td>
+                  <td>Sexe</td>
+                  <td>{{ client.sexe }}</td>
+                </tr>
+                <tr>
+                  <td>Date de naissance</td>
+                  <td>{{ client.date_naissance }}</td>
+                </tr>
+                <tr>
+                  <td>Poste</td>
+                  <td>{{ client.poste }}</td>
                 </tr>
                 <tr>
                   <td>Adresse</td>
-                  <td>{{ person[0].address.street }}, {{ person[0].address.suite }}</td>
-                </tr>
-                <tr>
-                  <td>Ville</td>
-                  <td>{{ person[0].address.city }}</td>
+                  <td>{{ client.rue }}, {{ client.ville }}</td>
                 </tr>
                 <tr>
                   <td>Code postal</td>
-                  <td>{{ person[0].address.zipcode }}</td>
+                  <td>{{ client.codePostal }}</td>
                 </tr>
                 <tr>
                   <td>Pays</td>
-                  <td>Unknown</td>
+                  <td>{{ client.pays }}</td>
                 </tr>
               </tbody>
             </template>
@@ -101,44 +106,28 @@
 
       <v-col cols="12" md="4">
         <base-material-card
-          class="v-card-profile"
-          avatar="https://upload.wikimedia.org/wikipedia/commons/a/a6/Anonymous_emblem.svg"
+          icon="mdi-domain" 
+          title="Infos Entreprise"
+          color="indigo"
         >
           <v-row>
-            <v-col cols="12">
-              <h4
-                class="display-3 font-weight-light mb-2 text-md-center indigo--text"
-              >{{ person[0].name }}</h4>
-            </v-col>
             <v-card-text>
               <v-col cols="12">
-                <h6 class="display-2 mb- grey--text">
-                  <v-icon large left color="info">mdi-web</v-icon>Site Web:
-                  <a href="person[0].website">{{ person[0].website }}</a>
+                <h6 class="display-2 mb-n3 grey--text">
+                  <v-icon large left color="info">mdi-office-building</v-icon>
+                  <span>Entreprise : {{ client.nom }}</span><!--nom de l entreprise-->
                 </h6>
               </v-col>
               <v-col cols="12">
                 <p class="font-weight-light mb-n3 grey--text">
-                  <v-icon large left color="blue">mdi-skype</v-icon>
-                  Skype: {{ person[0].username }}.skype
+                  <v-icon large left color="orange darken-2">mdi-email-outline</v-icon>
+                  Email entreprise : {{ client.email_entreprise }}
                 </p>
               </v-col>
               <v-col cols="12">
                 <p class="font-weight-light mb-n3 grey--text">
-                  <v-icon large left color="indigo">mdi-linkedin</v-icon>
-                  Linkedin: {{ person[0].username }}.linkedin
-                </p>
-              </v-col>
-              <v-col cols="12">
-                <p class="font-weight-light mb-n3 grey--text">
-                  <v-icon large left color="indigo">mdi-facebook</v-icon>
-                  Facebook: {{ person[0].username }}.facebook
-                </p>
-              </v-col>
-              <v-col cols="12">
-                <p class="font-weight-light grey--text">
-                  <v-icon large left color="blue">mdi-twitter</v-icon>
-                  Twitter: {{ person[0].username }}.twitter
+                  <v-icon large left color="indigo lighten-1">mdi-deskphone</v-icon>
+                  Numéro entreprise : {{ client.telephone }}
                 </p>
               </v-col>
             </v-card-text>
@@ -167,30 +156,7 @@ export default {
     /*-------------------------- */
     loading: true,
     firstLoad: true,
-    person: [
-      {
-        name: "",
-        username: "",
-        email: "",
-        address: {
-          street: "",
-          suite: "",
-          city: "",
-          zipcode: "",
-          geo: {
-            lat: "",
-            lng: ""
-          }
-        },
-        phone: "",
-        website: "",
-        company: {
-          name: "",
-          catchPhrase: "",
-          bs: ""
-        }
-      }
-    ]
+    client: {}
   }),
   computed: {
     id_user() {
@@ -204,28 +170,17 @@ export default {
     }else return this.$router.push({ name: "Connexion" });
     /*--------------------------------------------------- */
     
-    //userId du client choisi
-    if (this.$route.params.userId != null && this.$route.params.userId != 0) {
-      console.log("UserID: " + this.$route.params.userId);
-      var userId = this.$route.params.userId;
-    } else return this.$router.push({ name: "Clients" });
-
-    axios
-      .get("https://jsonplaceholder.typicode.com/users/" + userId)
-      .then(response => {
-        if (this.verifyResponseOk(response.data)) {
-          //this.person.push(response.data);
-          this.person.splice(0, 1, response.data);
-        }
-      })
-      .catch(error => this.errorMessage("Network ERROR: " + error))
-      .finally(() => {
-        setTimeout(() => {
-          this.loading = false;
-          this.firstLoad = false;
-        }, 1000);
-        console.log("OK");
-      });
+    //infos du client choisi
+    if (
+      this.$route.params.infos_client != null &&
+      this.$route.params.infos_client != 0
+    ) {
+      this.client = this.$route.params.infos_client;
+      setTimeout(() => {
+        this.loading = false;
+        this.firstLoad = false;
+      }, 1000);
+    }else return this.$router.push({ name: "Clients" });
   },
   methods: {
     /*------------------------------------------------------ */

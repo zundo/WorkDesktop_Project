@@ -18,10 +18,14 @@
     </v-text-field>-->
 
     <div class="mx-3" />
-
-    <v-btn class="ml-2" min-width="0" text to="/accueil">
-      <v-icon>mdi-view-dashboard</v-icon>
-    </v-btn>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <v-btn class="ml-2" min-width="0" v-on="on" text to="/accueil">
+          <v-icon>mdi-view-dashboard</v-icon>
+        </v-btn>
+      </template>
+        <span>Accueil</span>
+    </v-tooltip>
 
     <v-menu bottom left offset-y origin="top right" transition="scale-transition">
       <template v-slot:activator="{ attrs, on }">
@@ -39,6 +43,15 @@
         </app-bar-item>
       </v-list>
     </v-menu>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <v-btn @click="deconnexion" v-on="on" class="ml-2" min-width="0" text color="error">
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
+      </template>
+        <span>Déconnexion</span>
+    </v-tooltip>
+
   </v-app-bar>
 </template>
 
@@ -92,11 +105,6 @@ export default {
   data: () => ({
     settings: [
       {
-        icon: "mdi-account-lock",
-        title: "Se connecter",
-        to: '/'
-      },
-      {
         icon: "mdi-handshake",
         title: "Support",
         to: '/support'
@@ -105,11 +113,6 @@ export default {
         icon: "mdi-cogs",
         title: "Paramètres",
         to: '/parametres/parametres-generaux'
-      },
-      {
-        icon: "mdi-logout",
-        title: "Déconnexion",
-        to: '/'
       }
     ]
   }),
@@ -121,7 +124,10 @@ export default {
   methods: {
     ...mapMutations({
       setDrawer: "SET_DRAWER"
-    })
+    }),
+    deconnexion: function(){
+
+    },
   }
 };
 </script>

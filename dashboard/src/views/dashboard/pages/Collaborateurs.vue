@@ -358,22 +358,17 @@ export default {
     isAdmin() {
         return this.$store.state.isAdmin
     },
+    id_entreprise() {
+        return this.$store.state.id_entreprise
+    },
   },
   mounted() {
-      if((this.id_user != undefined && this.id_user !== 0) || (this.isAdmin != undefined && this.isAdmin !== 0)){
-        console.log('idUser: '+this.id_user)
-        console.log(this.isAdmin)
-      }else return this.$router.push({ name: "Connexion" });
-      /*--------------------------------------------------- */
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-      }
-    };
+    this.verifUserConnected();
+    /*----------------------*/
     //https://jsonplaceholder.typicode.com/users
 
     axios
-      .get("http://localhost:3000/users/"+this.id_user)//tous les users de l entreprise
+      .get("http://localhost:3000/users/"+this.id_entreprise)//tous les users de l entreprise
       .then(response => {
         if (this.verifyResponseOk(response.data)) {
           console.log(response.data);
@@ -381,14 +376,13 @@ export default {
           users.forEach(user => {
             this.items.push(user);
           });
-          //console.log("data: "+JSON.stringify(this.items))         
+          //console.log("data: "+JSON.stringify(this.items))
+          setTimeout(() => {
+            this.loading = false;
+            this.firstLoad = false;
+          }, 1000);
+          console.log("OK");       
         }
-
-        setTimeout(() => {
-          this.loading = false;
-          this.firstLoad = false;
-        }, 1000);
-        console.log("OK");
       })
       .catch(error => this.errorMessage("Network ERROR: " + error));
 
@@ -408,7 +402,7 @@ export default {
       if (this.collaborateur.isAdmin == true) this.collaborateur.isAdmin = 1;
       else this.collaborateur.isAdmin = 0;
 
-      this.collaborateur.id_entreprise = 1;//recuperer l'id_entreprise en fonction de l utilisateur TODO
+      this.collaborateur.id_entreprise = this.id_entreprise;//id_entreprise provenant du store
       let payload = this.collaborateur;
       //return console.log(JSON.stringify(payload));
       
@@ -465,6 +459,11 @@ export default {
     },
 
     /*------------------------------------------------------ */
+    verifUserConnected: function(){
+      if((this.id_user != undefined && this.id_user !== 0) || (this.isAdmin != undefined && this.isAdmin !== 0) || (this.id_entreprise != undefined && this.id_entreprise !== 0)){
+        //console.log(this.isAdmin)
+      }else return this.$router.push({ name: "Connexion" });
+    },
     verifyResponseOk: function(responseData) {
       var tmpStr = JSON.stringify(responseData);
       if (tmpStr.startsWith('"Error:')) {
