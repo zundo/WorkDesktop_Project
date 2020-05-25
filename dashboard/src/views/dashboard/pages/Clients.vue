@@ -28,7 +28,7 @@
     </v-dialog>
     <v-dialog dark v-model="isDialogDeleteClient" width="500" overlay-opacity="0.8">
       <v-card>
-        <v-card-title>Supprimer le client {{ clientToDelete.name }} ?</v-card-title>
+        <v-card-title>Supprimer le client {{ clientToDelete.firstname }} {{ clientToDelete.lastname }} ?</v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="isDialogDeleteClient=false" class="mx-2" fab dark>
@@ -69,23 +69,22 @@
         :headers="headers"
         :items="items"
         :search.sync="search"
-        :sort-by="['name']"
+        :sort-by="['nom']"
         :sort-desc="[false]"
         multi-sort
         show-expand
         single-expand
-        item-key="name"
         :expanded.sync="expanded"
       >
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
             <v-btn small color="blue" @click="PageInfosClient(item)">
               <v-icon left>mdi-card-account-details-outline</v-icon>
-              Informations {{ item.name }}
+              Informations M/Mme {{ item.lastname }}
             </v-btn>
             <v-btn :disabled="!isAdmin" small color="red" @click="dialogDeleteClient(item)" class="ml-3">
               <v-icon left>mdi-account-remove-outline</v-icon>
-              Supprimer {{ item.name }}
+              Supprimer M/Mme {{ item.lastname }}
             </v-btn>
           </td>
         </template>
@@ -94,7 +93,7 @@
           :value="true"
           icon="warning"
           class="error--text"
-        >La recherche "{{ search }}" inconnu.</div>
+        >La recherche "{{ search }}" est inconnu.</div>
       </v-data-table>
     </base-material-card>
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
@@ -194,7 +193,7 @@ export default {
           clients.forEach(client => {
             this.items.push(client);
           });
-
+          console.log(this.items)
           setTimeout(() => {
             this.loading = false;
             this.firstLoad = false;
@@ -217,7 +216,26 @@ export default {
     },
     deleteClient: function() {
       this.isDialogDeleteClient = false;
-      console.log("Le client " + this.clientToDelete.name + " a été supprimé");
+
+      axios
+        .delete("http://localhost:3000/deleteClient/"+this.clientToDelete.id)
+        .then(response => {
+          if(response.data.error == false){
+            //console.log(response.data.message)
+            this.successMessage(
+              "Le client " +
+                this.clientToDelete.firstname +' '+this.clientToDelete.lastname+
+                " a été supprimé avec succès"
+            );
+            setTimeout(() => {
+              document.location.reload(true);            
+            }, 1500);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+          this.errorMessage("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+        })
     },
     dialogDeleteClient: function(infos_client) {
       this.isDialogDeleteClient = true;

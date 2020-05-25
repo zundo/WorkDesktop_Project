@@ -201,8 +201,7 @@
     </v-dialog>
     <v-dialog dark v-model="isDialogDeleteCollaborateur" width="500" overlay-opacity="0.8">
       <v-card outlined>
-        <v-card-title>Supprimer le collaborateur {{ collaborateurToDelete.firstname }} {{ collaborateurToDelete.lastname }} ?<v-divider class="my-2"/></v-card-title>
-        
+        <v-card-title>Supprimer le collaborateur {{ collaborateurToDelete.firstname }} {{ collaborateurToDelete.lastname }} ?<v-divider class="my-2"/></v-card-title>  
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="isDialogDeleteCollaborateur=false" class="mx-2" fab dark>
@@ -270,7 +269,7 @@
           :value="true"
           icon="warning"
           class="error--text"
-        >La recherche "{{ search }}" inconnu.</div>
+        >La recherche "{{ search }}" est inconnu.</div>
       </v-data-table>
     </base-material-card>
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">

@@ -203,9 +203,9 @@ exports.getClientsByEntreprise = (res, where = "", port = 200, messageSend = "")
         else {
             if (results.length > 0) {
                 results.map(item => {
-                    delete item.id; // Suppression d'un elements
-                    delete item.id_entreprise_client; // Suppression d'un elements
-                    delete item.id_entreprise_utilisateur; // Suppression d'un elements
+                    //delete item.id; // Suppression d'un elements
+                    //delete item.id_entreprise_client; // Suppression d'un elements
+                    //delete item.id_entreprise_utilisateur; // Suppression d'un elements
                     item.date_naissance = changeDateForSend(JSON.stringify(item.date_naissance))
                     return item; // Retour le nouvel element item => results[i] = item
                 });

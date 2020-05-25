@@ -51,10 +51,12 @@ app.post('/login', loginCtrl.login); //Login
 app.get('/user/:id', userCtrl.getUtilisateur); //recuperation l'utilisateur unique (user connecte)
 app.put('/user/:id', userCtrl.updateUtilisateur) // Update de l'utilisateur
 app.put('/userEditPass/:id', userCtrl.editPasswordUtilisateur) // modifier le mdp de l'utilisateur
-app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation les utilisateurs de l'entreprise
 
 app.get('/clients/:id', clientCtrl.getClientsByEnt); //recuperation des clients de l'entreprise
+//app.post('/addClient', clientCtrl.addClient); //Inscription client
+app.delete('/deleteClient/:id', clientCtrl.deleteClient); //Supprimer le client
 
+app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation les users(collaborateurs) de l'entreprise
 app.post('/addCollaborateur', collaborateurCtrl.addCollaborateur); //Inscription collaborateurs
 app.delete('/deleteCollaborateur/:id', collaborateurCtrl.deleteCollaborateur); //Supprimer le collaborateur
 /*------------------------------------------------------------- */
