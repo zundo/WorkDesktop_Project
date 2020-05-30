@@ -35,7 +35,7 @@
                 <v-card class="mt-0" height="auto">
                   <v-col cols="12">
                     <div class="text-center">
-                      <v-btn
+                      <!--<v-btn
                         v-for="(social, i) in socials"
                         :key="i"
                         :color="social.iconColor"
@@ -46,7 +46,7 @@
                       >
                         <v-icon v-text="social.icon" />
                       </v-btn>
-                      <v-divider />
+                      <v-divider />-->
 
                       <v-row>
                         <v-col cols="12" md="6">
@@ -199,9 +199,32 @@
               </v-stepper-content>
 
               <v-stepper-step :complete="strep > 2" step="2" color="info">Informations entreprise</v-stepper-step>
-
               <v-stepper-content step="2">
-                <v-card class="mt-0" height="auto">
+                <v-card class="mt-0" height="auto" v-if="!isDataCompagny">
+                  <div class="text-center">
+                    <v-row>
+                      <v-col cols="11">
+                        <v-text-field
+                          color="info"
+                          label="Numéro de Siret*"
+                          v-model="entreprise.numSiret_ent"
+                          prepend-inner-icon="mdi-sort-numeric-variant"
+                          clearable
+                          outlined
+                          class="ml-5 mt-6"
+                          maxlength="14"
+                          hint="Numéro de SIRET entreprise"
+                        />
+                      </v-col>
+                      <v-col cols="1">
+                        <v-btn class="mt-8 mr-5" color="success" @click="getDataCompagny(entreprise.numSiret_ent)" depressed fab small>
+                          <v-icon>mdi-check-circle-outline</v-icon>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-card>
+                <v-card class="mt-0" height="auto" v-else>
                   <v-col cols="12">
                     <div class="text-center">
                       <v-row class="mt-n3">
@@ -221,6 +244,8 @@
                             v-model="entreprise.numSiret_ent"
                             prepend-inner-icon="mdi-sort-numeric-variant"
                             clearable
+                            maxlength="14"
+                            hint="Numéro de SIRET entreprise"
                           />
                         </v-col>
                       </v-row>
@@ -295,7 +320,10 @@
                     <small>*Veuillez remplir les champs</small>
                   </v-col>
                 </v-card>
-                <v-btn class="mr-2" color="info" @click="strep++" text outlined>
+                <v-btn class="mr-2" v-if="isNotFound==true && isDataCompagny==false" color="red lighten-1" @click="isDataCompagny=true" outlined>
+                  <v-icon left>mdi-help-circle-outline</v-icon>SIRET Introuvable ?
+                </v-btn>
+                <v-btn class="mr-2" :disabled="!isDataCompagny" color="info" @click="strep++" text outlined>
                   <v-icon left>mdi-check-circle-outline</v-icon>Continuer
                 </v-btn>
                 <v-btn text color="error" @click="strep--" outlined>
@@ -389,7 +417,7 @@ export default {
       email_ent: "",
       telephone_ent: ""
     },
-    socials: [
+    /*socials: [
       {
         href: "#",
         icon: "mdi-facebook",
@@ -405,9 +433,35 @@ export default {
         icon: "mdi-google",
         iconColor: "#ea4c89"
       }
-    ]
+    ]*/
+    isDataCompagny:false,
+    isNotFound:false,
   }),
   methods: {
+    getDataCompagny: function(siret = null){
+      if(siret === null || siret === 0 || siret.length === 0) return this.errorMessage("Le SIRET ne peut pas être vide !");
+      if(siret.length !== 14) return this.errorMessage("Le SIRET doit contenir 14 chiffres !")
+      if(siret.match(/^[0-9]*$/gm) == null) return this.errorMessage("Le SIRET doit contenir seulement des chiffres !")
+
+      axios
+        .get('https://entreprise.data.gouv.fr/api/sirene/v3/etablissements/' + siret)
+        .then(response => {
+            if(response !== undefined || response !== null){
+              //console.log(response);
+              this.entreprise.nom_ent=response.data.etablissement.unite_legale.denomination;
+              this.entreprise.rue_ent=response.data.etablissement.geo_l4;
+              this.entreprise.ville_ent=response.data.etablissement.libelle_commune;
+              this.entreprise.codePostal_ent=response.data.etablissement.code_postal;
+              this.entreprise.pays_ent="";
+              this.entreprise.website_ent="";
+              this.entreprise.email_ent="";
+              this.entreprise.telephone_ent="";
+              this.isDataCompagny = true;
+            }
+        })
+        .catch(error => { console.log(error); this.errorMessage("Le SIRET est introuvable ou inconnu, réessayer !"); this.isNotFound=true;});
+        //.finally(() => {});
+    },
     connexionPage: function() {
       const config = {
         headers: {

@@ -45,6 +45,23 @@ app.get('/', (req, res) => {
 });
 
 /*------------------------------------------------------------- */
+/*app.get('/testApi/:siret', (req, res) => {
+    //console.log(req.params.siret);
+
+    axios.get('https://entreprise.data.gouv.fr/api/sirene/v3/etablissements/' + req.params.siret)
+        .then(function(response) {
+            console.log(response.data);
+            res.setHeader('Content-Type', 'application/json')
+            try {
+                res.status(200).json({ data_entreprise: response.data })
+            } catch (error) {
+                let sendError = { error: true, message: "Processing error" }
+                res.status(500).json(sendError)
+            }
+        })
+        .catch(function(error) { console.log(error); })
+});*/
+
 app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
 app.post('/login', loginCtrl.login); //Login
 

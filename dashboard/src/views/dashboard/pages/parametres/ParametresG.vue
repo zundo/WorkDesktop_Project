@@ -413,7 +413,7 @@ export default {
     },
     annulerUpdate: function() {
       this.isUpdateUser = false;
-      document.location.reload(true);
+      //document.location.reload(true);
     },
     savePassword: function(old_passwordUser, passwordUser) {
       this.isChangePasswordDialog = false;

@@ -35,7 +35,7 @@
             </template>
 
             <v-card-text class="text-center">
-              <v-btn
+              <!--<v-btn
                 v-for="(social, i) in socials"
                 :key="i"
                 :href="social.href"
@@ -48,7 +48,7 @@
                 target="_blank"
               >
                 <v-icon v-text="social.icon" />
-              </v-btn>
+              </v-btn>-->
               <v-col cols="12" class="py-2">
                 <v-text-field
                   color="blue"
@@ -108,7 +108,7 @@ export default {
     /*-------------------------- */
     showPassword: false,
     isDialogForgotPassword:false,
-    socials: [
+    /*socials: [
       {
         href: "#",
         icon: "mdi-facebook",
@@ -124,7 +124,7 @@ export default {
         icon: "mdi-google",
         iconColor: "#ea4c89"
       }
-    ],
+    ],*/
     login: "",
     password: ""
   }),
