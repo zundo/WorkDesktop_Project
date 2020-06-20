@@ -72,7 +72,7 @@ app.delete('/deleteCollaborateur/:id', collaborateurCtrl.deleteCollaborateur); /
 app.get('/clients/:id', clientCtrl.getClientsByEnt); //recuperation des clients de l'entreprise
 app.post('/addClient', clientCtrl.addClient); //Inscription client
 app.delete('/deleteClient/:id', clientCtrl.deleteClient); //Supprimer le client
-app.put('/client/:id', clientCtrl.updateClient); // Update du client
+app.put('/updateClient/:id', clientCtrl.updateClient); // Update du client
 
 app.get('/factures/:id', factureCtrl.getFacturesByEnt); //recuperation des factures de l'entreprise
 app.post('/addFacture', factureCtrl.addFacture); //Inscription collaborateurs

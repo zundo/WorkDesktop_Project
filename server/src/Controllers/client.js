@@ -81,7 +81,7 @@ exports.addClient = async(req, res) => {
 }
 
 exports.updateClient = async(req, res) => {
-    index.verifId(req.params.id, res); //id du clients
+    index.verifId(req.params.id, res); //id du client
     const id_client = req.params.id;
     if (id_client == 0 || id_client == null || id_client == undefined) index.sendReturn(res, 401, { error: true, message: "L'id client n'existe pas" })
 

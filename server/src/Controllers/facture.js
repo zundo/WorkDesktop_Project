@@ -59,13 +59,46 @@ exports.addFacture = async(req, res) => {
 }
 
 exports.updateFacture = async(req,res) => {
-    index.verifId(req.params.id, res); //id du clients
-    const id_client = req.params.id;
-    if (id_client == 0 || id_client == null || id_client == undefined) index.sendReturn(res, 401, { error: true, message: "L'id client n'existe pas" })
+    index.verifId(req.params.id, res); //id du facture
+    const id_facture = req.params.id;
+
+    if (id_facture == 0 || id_facture == null || id_facture == undefined) index.sendReturn(res, 401, { error: true, message: "L'id facture n'existe pas" })
 
     const data = req.body;
-
     // Vérification de si les données sont bien présentes dans le body
+    if (index.exist(data.titre) == false || index.exist(data.statut) == false || index.exist(data.date) == false ||
+        index.exist(data.montant) == false || index.exist(data.description) == false){
+        index.sendReturn(res, 403, {
+            error: true,
+            message: "L'une ou plusieurs données obligatoire sont manquantes"
+        })
+    }else{
+        if (index.textFormat(data.titre) == false || index.floatFormat(data.montant) == false || index.dateFormat(data.date) == false){
+            index.sendReturn(res, 409, {
+                error: true,
+                message: "L'une des données obligatoire ne sont pas conformes"
+            })
+        }else{
+            // update de la facture en base de données
+            toUpdate = {
+                titre: data.titre.trim(),
+                statut: data.statut.trim(),
+                date: index.changeDateForSQL(data.date),
+                montant: data.montant.trim(),
+                description: data.description.trim()
+            };
+
+            bdd.query("UPDATE `facture` SET ? WHERE `facture`.`id_f` = '" + id_facture + "'", toUpdate, (error, results) => {
+                if (results.affectedRows != 0) {
+                    index.sendReturn(res, 200, { error: false, message: "La facture a été modifiée avec succès" })
+                } else if (results.affectedRows == 0) {
+                    index.sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+                } else {
+                    index.sendReturn(res, 400, { error: true, message: "Modification Impossible" })
+                }
+            });
+        }
+    }
 }
 
 exports.deleteFacture = async(req, res) => {
