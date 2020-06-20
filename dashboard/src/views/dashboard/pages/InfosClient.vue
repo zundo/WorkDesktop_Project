@@ -63,10 +63,6 @@
                   <td>{{ client.nom }}</td>
                 </tr>
                 <tr>
-                  <td>Personne à contacter</td>
-                  <td>{{ client.personne_contacter }}</td>
-                </tr>
-                <tr>
                   <td>Email</td>
                   <td>{{ client.email }}</td>
                 </tr>

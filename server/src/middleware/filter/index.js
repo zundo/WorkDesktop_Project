@@ -69,6 +69,13 @@ exports.textFormat = (data) => {
     else
         return true
 }
+exports.floatFormat = (data) =>{
+    let regexFloat = /[0-9]+(\.[0-9][0-9]?)?/g
+    if(data.match(regexFloat) == null)
+        return false
+    else
+        return true
+}
 
 // Function vérification de si l'email existe en base de données
 exports.emailExist = async(data) => {
@@ -213,6 +220,45 @@ exports.getClientsByEntreprise = (res, where = "", port = 200, messageSend = "")
                 sendReturn(res, port, {
                     error: false,
                     clients: results
+                })
+            } else {
+                sendReturn(res, 401, {
+                    error: true,
+                    message: "La requête en base de donnée n'a pas fonctionné"
+                })
+            }
+        }
+    });
+}
+    
+// Function qui récupère tous les factures de l'entreprise dans la table factures
+exports.getFacturesByEntreprise = (res, where = "", port = 200, messageSend = "") => {
+    bdd.query("SELECT `facture`.*, `clients`.* FROM `facture` LEFT JOIN `clients` ON `facture`.`id_client` = `clients`.`id`" + where, (error, results, fields) => {
+        // Si erreur dans la requête
+        if (error) {
+            console.log(error)
+            sendReturn(res, port, { error: false, message: "Erreur dans la requête" });
+        }
+        // Si le resultat n'existe pas
+        else if (results === undefined)
+            sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
+        // Si la liste des utilises est vide
+        else if (results.length == 0)
+            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+        else {
+            if (results.length > 0) {
+                results.map(item => {
+                    //delete item.id; // Suppression d'un elements
+                    //delete item.id_entreprise_client; // Suppression d'un elements
+                    //delete item.id_entreprise_utilisateur; // Suppression d'un elements
+                    item.date = changeDateForSend(JSON.stringify(item.date))
+                    item.date_naissance = changeDateForSend(JSON.stringify(item.date_naissance))
+                    return item; // Retour le nouvel element item => results[i] = item
+                });
+                //console.log(JSON.stringify(results));
+                sendReturn(res, port, {
+                    error: false,
+                    factures: results
                 })
             } else {
                 sendReturn(res, 401, {

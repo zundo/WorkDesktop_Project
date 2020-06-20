@@ -2,17 +2,13 @@ const express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
-    registerCtrl_old = require('./src/Controllers_old/register'),
-    schoolCtrl_old = require('./src/Controllers_old/school'),
-    facultyCtrl_old = require('./src/Controllers_old/faculty'),
-    userCtrl_old = require('./src/Controllers_old/user'),
-    loginCtrl_old = require('./src/Controllers_old/login'),
     /*---------------------------------------------------------- */
     registerCtrl = require('./src/Controllers/register'),
     loginCtrl = require('./src/Controllers/login'),
     collaborateurCtrl = require("./src/Controllers/collaborateur"),
     userCtrl = require("./src/Controllers/user"),
     clientCtrl = require("./src/Controllers/client"),
+    factureCtrl = require("./src/Controllers/facture"),
     /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
@@ -69,45 +65,21 @@ app.get('/user/:id', userCtrl.getUtilisateur); //recuperation l'utilisateur uniq
 app.put('/user/:id', userCtrl.updateUtilisateur) // Update de l'utilisateur
 app.put('/userEditPass/:id', userCtrl.editPasswordUtilisateur) // modifier le mdp de l'utilisateur
 
-app.get('/clients/:id', clientCtrl.getClientsByEnt); //recuperation des clients de l'entreprise
-//app.post('/addClient', clientCtrl.addClient); //Inscription client
-app.delete('/deleteClient/:id', clientCtrl.deleteClient); //Supprimer le client
-
 app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation les users(collaborateurs) de l'entreprise
 app.post('/addCollaborateur', collaborateurCtrl.addCollaborateur); //Inscription collaborateurs
 app.delete('/deleteCollaborateur/:id', collaborateurCtrl.deleteCollaborateur); //Supprimer le collaborateur
+
+app.get('/clients/:id', clientCtrl.getClientsByEnt); //recuperation des clients de l'entreprise
+app.post('/addClient', clientCtrl.addClient); //Inscription client
+app.delete('/deleteClient/:id', clientCtrl.deleteClient); //Supprimer le client
+app.put('/client/:id', clientCtrl.updateClient); // Update du client
+
+app.get('/factures/:id', factureCtrl.getFacturesByEnt); //recuperation des factures de l'entreprise
+app.post('/addFacture', factureCtrl.addFacture); //Inscription collaborateurs
+app.delete('/deleteFacture/:id', factureCtrl.deleteFacture); //Supprimer la facture
+app.put('/updateFacture/:id', factureCtrl.updateFacture); // update Fcature
+
 /*------------------------------------------------------------- */
-
-app.post('/register_old', registerCtrl_old.register)
-
-app.post('/login_old', loginCtrl_old.login)
-
-app.get('/user', userCtrl_old.getUsers)
-
-app.get('/user/:id', userCtrl_old.getUser)
-
-app.get('/users', userCtrl_old.getUserByType)
-
-app.put('/user/:id', userCtrl_old.updateUser)
-
-app.delete('/user/:id', userCtrl_old.deleteUser)
-
-app.post('/school/register', schoolCtrl_old.register)
-
-app.get('/school', schoolCtrl_old.getSchools)
-
-app.get('/school/:id', schoolCtrl_old.getSchool)
-
-app.put('/school/:id', schoolCtrl_old.updateSchool)
-
-app.post('/school/:id/faculty', facultyCtrl_old.register)
-
-app.post('/faculty/user', facultyCtrl_old.userFacultyRegister)
-
-app.put('/faculty/:id', facultyCtrl_old.updateFaculty)
-
-app.get('/faculty/:id', facultyCtrl_old.getUserFaculty)
-
 app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname + '/error.html'))
 })
