@@ -69,9 +69,17 @@ exports.textFormat = (data) => {
     else
         return true
 }
-exports.floatFormat = (data) =>{
-    let regexFloat = /[0-9]+(\.[0-9][0-9]?)?/g
-    if(data.match(regexFloat) == null)
+exports.numberFormat = (data) => {
+    let regexNumber = /^[0-9]+$/
+    if (data.match(regexNumber) == null)
+        return false
+    else
+        return true
+}
+
+exports.floatFormat = (data) => {
+    let regexFloat = /^[0-9]+(\.[0-9]{0,})$/
+    if (data.match(regexFloat) == null)
         return false
     else
         return true
@@ -230,7 +238,7 @@ exports.getClientsByEntreprise = (res, where = "", port = 200, messageSend = "")
         }
     });
 }
-    
+
 // Function qui récupère tous les factures de l'entreprise dans la table factures
 exports.getFacturesByEntreprise = (res, where = "", port = 200, messageSend = "") => {
     bdd.query("SELECT `facture`.*, `clients`.* FROM `facture` LEFT JOIN `clients` ON `facture`.`id_client` = `clients`.`id`" + where, (error, results, fields) => {

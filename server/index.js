@@ -75,7 +75,7 @@ app.delete('/deleteClient/:id', clientCtrl.deleteClient); //Supprimer le client
 app.put('/updateClient/:id', clientCtrl.updateClient); // Update du client
 
 app.get('/factures/:id', factureCtrl.getFacturesByEnt); //recuperation des factures de l'entreprise
-app.post('/addFacture', factureCtrl.addFacture); //Inscription collaborateurs
+app.post('/addFacture', factureCtrl.addFacture); //Insertion facture
 app.delete('/deleteFacture/:id', factureCtrl.deleteFacture); //Supprimer la facture
 app.put('/updateFacture/:id', factureCtrl.updateFacture); // update Fcature
 
