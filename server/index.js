@@ -11,6 +11,7 @@ const express = require('express'),
     factureCtrl = require("./src/Controllers/facture"),
     projetCtrl = require("./src/Controllers/projet"),
     ticketCtrl = require("./src/Controllers/ticket"),
+    entrepriseCtrl = require("./src/Controllers/entreprise"),
     /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
@@ -90,6 +91,10 @@ app.get('/tickets/:id', ticketCtrl.getTicketsByEnt); //recuperation des projets 
 app.post('/addTicket', ticketCtrl.addTicket); //Insertion ticket
 app.get('/cloreTicket/:id', ticketCtrl.cloreTicket); //clore le ticket
 app.put('/reponseTicket/:id', ticketCtrl.reponseTicket); //reponse du ticket
+
+app.get('/entreprise', entrepriseCtrl.getEntreprises); //recuperation des entreprises
+app.post('/addEntreprise', entrepriseCtrl.addEntreprise); //Insertion entreprise
+app.put('/updateEntreprise/:id', entrepriseCtrl.updateEntreprise); // update entreprise
 /*------------------------------------------------------------- */
 app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname + '/error.html'))

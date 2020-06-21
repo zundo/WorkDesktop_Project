@@ -4,12 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "initBdd": "/Applications/MAMP/Library/bin/mysql --host=localhost -ulicenceCDA -pCTpWtq0wuVwhNVFf < data.sql ",
         "start": "pm2 kill && pm2 start index.js --watch && pm2 logs",
         "stop": "pm2 kill",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "Sébastien et Mounir",
+    "author": "Mounir",
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^3.0.6",

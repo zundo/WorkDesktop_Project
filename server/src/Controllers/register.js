@@ -29,9 +29,9 @@ exports.register = async(req, res) => {
             message: "L'une ou plusieurs données obligatoire sont manquantes"
         })
     } else {
-        //verification num siret conforme TODO
-        if (index.textFormat(data.nom_ent) == false || index.textFormat(data.rue_ent) == false || index.zipFormat(data.codePostal_ent) == false ||
-            index.textFormat(data.ville_ent) == false || index.textFormat(data.pays_ent) == false || index.emailFormat(data.email_ent) == false) {
+        //verification
+        if (index.textFormat(data.nom_ent) == false || index.textFormat(data.rue_ent) == false || index.zipFormat(data.codePostal_ent) == false || data.numSiret_ent.length != 13 ||
+            index.textFormat(data.ville_ent) == false || index.textFormat(data.pays_ent) == false || index.emailFormat(data.email_ent) == false || index.numberFormat(data.numSiret_ent) == false) {
             index.sendReturn(res, 409, {
                 error: true,
                 message: "L'une des données obligatoire ne sont pas conformes (entreprise)"
