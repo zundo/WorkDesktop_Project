@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  sam. 20 juin 2020 à 17:36
+-- Généré le :  Dim 21 juin 2020 à 17:05
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -118,7 +118,7 @@ INSERT INTO `facture` (`id_f`, `titre`, `statut`, `date`, `montant`, `descriptio
 (1, 'projet max', 'impaye', '2020-06-25', '125.00', 'pprojet dashboard', 1, 1),
 (3, 'tyty', 'tyty', '2020-06-02', '4.00', 'lmllk', 1, 1),
 (4, 'titretest', 'statuttest', '2020-06-20', '175.00', 'loloilolhgk,fdhdfh4152352', 1, 1),
-(5, 'titretesting', 'statuttestting', '2020-06-25', '579.96', 'autrechoseeee', 1, 1),
+(5, 'titretesting', 'statuttestting', '2020-06-25', '5759.95', 'autrechoseeee', 1, 1),
 (6, 'titretest', 'statuttest', '2020-06-20', '175.59', 'loloilolhgk,fdhdfh4152352', 1, 1),
 (7, 'titretest', 'statuttest', '2020-06-20', '175.58', 'loloilolhgk,fdhdfh4152352', 1, 1),
 (8, 'titretest', 'statuttest', '2020-06-20', '175.52', 'loloilolhgk,fdhdfh4152352', 1, 1),
@@ -134,12 +134,24 @@ INSERT INTO `facture` (`id_f`, `titre`, `statut`, `date`, `montant`, `descriptio
 DROP TABLE IF EXISTS `projet`;
 CREATE TABLE IF NOT EXISTS `projet` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(64) NOT NULL,
-  `description` varchar(64) NOT NULL,
+  `nomProjet` varchar(64) NOT NULL,
+  `descriptionProjet` varchar(64) NOT NULL,
+  `date_debutProjet` datetime NOT NULL,
+  `date_finProjet` datetime NOT NULL,
   `id_user` int(32) NOT NULL,
+  `id_entreprise` int(32) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `id_user` (`id_user`),
+  KEY `id_entreprise` (`id_entreprise`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `projet`
+--
+
+INSERT INTO `projet` (`id`, `nomProjet`, `descriptionProjet`, `date_debutProjet`, `date_finProjet`, `id_user`, `id_entreprise`) VALUES
+(2, 'nomProjettesting', 'descriptionProjettesting', '2020-06-25 12:00:00', '2020-08-25 12:00:00', 1, 1),
+(5, 'newwwwnomProjettdddestingd', 'newwwwdescriptionProjettestingdddd', '2019-06-22 12:00:00', '2022-08-27 12:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -155,10 +167,21 @@ CREATE TABLE IF NOT EXISTS `ticket` (
   `contenu` text NOT NULL,
   `reponseSupport` text NOT NULL,
   `status` varchar(64) NOT NULL,
+  `dateTicket` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_user` int(32) NOT NULL,
+  `id_entreprise` int(32) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `id_user` (`id_user`),
+  KEY `id_entreprise` (`id_entreprise`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `ticket`
+--
+
+INSERT INTO `ticket` (`id`, `sujet`, `theme`, `contenu`, `reponseSupport`, `status`, `dateTicket`, `id_user`, `id_entreprise`) VALUES
+(2, 'bug page 7', 'BUG', 'contenuuuuuu', 'c\'est normal, ce n\'est pas un bug', 'Répondu', '2020-06-21 18:46:43', 1, 1),
+(3, 'bug page 765', 'BUGg', 'contenuuuuuuggg', 'c\'est normal, ce n\'est pas un bug, j\'ai dit !', 'Répondu', '2020-06-21 19:03:18', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -191,7 +214,14 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id_entreprise` int(32) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_entreprise` (`id_entreprise`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id`, `email`, `password`, `lastname`, `firstname`, `date_naissance`, `sexe`, `rue`, `ville`, `codePostal`, `pays`, `site_web`, `personne_contacter`, `phone`, `poste`, `createdAt`, `updateAt`, `lastLogin`, `attempt`, `isAdmin`, `id_entreprise`) VALUES
+(1, 'dfdf@dffd.ff', 'fff', 'fff', 'fff', '2020-06-25 00:00:00', 'Homme', 'ff', 'ff', 12345, 'gg', 'gg', '06123456788', '061547245464', 'dev', '2020-06-21 17:52:10', '2020-06-21 17:52:10', '2020-06-21 17:52:10', 0, 1, 1);
 
 --
 -- Contraintes pour les tables déchargées
@@ -215,13 +245,15 @@ ALTER TABLE `facture`
 -- Contraintes pour la table `projet`
 --
 ALTER TABLE `projet`
-  ADD CONSTRAINT `projet_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id`);
+  ADD CONSTRAINT `projet_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `projet_ibfk_2` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprise` (`id`);
 
 --
 -- Contraintes pour la table `ticket`
 --
 ALTER TABLE `ticket`
-  ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id`);
+  ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `ticket_ibfk_2` FOREIGN KEY (`id_entreprise`) REFERENCES `entreprise` (`id`);
 
 --
 -- Contraintes pour la table `utilisateur`
