@@ -241,7 +241,45 @@ exports.getClientsByEntreprise = (res, where = "", port = 200, messageSend = "")
 
 // Function qui récupère tous les factures de l'entreprise dans la table factures
 exports.getFacturesByEntreprise = (res, where = "", port = 200, messageSend = "") => {
-    bdd.query("SELECT `facture`.*, `clients`.* FROM `facture` LEFT JOIN `clients` ON `facture`.`id_client` = `clients`.`id`" + where, (error, results, fields) => {
+        bdd.query("SELECT `facture`.*, `clients`.* FROM `facture` LEFT JOIN `clients` ON `facture`.`id_client` = `clients`.`id`" + where, (error, results, fields) => {
+            // Si erreur dans la requête
+            if (error) {
+                console.log(error)
+                sendReturn(res, port, { error: false, message: "Erreur dans la requête" });
+            }
+            // Si le resultat n'existe pas
+            else if (results === undefined)
+                sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
+            // Si la liste des utilises est vide
+            else if (results.length == 0)
+                sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+            else {
+                if (results.length > 0) {
+                    results.map(item => {
+                        //delete item.id; // Suppression d'un elements
+                        //delete item.id_entreprise_client; // Suppression d'un elements
+                        //delete item.id_entreprise_utilisateur; // Suppression d'un elements
+                        item.date = changeDateForSend(JSON.stringify(item.date))
+                        item.date_naissance = changeDateForSend(JSON.stringify(item.date_naissance))
+                        return item; // Retour le nouvel element item => results[i] = item
+                    });
+                    //console.log(JSON.stringify(results));
+                    sendReturn(res, port, {
+                        error: false,
+                        factures: results
+                    })
+                } else {
+                    sendReturn(res, 401, {
+                        error: true,
+                        message: "La requête en base de donnée n'a pas fonctionné"
+                    })
+                }
+            }
+        });
+    }
+    // Function qui récupère tous les projets de l'entreprise dans la table projets
+exports.getProjetsByEntreprise = (res, where = "", port = 200, messageSend = "") => {
+    bdd.query("SELECT `projet`.*, `utilisateur`.`firstname`, `utilisateur`.`lastname` FROM `projet` LEFT JOIN `utilisateur` ON `projet`.`id_user` = `utilisateur`.`id`" + where, (error, results, fields) => {
         // Si erreur dans la requête
         if (error) {
             console.log(error)
@@ -256,17 +294,49 @@ exports.getFacturesByEntreprise = (res, where = "", port = 200, messageSend = ""
         else {
             if (results.length > 0) {
                 results.map(item => {
-                    //delete item.id; // Suppression d'un elements
-                    //delete item.id_entreprise_client; // Suppression d'un elements
-                    //delete item.id_entreprise_utilisateur; // Suppression d'un elements
-                    item.date = changeDateForSend(JSON.stringify(item.date))
-                    item.date_naissance = changeDateForSend(JSON.stringify(item.date_naissance))
+                    item.date_debut = changeDateForSend(JSON.stringify(item.date_debut))
+                    item.date_fin = changeDateForSend(JSON.stringify(item.date_fin))
                     return item; // Retour le nouvel element item => results[i] = item
                 });
                 //console.log(JSON.stringify(results));
                 sendReturn(res, port, {
                     error: false,
-                    factures: results
+                    projets: results
+                })
+            } else {
+                sendReturn(res, 401, {
+                    error: true,
+                    message: "La requête en base de donnée n'a pas fonctionné"
+                })
+            }
+        }
+    });
+}
+
+// Function qui récupère tous les tickets de l'entreprise dans la table ticket
+exports.getTicketsByEntreprise = (res, where = "", port = 200, messageSend = "") => {
+    bdd.query("SELECT `ticket`.*, `utilisateur`.`firstname`, `utilisateur`.`lastname` FROM `ticket` LEFT JOIN `utilisateur` ON `ticket`.`id_user` = `utilisateur`.`id`" + where, (error, results, fields) => {
+        // Si erreur dans la requête
+        if (error) {
+            console.log(error)
+            sendReturn(res, port, { error: false, message: "Erreur dans la requête" });
+        }
+        // Si le resultat n'existe pas
+        else if (results === undefined)
+            sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
+        // Si la liste des utilises est vide
+        else if (results.length == 0)
+            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+        else {
+            if (results.length > 0) {
+                results.map(item => {
+                    item.dateTicket = changeDateForSend(JSON.stringify(item.dateTicket))
+                    return item; // Retour le nouvel element item => results[i] = item
+                });
+                //console.log(JSON.stringify(results));
+                sendReturn(res, port, {
+                    error: false,
+                    tickets: results
                 })
             } else {
                 sendReturn(res, 401, {

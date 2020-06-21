@@ -12,26 +12,26 @@ exports.getFacturesByEnt = async(req, res) => {
 exports.addFacture = async(req, res) => {
     const data = req.body;
 
-    if (data.id_entreprise_utilisateur == 0 || data.id_entreprise_utilisateur == null || data.id_entreprise_utilisateur == undefined) 
+    if (data.id_entreprise_utilisateur == 0 || data.id_entreprise_utilisateur == null || data.id_entreprise_utilisateur == undefined)
         index.sendReturn(res, 401, { error: true, message: "L'id entreprise user n'existe pas" })
 
-    if (data.id_client == 0 || data.id_client == null || data.id_client == undefined) 
+    if (data.id_client == 0 || data.id_client == null || data.id_client == undefined)
         index.sendReturn(res, 401, { error: true, message: "L'id client n'existe pas" })
-    
+
     // Vérification de si les données sont bien présentes dans le body
     if (index.exist(data.titre) == false || index.exist(data.statut) == false || index.exist(data.date) == false ||
-        index.exist(data.montant) == false || index.exist(data.description) == false){
+        index.exist(data.montant) == false || index.exist(data.description) == false) {
         index.sendReturn(res, 403, {
             error: true,
             message: "L'une ou plusieurs données obligatoire sont manquantes"
         })
-    }else{
-        if (index.textFormat(data.titre) == false || index.floatFormat(data.montant) == false || index.dateFormat(data.date) == false){
+    } else {
+        if (index.textFormat(data.titre) == false || index.floatFormat(data.montant) == false || index.dateFormat(data.date) == false) {
             index.sendReturn(res, 409, {
                 error: true,
                 message: "L'une des données obligatoire ne sont pas conformes"
             })
-        }else{
+        } else {
             toInsert = {
                 titre: data.titre.trim(),
                 statut: data.statut.trim(),
@@ -58,7 +58,7 @@ exports.addFacture = async(req, res) => {
     }
 }
 
-exports.updateFacture = async(req,res) => {
+exports.updateFacture = async(req, res) => {
     index.verifId(req.params.id, res); //id du facture
     const id_facture = req.params.id;
 
@@ -67,18 +67,18 @@ exports.updateFacture = async(req,res) => {
     const data = req.body;
     // Vérification de si les données sont bien présentes dans le body
     if (index.exist(data.titre) == false || index.exist(data.statut) == false || index.exist(data.date) == false ||
-        index.exist(data.montant) == false || index.exist(data.description) == false){
+        index.exist(data.montant) == false || index.exist(data.description) == false) {
         index.sendReturn(res, 403, {
             error: true,
             message: "L'une ou plusieurs données obligatoire sont manquantes"
         })
-    }else{
-        if (index.textFormat(data.titre) == false || index.floatFormat(data.montant) == false || index.dateFormat(data.date) == false){
+    } else {
+        if (index.textFormat(data.titre) == false || index.floatFormat(data.montant) == false || index.dateFormat(data.date) == false) {
             index.sendReturn(res, 409, {
                 error: true,
                 message: "L'une des données obligatoire ne sont pas conformes"
             })
-        }else{
+        } else {
             // update de la facture en base de données
             toUpdate = {
                 titre: data.titre.trim(),
@@ -102,7 +102,7 @@ exports.updateFacture = async(req,res) => {
 }
 
 exports.deleteFacture = async(req, res) => {
-    index.verifId(req.params.id, res); //id_entreprise du client
+    index.verifId(req.params.id, res); //id de la facture
 
     // Suppression de l'utilisateur en base de donnée
     bdd.query("DELETE FROM `facture` WHERE `facture`.`id_f` = '" + req.params.id + "'", (error, results) => {

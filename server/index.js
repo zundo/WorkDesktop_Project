@@ -9,6 +9,8 @@ const express = require('express'),
     userCtrl = require("./src/Controllers/user"),
     clientCtrl = require("./src/Controllers/client"),
     factureCtrl = require("./src/Controllers/facture"),
+    projetCtrl = require("./src/Controllers/projet"),
+    ticketCtrl = require("./src/Controllers/ticket"),
     /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
@@ -77,8 +79,17 @@ app.put('/updateClient/:id', clientCtrl.updateClient); // Update du client
 app.get('/factures/:id', factureCtrl.getFacturesByEnt); //recuperation des factures de l'entreprise
 app.post('/addFacture', factureCtrl.addFacture); //Insertion facture
 app.delete('/deleteFacture/:id', factureCtrl.deleteFacture); //Supprimer la facture
-app.put('/updateFacture/:id', factureCtrl.updateFacture); // update Fcature
+app.put('/updateFacture/:id', factureCtrl.updateFacture); // update Facture
 
+app.get('/projets/:id', projetCtrl.getProjetsByEnt); //recuperation des projets de l'entreprise
+app.post('/addProjet', projetCtrl.addProjet); //Insertion projet
+app.delete('/deleteProjet/:id', projetCtrl.deleteProjet); //Supprimer le projet
+app.put('/updateProjet/:id', projetCtrl.updateProjet); // update projet
+
+app.get('/tickets/:id', ticketCtrl.getTicketsByEnt); //recuperation des projets de l'entreprise
+app.post('/addTicket', ticketCtrl.addTicket); //Insertion ticket
+app.get('/cloreTicket/:id', ticketCtrl.cloreTicket); //clore le ticket
+app.put('/reponseTicket/:id', ticketCtrl.reponseTicket); //reponse du ticket
 /*------------------------------------------------------------- */
 app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname + '/error.html'))
