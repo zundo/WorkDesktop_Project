@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="The Unglorius DevTeamProject" company="" webLink="http://" view-date="2020-04-23" view-index="0" gantt-divider-location="319" resource-divider-location="300" version="2.8.10" locale="fr_FR">
+    <description/>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="178" order="0"/>
+        <field id="tpd4" name="Date de début" width="68" order="1"/>
+        <field id="tpd5" name="Date de fin" width="67" order="2"/>
+        <option id="color.recent"><![CDATA[#3300ff #00cccc #009933 #ff3333 #f3b214]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="209" order="0"/>
+        <field id="1" name="Rôle par défaut" width="85" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Spécification" color="#ff3333" meeting="false" start="2020-03-30" duration="67" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" priority="4" expand="true">
+            <task id="12" name="Documentation" color="#8cb6ce" meeting="false" start="2020-04-01" duration="65" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true"/>
+            <task id="14" name="Conception" color="#8cb6ce" meeting="false" start="2020-03-30" duration="67" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="4" name="Conception" color="#009933" meeting="false" start="2020-03-30" duration="28" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+            <task id="95" name="Modélisation" color="#8cb6ce" meeting="false" start="2020-03-30" duration="10" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="18" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="18" name="MCD" color="#009933" meeting="false" start="2020-04-13" duration="3" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="36" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="36" name="Diagrammes" color="#009933" meeting="false" start="2020-04-16" duration="5" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <notes><![CDATA[Diagramme de Séquence
+
+Diagramme de Cas d'utilisation
+
+Diagrammes de Classes]]></notes>
+                <depend id="30" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="30" name="Base de données" color="#009933" meeting="false" start="2020-04-23" duration="10" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="1" name="Application Backend" color="#f3b214" meeting="false" start="2020-03-30" duration="23" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" priority="2" expand="true">
+            <task id="25" name="Node" color="#8cb6ce" meeting="false" start="2020-03-30" duration="4" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="17" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="17" name="API" color="#8cb6ce" meeting="false" start="2020-04-03" duration="5" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" priority="2" expand="true">
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="24" name="Routes" color="#8cb6ce" meeting="false" start="2020-04-10" duration="3" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="23" name="Test routes Postman" color="#8cb6ce" meeting="false" start="2020-04-15" duration="2" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="97" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="97" name="Calendrier" color="#8cb6ce" meeting="false" start="2020-04-17" duration="9" complete="0" thirdDate="2020-04-17" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="5" name="Réalisation" color="#00cccc" meeting="false" start="2020-04-20" duration="20" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+            <task id="19" name="Appli web" color="#8cb6ce" meeting="false" start="2020-04-20" duration="20" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true"/>
+            <task id="43" name="Appli Mobile" color="#8cb6ce" meeting="false" start="2020-04-20" duration="20" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true"/>
+            <task id="42" name="Application Bureautique" color="#00cccc" meeting="false" start="2020-04-20" duration="20" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="48" name="Deploiement" color="#8cb6ce" meeting="false" start="2020-07-06" duration="6" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+            <task id="55" name="Création Serveur" color="#8cb6ce" meeting="false" start="2020-07-06" duration="2" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="56" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="56" name="Mise en ligne API" color="#8cb6ce" meeting="false" start="2020-07-08" duration="2" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="57" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="57" name="Build des Applications" color="#8cb6ce" meeting="false" start="2020-07-10" duration="2" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true"/>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Khalil" function="1" contacts="" phone=""/>
+        <resource id="1" name="Mounir" function="1" contacts="" phone=""/>
+        <resource id="2" name="El Hadji" function="3" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="55" resource-id="1" function="1" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles>
+        <role id="1" name="Développeur"/>
+        <role id="2" name="Chef de Projet"/>
+        <role id="3" name="DevOps"/>
+        <role id="4" name="Team"/>
+    </roles>
+</project>
