@@ -53,7 +53,7 @@
                   color="error"
                   text
                   @click="isDialogNewFacture = false"
-                >Close</v-btn>
+                >Fermer</v-btn>
                 <v-btn outlined color="success" text @click="saveNewFacture">Sauvegarder</v-btn>
               </v-col>
             </v-row>

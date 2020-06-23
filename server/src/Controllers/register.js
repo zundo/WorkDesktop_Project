@@ -1,7 +1,8 @@
 const express = require('express'),
     index = require('../middleware/filter/index'),
     bdd = require('../modele/index'),
-    bcrypt = require('bcrypt')
+    bcrypt = require('bcrypt'),
+    indexEmail = require('../middleware/filter/sendEmail')
 
 exports.register = async(req, res) => {
     const data = req.body
@@ -30,7 +31,7 @@ exports.register = async(req, res) => {
         })
     } else {
         //verification
-        if (index.textFormat(data.nom_ent) == false || index.textFormat(data.rue_ent) == false || index.zipFormat(data.codePostal_ent) == false || data.numSiret_ent.length != 13 ||
+        if (index.textFormat(data.nom_ent) == false || index.textFormat(data.rue_ent) == false || index.zipFormat(data.codePostal_ent) == false || data.numSiret_ent.length != 14 ||
             index.textFormat(data.ville_ent) == false || index.textFormat(data.pays_ent) == false || index.emailFormat(data.email_ent) == false || index.numberFormat(data.numSiret_ent) == false) {
             index.sendReturn(res, 409, {
                 error: true,
@@ -124,8 +125,9 @@ exports.register = async(req, res) => {
                                         message: "La requête d'inscription en base de donnée n'a pas fonctionné"
                                     })
                                 } else {
-                                    console.log("L'utilisateur admin a bien été ajouté")
-                                    index.sendReturn(res, 201, { error: false, message: "L' utilisateur admin a bien été crée avec succès", id_user: results.insertId, isAdmin: true, id_entreprise: data.id_entreprise })
+                                    console.log("L'utilisateur admin a bien été ajouté");
+                                    //indexEmail.sendEmail(data.email.trim().toLowerCase(), Math.floor(100000 + Math.random() * 900000));
+                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur admin a bien été crée avec succès", id_user: results.insertId, isAdmin: true, id_entreprise: data.id_entreprise })
                                 }
                             });
                         }

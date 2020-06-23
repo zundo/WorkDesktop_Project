@@ -101,6 +101,7 @@ exports.changeDateForSQL = (data) => {
     data = data.substr(6, 4) + "-" + data.substr(3, 2) + "-" + data.substr(0, 2) + " 12:00:00";
     return data
 };
+
 // Function qui change le format de la date pour le renvoi de la requête
 exports.changeDateForSend = (data) => {
     data = data.substr(9, 2) + "-" + data.substr(6, 2) + "-" + data.substr(1, 4);
@@ -337,6 +338,43 @@ exports.getTicketsByEntreprise = (res, where = "", port = 200, messageSend = "")
                 sendReturn(res, port, {
                     error: false,
                     tickets: results
+                })
+            } else {
+                sendReturn(res, 401, {
+                    error: true,
+                    message: "La requête en base de donnée n'a pas fonctionné"
+                })
+            }
+        }
+    });
+}
+
+
+// Function qui récupère tous les tickets de l'entreprise dans la table ticket
+exports.getEvenementsByEntreprise = (res, where = "", port = 200, messageSend = "") => {
+    bdd.query("SELECT `calendrier`.*, `utilisateur`.`firstname`, `utilisateur`.`lastname` FROM `calendrier` LEFT JOIN `utilisateur` ON `calendrier`.`id_user` = `utilisateur`.`id`" + where, (error, results, fields) => {
+        // Si erreur dans la requête
+        if (error) {
+            console.log(error)
+            sendReturn(res, port, { error: false, message: "Erreur dans la requête" });
+        }
+        // Si le resultat n'existe pas
+        else if (results === undefined)
+            sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
+        // Si la liste des utilises est vide
+        else if (results.length == 0)
+            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+        else {
+            if (results.length > 0) {
+                results.map(item => {
+                    item.start = JSON.stringify(item.start).substr(1, 10)
+                    item.end = JSON.stringify(item.end).substr(1, 10)
+                    return item; // Retour le nouvel element item => results[i] = item
+                });
+                //console.log(JSON.stringify(results));
+                sendReturn(res, port, {
+                    error: false,
+                    evenements: results
                 })
             } else {
                 sendReturn(res, 401, {

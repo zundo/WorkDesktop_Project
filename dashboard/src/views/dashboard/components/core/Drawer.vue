@@ -17,7 +17,7 @@
       />
     </template>
 
-    <v-divider class="mb-1" />
+    <v-divider />
 
     <v-list
       dense
@@ -44,12 +44,11 @@
       </v-list-item>
     </v-list>
 
-    <v-divider class="mb-2" />
+    <v-divider />
 
     <v-list
       expand
       nav
-      dense
     >
       <div />
 

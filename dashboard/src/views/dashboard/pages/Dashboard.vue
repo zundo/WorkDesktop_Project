@@ -186,7 +186,6 @@
           </v-card-text>
         </base-material-card>
       </v-col>
-
       <v-col cols="12" md="6">
         <base-material-card class="px-5 py-3">
           <template v-slot:heading>
@@ -231,6 +230,11 @@
         </base-material-card>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="12" md="9">
+        <collaborateur></collaborateur>
+      </v-col>
+    </v-row>
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
       <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
       {{snackbarMessage}}
@@ -242,8 +246,13 @@
 </template>
 
 <script>
+import collaborateur from './Collaborateurs'
+
 export default {
   name: "DashboardDashboard",
+  components: {
+    collaborateur
+  },
   data() {
     return {
       isSuccess: false,

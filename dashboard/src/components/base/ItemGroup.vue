@@ -5,6 +5,7 @@
     :sub-group="subGroup"
     append-icon="mdi-menu-down"
     :color="barColor !== 'rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7)' ? 'white' : 'grey darken-1'"
+    dense
   >
     <template v-slot:activator>
       <v-list-item-icon
@@ -35,7 +36,7 @@
       />
 
       <base-item
-      class="ml-4"
+        class="ml-4 mt-n1"
         v-else
         :key="`item-${i}`"
         :item="child"

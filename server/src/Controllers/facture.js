@@ -9,6 +9,7 @@ exports.getFacturesByEnt = async(req, res) => {
     // Récupération des clients de l'entreprise
     index.getFacturesByEntreprise(res, " WHERE `facture`.`id_entreprise_utilisateur` = '" + req.params.id + "'");
 }
+
 exports.addFacture = async(req, res) => {
     const data = req.body;
 

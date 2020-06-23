@@ -18,7 +18,7 @@
                   color="error"
                   text
                   @click="isDialogNewClient = false"
-                >Close</v-btn>
+                >Fermer</v-btn>
                 <v-btn outlined color="success" text @click="saveNewClient">Sauvegarder</v-btn>
               </v-col>
             </v-row>

@@ -100,6 +100,7 @@
                   label="Date de naissance*"
                   prepend-icon="mdi-calendar-outline"
                   maxlength="10"
+                  hint="AAAA/MM/JJ"
                   @click:prepend="isDialogDateNaissanceOpen = true"
                 />
               </v-col>
@@ -193,7 +194,7 @@
               color="error"
               text
               @click="isDialogNewCollaborateur = false"
-            >Close</v-btn>
+            >Fermer</v-btn>
             <v-btn outlined color="success" text @click="saveNewCollaborateur">Sauvegarder</v-btn>
           </v-col>
         </v-col>
@@ -383,8 +384,11 @@ export default {
           console.log("OK");       
         }
       })
-      .catch(error => this.errorMessage("Network ERROR: " + error));
-
+      .catch(error => {
+        console.log("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+        this.errorMessage("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+        this.collaborateur.date_naissance = collaborateurDateNaissance;
+      })
   },
   methods: {
     saveNewCollaborateur: function() {
@@ -408,7 +412,7 @@ export default {
       axios
         .post("http://localhost:3000/addCollaborateur", qs.stringify(payload), config)
         .then(response => {
-          this.successMessage("Le collabrateur a bien été ajouté !");
+          this.successMessage("Le collaborateur a bien été ajouté !");
           console.log("Le collaborateur a bien été ajouté !");
           if(response.data.error == false) 
             document.location.reload(true);

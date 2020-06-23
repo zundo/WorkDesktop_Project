@@ -12,6 +12,7 @@ const express = require('express'),
     projetCtrl = require("./src/Controllers/projet"),
     ticketCtrl = require("./src/Controllers/ticket"),
     entrepriseCtrl = require("./src/Controllers/entreprise"),
+    calendrierCtrl = require("./src/Controllers/calendrier"),
     /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
@@ -92,9 +93,12 @@ app.post('/addTicket', ticketCtrl.addTicket); //Insertion ticket
 app.get('/cloreTicket/:id', ticketCtrl.cloreTicket); //clore le ticket
 app.put('/reponseTicket/:id', ticketCtrl.reponseTicket); //reponse du ticket
 
-app.get('/entreprise', entrepriseCtrl.getEntreprises); //recuperation des entreprises
+app.get('/entreprises', entrepriseCtrl.getEntreprises); //recuperation des entreprises
 app.post('/addEntreprise', entrepriseCtrl.addEntreprise); //Insertion entreprise
 app.put('/updateEntreprise/:id', entrepriseCtrl.updateEntreprise); // update entreprise
+
+app.get('/evenements/:id', calendrierCtrl.getEvenements); // recuperation evenements
+app.post('/addEvenement', calendrierCtrl.addEvenement); // insertion d'evenement
 /*------------------------------------------------------------- */
 app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname + '/error.html'))
