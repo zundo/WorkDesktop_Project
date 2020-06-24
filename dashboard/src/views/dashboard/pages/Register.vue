@@ -28,8 +28,8 @@
                 </h1>
               </div>
             </template>
-            <v-stepper v-model="strep" vertical>
-              <v-stepper-step :complete="strep > 1" step="1" color="info">Informations utilisateur</v-stepper-step>
+            <v-stepper v-model="etape" vertical>
+              <v-stepper-step :complete="etape > 1" step="1" color="info">Informations utilisateur</v-stepper-step>
 
               <v-stepper-content step="1">
                 <v-card class="mt-0" height="auto">
@@ -47,7 +47,6 @@
                         <v-icon v-text="social.icon" />
                       </v-btn>
                       <v-divider />-->
-
                       <v-row>
                         <v-col cols="12" md="6">
                           <v-text-field
@@ -131,7 +130,6 @@
                             clearable
                           />
                         </v-col>
-
                         <v-col cols="12" md="3">
                           <v-text-field
                             color="info"
@@ -193,12 +191,11 @@
                     <small>*Veuillez remplir les champs</small>
                   </v-col>
                 </v-card>
-                <v-btn color="info" @click="strep++" text outlined>
+                <v-btn color="info" @click="etape++" text outlined>
                   <v-icon left>mdi-check-circle-outline</v-icon>Continuer
                 </v-btn>
               </v-stepper-content>
-
-              <v-stepper-step :complete="strep > 2" step="2" color="info">Informations entreprise</v-stepper-step>
+              <v-stepper-step :complete="etape > 2" step="2" color="info">Informations entreprise</v-stepper-step>
               <v-stepper-content step="2">
                 <v-card class="mt-0" height="auto" v-if="!isDataCompagny">
                   <div class="text-center">
@@ -323,18 +320,32 @@
                 <v-btn class="mr-2" v-if="isNotFound==true && isDataCompagny==false" color="red lighten-1" @click="isDataCompagny=true" outlined>
                   <v-icon left>mdi-help-circle-outline</v-icon>SIRET Introuvable ?
                 </v-btn>
-                <v-btn class="mr-2" :disabled="!isDataCompagny" color="info" @click="strep++" text outlined>
+                <v-btn class="mr-2" :disabled="!isDataCompagny" color="info" @click="etape++" text outlined>
                   <v-icon left>mdi-check-circle-outline</v-icon>Continuer
                 </v-btn>
-                <v-btn text color="error" @click="strep--" outlined>
+                <v-btn text color="error" @click="etape--" outlined>
                   <v-icon left>mdi-arrow-left-circle-outline</v-icon>Retour
                 </v-btn>
               </v-stepper-content>
 
-              <v-stepper-step :complete="strep > 3" step="3" color="info">Autres</v-stepper-step>
+              <v-stepper-step :complete="etape > 3" step="3" color="info">Autres</v-stepper-step>
 
               <v-stepper-content step="3">
-                <v-card class="mt-0" height="auto">
+                <v-card
+                  color="primary"
+                  dark
+                  v-if="loading === true"
+                >
+                  <v-card-text>
+                    Chargement
+                    <v-progress-linear
+                      indeterminate
+                      color="white"
+                      class="mb-0"
+                    ></v-progress-linear>
+                  </v-card-text>
+                </v-card>
+                <v-card class="mt-0" height="auto" v-else>
                   <v-card-title>Merci pour toutes ces informations</v-card-title>
                   <v-row>
                     <v-col cols="12">
@@ -350,10 +361,10 @@
                     </v-col>
                   </v-row>
                 </v-card>
-                <v-btn class="mr-2" text outlined color="success" @click="connexionPage">
+                <v-btn class="mr-2" text outlined color="success" @click="registerPage">
                   <v-icon left>mdi-content-save-outline</v-icon>Inscription
                 </v-btn>
-                <v-btn text color="error" @click="strep--" outlined>
+                <v-btn text color="error" @click="etape--" outlined>
                   <v-icon left>mdi-arrow-left-circle-outline</v-icon>Retour
                 </v-btn>
               </v-stepper-content>
@@ -381,11 +392,12 @@ export default {
   components: {},
 
   data: () => ({
-    strep: 1,
+    etape: 1,
     isinfo: false,
     isSnackbarOpened: false,
     snackbarMessage: "",
     /*-------------------------- */
+    loading:false,
     isDialogDateNaissanceOpen: false,
     showPassword: false,
     items_Sexe: ["Homme", "Femme"],
@@ -447,7 +459,6 @@ export default {
         .get('https://entreprise.data.gouv.fr/api/sirene/v3/etablissements/' + siret)
         .then(response => {
             if(response !== undefined || response !== null){
-              //console.log(response);
               this.entreprise.nom_ent=response.data.etablissement.unite_legale.denomination;
               this.entreprise.rue_ent=response.data.etablissement.geo_l4;
               this.entreprise.ville_ent=response.data.etablissement.libelle_commune;
@@ -462,7 +473,7 @@ export default {
         .catch(error => { console.log(error); this.errorMessage("Le SIRET est introuvable ou inconnu, réessayer !"); this.isNotFound=true;});
         //.finally(() => {});
     },
-    connexionPage: function() {
+    registerPage: function() {
       const config = {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
@@ -504,7 +515,7 @@ export default {
         })
         .finally(() => {
           if ((id_user != undefined && id_user.length != 0) || (id_entreprise != undefined && id_entreprise.length != 0) || (isAdmin != undefined && isAdmin.length != 0)){
-            //console.log(id_user)
+            this.loading=true
             this.$store.commit('SET_ID_ENTREPRISE', id_entreprise);
             this.$store.commit('SET_ID_USER', id_user);
             this.$store.commit('SET_IS_ADMIN', isAdmin);
@@ -518,14 +529,6 @@ export default {
         });
     },
     /*------------------------------------------------------ */
-    /*verifyResponseOk: function(responseData) {
-      var tmpStr = JSON.stringify(responseData);
-      if (tmpStr.startsWith('"Error:')) {
-        this.errorMessage(responseData.substring(7)); // suppress "Error:
-        return false;
-      }
-      return true;
-    },*/
     infoMessage: function(message) {
       this.snackbarMessage = message;
       this.isinfo = true;

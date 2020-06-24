@@ -18,7 +18,8 @@ exports.register = async(req, res) => {
         error = true
     if (index.exist(data.codePostal) == false || index.exist(data.pays) == false || index.exist(data.phone) == false || index.exist(data.poste) == false)
         error = true
-        //entreprise
+
+    //entreprise
     if (index.exist(data.numSiret_ent) == false || index.exist(data.nom_ent) == false || index.exist(data.rue_ent) == false || index.exist(data.codePostal_ent) == false)
         error = true
     if (index.exist(data.ville_ent) == false || index.exist(data.pays_ent) == false || index.exist(data.email_ent) == false || index.exist(data.telephone_ent) == false)

@@ -38,7 +38,7 @@
                   v-model="evenement.nomEvent"
                   label="Nom"
                   prepend-icon="mdi-clipboard-text-multiple"
-                  maxlength="10"
+                  maxlength="20"
                   @click:prepend="isDialogDateFinOpen = true"
                   outlined
                 />
@@ -194,24 +194,6 @@ export default {
         start: "2020-01-01",
         end: "2020-01-01"
       },
-      /*{
-        name: "Vacation",
-        start: "2020-06-21",
-        end: "2020-06-28"
-      },
-      {
-        name: "Meeting",
-        start: "2020-06-21"
-      },
-      {
-        name: "Conference",
-        start: "2020-06-30"
-      },
-      {
-        name: "Hackathon",
-        start: "2020-06-18",
-        end: "2020-07-17"
-      }*/
     ],
     type: "month",
     types: ["month", "week", "day"]
