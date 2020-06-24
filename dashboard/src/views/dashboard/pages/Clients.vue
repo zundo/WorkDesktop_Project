@@ -1,10 +1,28 @@
 <template>
   <v-container id="clients" tag="section" fluid>
+    <v-dialog v-model="isDialogDateNaissanceOpen" width="300px" overlay-opacity="0.8">
+      <v-date-picker
+        scrollable
+        color="blue lighten-1"
+        v-model="client.date_naissance"
+        reactive
+        show-current
+      >
+        <v-btn
+          class="ml-auto"
+          outlined
+          color="info"
+          text
+          @click="isDialogDateNaissanceOpen = false"
+        >Ok</v-btn>
+      </v-date-picker>
+    </v-dialog>
     <v-dialog v-model="isDialogNewClient" max-width="1000px" overlay-opacity="0.9">
       <v-card class="px-6">
         <v-card-title class="indigo--text">
           Nouveau Client
-          <v-divider class="my-5" />
+          <v-icon aria-label="Close" @click="isDialogNewClient = false">mdi-close</v-icon>
+          <v-divider class="my-1" />
         </v-card-title>
         <v-row>
           <v-col cols="12">
@@ -73,7 +91,7 @@
                             />
                           </v-col>
                         </v-row>
-                        <v-row>
+                        <v-row class="mt-n6">
                           <v-col cols="12" md="4">
                             <v-text-field
                               color="info"
@@ -103,7 +121,7 @@
                           </v-col>
                         </v-row>
                         <v-row class="mt-n4">
-                          <v-col cols="12" md="4">
+                          <v-col cols="12" md="3">
                             <v-text-field
                               color="info"
                               label="Rue*"
@@ -121,7 +139,7 @@
                               clearable
                             />
                           </v-col>
-                          <v-col cols="12" md="2">
+                          <v-col cols="12" md="3">
                             <v-text-field
                               color="info"
                               label="Code Postal*"
@@ -148,11 +166,11 @@
                     color="indigo"
                     class="mr-2"
                     :disabled="!isDataCompagny"
-                    @click="saveNewEntreprise"
+                    @click="etape++"
                     text
                     outlined
                   >
-                    <v-icon left>mdi-check-circle-outline</v-icon>Sauvegarder
+                    <v-icon left>mdi-check-circle-outline</v-icon>Suite
                   </v-btn>
                   <v-btn
                     class="mr-2"
@@ -163,17 +181,14 @@
                   >
                     <v-icon left>mdi-help-circle-outline</v-icon>SIRET Introuvable ?
                   </v-btn>
-                  <v-btn text color="error" @click="isDialogNewClient = false" outlined>
-                    <v-icon left>mdi-close-box-outline</v-icon>Annuler l'inscription
-                  </v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="2">
                   <v-card class="mb-5" color="grey darken-4" height="auto">
                     <v-col cols="12">
                       <div class="text-center">
-                        <v-row>
-                          <v-col cols="12" md="6">
+                        <v-row class="mt-n4">
+                          <v-col cols="12" md="4">
                             <v-text-field
                               color="info"
                               label="Nom*"
@@ -182,7 +197,7 @@
                               clearable
                             />
                           </v-col>
-                          <v-col cols="12" md="6">
+                          <v-col cols="12" md="4">
                             <v-text-field
                               color="info"
                               label="Prénom*"
@@ -191,9 +206,28 @@
                               clearable
                             />
                           </v-col>
+                          <v-col cols="12" md="4">
+                            <v-text-field
+                              color="info"
+                              label="Numéro de téléphone*"
+                              v-model="client.phone"
+                              prepend-inner-icon="mdi-deskphone"
+                              clearable
+                            />
+                          </v-col>
                         </v-row>
-                        <v-row class="mt-n4">
-                          <v-col cols="12" md="12">
+                        <v-row class="mt-n6">
+                          <v-col cols="12" md="6">
+                            <v-text-field
+                              color="info"
+                              label="Poste*"
+                              v-model="client.poste"
+                              prepend-inner-icon="mdi-badge-account-outline"
+                              clearable
+                            />
+                          </v-col>
+
+                          <v-col cols="12" md="6">
                             <v-text-field
                               color="info"
                               label="Email*"
@@ -203,7 +237,7 @@
                             />
                           </v-col>
                         </v-row>
-                        <v-row class="mt-n4">
+                        <v-row class="mt-n6">
                           <v-col cols="12" md="6">
                             <v-text-field
                               color="info"
@@ -234,33 +268,11 @@
                             />
                           </v-col>
                         </v-row>
-                        <v-row class="mt-n4">
-                          <v-col cols="12" md="6">
-                            <v-text-field
-                              color="info"
-                              label="Poste*"
-                              v-model="client.poste"
-                              prepend-inner-icon="mdi-badge-account-outline"
-                              clearable
-                            />
-                          </v-col>
-
-                          <v-col cols="12" md="6">
-                            <v-text-field
-                              color="info"
-                              label="Numéro de téléphone*"
-                              v-model="client.phone"
-                              prepend-inner-icon="mdi-deskphone"
-                              clearable
-                            />
-                          </v-col>
-
-                        </v-row>
-                        <v-row class="mt-n4">
+                        <v-row class="mt-n6">
                           <v-col cols="12" md="3">
                             <v-text-field
                               color="info"
-                              label="Rue*"
+                              label="Rue"
                               v-model="client.rue"
                               prepend-inner-icon="mdi-walk"
                               clearable
@@ -269,7 +281,7 @@
                           <v-col cols="12" md="3">
                             <v-text-field
                               color="info"
-                              label="Ville*"
+                              label="Ville"
                               v-model="client.ville"
                               prepend-inner-icon="mdi-walk"
                               clearable
@@ -278,7 +290,7 @@
                           <v-col cols="12" md="3">
                             <v-text-field
                               color="info"
-                              label="Code Postal*"
+                              label="Code Postal"
                               v-model="client.codePostal"
                               prepend-inner-icon="mdi-walk"
                               clearable
@@ -287,7 +299,7 @@
                           <v-col cols="12" md="3">
                             <v-text-field
                               color="info"
-                              label="Pays*"
+                              label="Pays"
                               v-model="client.pays"
                               prepend-inner-icon="mdi-walk"
                               clearable
@@ -300,8 +312,8 @@
                   <v-btn color="indigo" class="mr-5" @click="saveNewClient" text outlined>
                     <v-icon left>mdi-check-circle-outline</v-icon>Sauvegarder
                   </v-btn>
-                  <v-btn text color="error" @click="annulerInsertion" outlined>
-                    <v-icon left>mdi-close-box-outline</v-icon>Annuler l'inscription
+                  <v-btn text color="error" @click="etape--" outlined>
+                    <v-icon left>mdi-arrow-left-circle-outline</v-icon>Retour
                   </v-btn>
                 </v-stepper-content>
                 <v-stepper-content step="3">
@@ -444,6 +456,7 @@ export default {
       email_ent: "",
       telephone_ent: ""
     },
+    isDialogDateNaissanceOpen: false,
     isDialogNewClient: false,
     isDialogDeleteClient: false,
     clientToDelete: [],
@@ -507,7 +520,7 @@ export default {
           clients.forEach(client => {
             this.items.push(client);
           });
-          console.log(this.items);
+          //console.log(this.items);
           setTimeout(() => {
             this.loading = false;
             this.firstLoad = false;
@@ -566,18 +579,54 @@ export default {
           this.errorMessage("Le SIRET est introuvable ou inconnu, réessayer !");
           this.isNotFound = true;
         });
-      //.finally(() => {});
     },
-    saveNewEntreprise: function() {
-      this.etape++;
-      console.log("Sauvegarder new entreprise");
-    },
-    saveNewClient: function() {
-      this.etape++;
-      console.log("Sauvegarder new client");
-    },
-    annulerInsertion: function() {
-      this.isDialogNewClient = false;
+    saveNewClient: async function() {
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }
+      };
+
+      let clientDateNaissance = this.client.date_naissance;
+      console.log(clientDateNaissance)
+            console.log(this.client.date_naissance)
+
+      this.client.date_naissance =
+        this.client.date_naissance.substring(8, 10) +
+        "-" +
+        this.client.date_naissance.substring(5, 7) +
+        "-" +
+        this.client.date_naissance.substring(0, 4);
+
+        this.client.id_entreprise_utilisateur = this.id_entreprise; //id_entreprise provenant du store
+
+      let payload = Object.assign(this.client, this.entreprise);
+
+      axios
+        .post(
+          "http://localhost:3000/addClient",
+          qs.stringify(payload),
+          config
+        )
+        .then(response => {
+          this.successMessage("Le client a bien été ajouté !");
+          if (response.data.error == false) document.location.reload(true);
+        })
+        .catch(error => {
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.client.date_naissance = clientDateNaissance;
+        })
     },
     openDialogNewClient: function() {
       this.isDialogNewClient = true;

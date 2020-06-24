@@ -134,7 +134,7 @@ exports.getUser = (res, where = "", port = 200, messageSend = "") => {
             sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
         // Si la liste des utilises est vide
         else if (results.length == 0)
-            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+            sendReturn(res, 409, { error: true, message: "Aucun résultat" })
         else {
             if (results.length > 0) {
                 results.map(item => {
@@ -174,7 +174,7 @@ exports.getUsersByEntreprise = (res, where = "", port = 200, messageSend = "") =
             sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
         // Si la liste des utilises est vide
         else if (results.length == 0)
-            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+            sendReturn(res, 200, { error: false, message: "Résultat vide" })
         else {
             if (results.length > 0) {
                 results.map(item => {
@@ -213,11 +213,8 @@ exports.getClientsByEntreprise = (res, where = "", port = 200, messageSend = "")
         // Si le resultat n'existe pas
         else if (results === undefined)
             sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
-        // Si la liste des utilises est vide
-        else if (results.length == 0)
-            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
         else {
-            if (results.length > 0) {
+            if (results.length >= 0) {
                 results.map(item => {
                     //delete item.id; // Suppression d'un elements
                     //delete item.id_entreprise_client; // Suppression d'un elements
@@ -251,11 +248,8 @@ exports.getFacturesByEntreprise = (res, where = "", port = 200, messageSend = ""
             // Si le resultat n'existe pas
             else if (results === undefined)
                 sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
-            // Si la liste des utilises est vide
-            else if (results.length == 0)
-                sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
             else {
-                if (results.length > 0) {
+                if (results.length >= 0) {
                     results.map(item => {
                         //delete item.id; // Suppression d'un elements
                         //delete item.id_entreprise_client; // Suppression d'un elements
@@ -289,11 +283,8 @@ exports.getProjetsByEntreprise = (res, where = "", port = 200, messageSend = "")
         // Si le resultat n'existe pas
         else if (results === undefined)
             sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
-        // Si la liste des utilises est vide
-        else if (results.length == 0)
-            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
         else {
-            if (results.length > 0) {
+            if (results.length >= 0) {
                 results.map(item => {
                     item.date_debut = changeDateForSend(JSON.stringify(item.date_debut))
                     item.date_fin = changeDateForSend(JSON.stringify(item.date_fin))
@@ -325,11 +316,8 @@ exports.getTicketsByEntreprise = (res, where = "", port = 200, messageSend = "")
         // Si le resultat n'existe pas
         else if (results === undefined)
             sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
-        // Si la liste des utilises est vide
-        else if (results.length == 0)
-            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
         else {
-            if (results.length > 0) {
+            if (results.length >= 0) {
                 results.map(item => {
                     item.dateTicket = changeDateForSend(JSON.stringify(item.dateTicket))
                     return item; // Retour le nouvel element item => results[i] = item
@@ -361,11 +349,8 @@ exports.getEvenementsByEntreprise = (res, where = "", port = 200, messageSend = 
         // Si le resultat n'existe pas
         else if (results === undefined)
             sendReturn(res, port, { error: false, message: "Aucun résultat pour la requête" });
-        // Si la liste des utilises est vide
-        else if (results.length == 0)
-            sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
         else {
-            if (results.length > 0) {
+            if (results.length >= 0) {
                 results.map(item => {
                     item.start = JSON.stringify(item.start).substr(1, 10)
                     item.end = JSON.stringify(item.end).substr(1, 10)

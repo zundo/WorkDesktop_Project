@@ -35,7 +35,7 @@ exports.addClient = async(req, res) => {
         })
     } else {
         //verification 
-        if (index.textFormat(data.nom_ent) == false || index.textFormat(data.rue_ent) == false || index.zipFormat(data.codePostal_ent) == false || data.numSiret_ent.length != 13 ||
+        if (index.textFormat(data.nom_ent) == false || index.textFormat(data.rue_ent) == false || index.zipFormat(data.codePostal_ent) == false || data.numSiret_ent.length != 14 ||
             index.textFormat(data.ville_ent) == false || index.textFormat(data.pays_ent) == false || index.emailFormat(data.email_ent) == false || index.numberFormat(data.numSiret_ent) == false) {
             index.sendReturn(res, 409, {
                 error: true,
@@ -48,13 +48,13 @@ exports.addClient = async(req, res) => {
                 message: "L'une des données obligatoire ne sont pas conformes"
             })
         } else {
-            if (index.exist(data.website_ent) == false) data.website_ent = "Inconnu";
+            /*if (index.exist(data.website_ent) == false) data.website_ent = "Inconnu";
 
             if (index.exist(data.site_web) == false) data.site_web = "Inconnu";
             if (index.exist(data.rue) == false) data.rue = "Inconnu";
             if (index.exist(data.ville) == false) data.ville = "Inconnu";
-            if (index.exist(data.codePostal) == false) data.codePostal = "Inconnu";
-            if (index.exist(data.pays) == false) data.pays = "Inconnu";
+            if (index.exist(data.codePostal) == false) data.codePostal = 0;
+            if (index.exist(data.pays) == false) data.pays = "Inconnu";*/
 
             if (data.id_entreprise_utilisateur == 0 || data.id_entreprise_utilisateur == null || data.id_entreprise_utilisateur == undefined)
                 index.sendReturn(res, 401, { error: true, message: "L'id entreprise user n'existe pas" })
@@ -68,7 +68,7 @@ exports.addClient = async(req, res) => {
                 pays: data.pays_ent.trim(),
                 email_entreprise: data.email_ent.trim().toLowerCase(),
                 telephone: data.telephone_ent.trim(),
-                site_web: data.website_ent.trim()
+                site_web: index.exist(data.website_ent) == false ? data.website_ent = "Inconnu" : data.website_ent.trim()
             };
 
             bdd.query("INSERT INTO entreprise SET ?", toInsertEnt, (error, resultsEnt) => {
@@ -87,11 +87,11 @@ exports.addClient = async(req, res) => {
                         firstname: data.firstname.trim(),
                         date_naissance: index.changeDateForSQL(data.date_naissance),
                         sexe: data.sexe.trim(),
-                        rue: data.rue.trim(),
-                        codePostal: data.codePostal.trim(),
-                        ville: data.ville.trim(),
-                        pays: data.pays.trim(),
-                        site_web: data.site_web.trim(),
+                        rue: index.exist(data.rue) == false ? data.rue = "Inconnu" : data.rue.trim(),
+                        codePostal: index.exist(data.codePostal) == false ? data.codePostal = 0 : data.codePostal.trim(),
+                        ville: index.exist(data.site_web) == false ? data.rue = "Inconnu" : data.ville.trim(),
+                        pays: index.exist(data.pays) == false ? data.pays = "Inconnu" : data.pays.trim(),
+                        site_web: index.exist(data.site_web) == false ? data.site_web = "Inconnu" : data.site_web.trim(),
                         phone: data.phone.trim(),
                         poste: data.poste.trim(),
                         id_entreprise_client: data.id_entreprise_client,
@@ -150,11 +150,10 @@ exports.updateClient = async(req, res) => {
                 message: "L'une des données obligatoire ne sont pas conformes"
             })
         } else {
-            if (index.exist(data.site_web) == false) data.site_web = "Inconnu";
+            /*if (index.exist(data.site_web) == false) data.site_web = "Inconnu";
             if (index.exist(data.rue) == false) data.rue = "Inconnu";
-            if (index.exist(data.ville) == false) data.ville = "Inconnu";
-            if (index.exist(data.codePostal) == false) data.codePostal = "Inconnu";
-            if (index.exist(data.pays) == false) data.pays = "Inconnu";
+            if (index.exist(data.ville) == false) data.ville = "Inconnu";*/
+            //if (index.exist(data.codePostal) == false) data.codePostal = 0;
 
             // update du client en base de données
             toUpdate = {
@@ -163,11 +162,11 @@ exports.updateClient = async(req, res) => {
                 firstname: data.firstname.trim(),
                 date_naissance: index.changeDateForSQL(data.date_naissance),
                 sexe: data.sexe.trim(),
-                rue: data.rue.trim(),
-                codePostal: data.codePostal.trim(),
-                ville: data.ville.trim(),
-                pays: data.pays.trim(),
-                site_web: data.site_web.trim(),
+                rue: index.exist(data.rue) == false ? data.rue = "Inconnu" : data.rue.trim(),
+                codePostal: index.exist(data.codePostal) == false ? data.codePostal = 0 : data.codePostal.trim(),
+                ville: index.exist(data.site_web) == false ? data.rue = "Inconnu" : data.ville.trim(),
+                pays: index.exist(data.pays) == false ? data.pays = "Inconnu" : data.pays.trim(),
+                site_web: index.exist(data.site_web) == false ? data.site_web = "Inconnu" : data.site_web.trim(),
                 phone: data.phone.trim(),
                 poste: data.poste.trim(),
             };

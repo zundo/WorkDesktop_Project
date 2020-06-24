@@ -9,8 +9,8 @@ export default new Vuex.Store({
         barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
         barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-3.jpg',
         drawer: null,
-        id_entreprise: 1, //mettre a null plus tard //id_entreprise: null (1)
-        id_user: 1, //mettre a null plus tard //id_user: null (2)
+        id_entreprise: 8, //mettre a null plus tard //id_entreprise: null (1)
+        id_user: 2, //mettre a null plus tard //id_user: null (2)
         isAdmin: true //mettre a null plus tard //isAdmin: null (true)
     },
     //plugins: [createPersistedState()], //TODO plugin permettant d'utiliser le localstorage

@@ -34,10 +34,9 @@ exports.addCollaborateur = async(req, res) => {
             // Vérification de si l'email existe déjà
             if (await index.emailExist(data.email)) {
                 index.sendReturn(res, 422, {
-                        error: true,
-                        message: "Votre email n'est pas correct (existe déjà)"
-                    })
-                    //^^Message d'erreur requête verif email
+                    error: true,
+                    message: "Votre email n'est pas correct (existe déjà)"
+                })
             } else {
                 // Encryptage du mot de passe
                 data.password = await new Promise(resolve => {

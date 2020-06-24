@@ -175,16 +175,16 @@
             </v-row>
           </div>
           <v-col cols="12">
-          <!--<v-switch
+            <!--<v-switch
             v-model="switch1"
             :label="`Switch 1: ${switch1.toString()}`"
-          ></v-switch>-->
-          <v-switch
-            class="ml-n3 my-n2"
-            v-model="collaborateur.isAdmin"
-            label="Super Admin ?"
-            :color="collaborateur.isAdmin ? 'info' : 'error'"
-          ></v-switch>
+            ></v-switch>-->
+            <v-switch
+              class="ml-n3 my-n2"
+              v-model="collaborateur.isAdmin"
+              label="Super Admin ?"
+              :color="collaborateur.isAdmin ? 'info' : 'error'"
+            ></v-switch>
           </v-col>
           <small>*Veuillez remplir les champs</small>
           <v-col cols="12" class="text-right">
@@ -202,7 +202,10 @@
     </v-dialog>
     <v-dialog dark v-model="isDialogDeleteCollaborateur" width="500" overlay-opacity="0.8">
       <v-card outlined>
-        <v-card-title>Supprimer le collaborateur {{ collaborateurToDelete.firstname }} {{ collaborateurToDelete.lastname }} ?<v-divider class="my-2"/></v-card-title>  
+        <v-card-title>
+          Supprimer le collaborateur {{ collaborateurToDelete.firstname }} {{ collaborateurToDelete.lastname }} ?
+          <v-divider class="my-2" />
+        </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="isDialogDeleteCollaborateur=false" class="mx-2" fab dark>
@@ -252,14 +255,20 @@
       >
         <template v-slot:expanded-item="{ headers, item }">
           <th class="pr-1">
-            <v-chip  color="purple lighten-1" v-if="item.isAdmin">Admin</v-chip>
+            <v-chip color="purple lighten-1" v-if="item.isAdmin">Admin</v-chip>
           </th>
           <td :colspan="headers.length">
             <v-btn small color="blue" @click="PageInfosCollaborateur(item)">
               <v-icon left>mdi-card-account-details-outline</v-icon>
               Informations {{ item.firstname }}
             </v-btn>
-            <v-btn :disabled="!isAdmin || item.isAdmin == 1" small color="red" @click="dialogDeleteCollaborateur(item)" class="ml-3">
+            <v-btn
+              :disabled="!isAdmin || item.isAdmin == 1"
+              small
+              color="red"
+              @click="dialogDeleteCollaborateur(item)"
+              class="ml-3"
+            >
               <v-icon left>mdi-account-remove-outline</v-icon>
               Supprimer {{ item.firstname }}
             </v-btn>
@@ -353,14 +362,14 @@ export default {
   }),
   computed: {
     id_user() {
-        return this.$store.state.id_user
+      return this.$store.state.id_user;
     },
     isAdmin() {
-        return this.$store.state.isAdmin
+      return this.$store.state.isAdmin;
     },
     id_entreprise() {
-        return this.$store.state.id_entreprise
-    },
+      return this.$store.state.id_entreprise;
+    }
   },
   mounted() {
     this.verifUserConnected();
@@ -368,7 +377,7 @@ export default {
     //https://jsonplaceholder.typicode.com/users
 
     axios
-      .get("http://localhost:3000/users/"+this.id_entreprise)//tous les users de l entreprise
+      .get("http://localhost:3000/users/" + this.id_entreprise) //tous les users de l entreprise
       .then(response => {
         if (this.verifyResponseOk(response.data)) {
           console.log(response.data);
@@ -381,14 +390,24 @@ export default {
             this.loading = false;
             this.firstLoad = false;
           }, 1000);
-          console.log("OK");       
+          console.log("OK");
         }
       })
       .catch(error => {
-        console.log("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
-        this.errorMessage("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+        console.log(
+          "ERROR " +
+            JSON.stringify(error.response.status) +
+            " : " +
+            JSON.stringify(error.response.data.message)
+        );
+        this.errorMessage(
+          "ERROR " +
+            JSON.stringify(error.response.status) +
+            " : " +
+            JSON.stringify(error.response.data.message)
+        );
         this.collaborateur.date_naissance = collaborateurDateNaissance;
-      })
+      });
   },
   methods: {
     saveNewCollaborateur: function() {
@@ -400,28 +419,46 @@ export default {
       };
 
       let collaborateurDateNaissance = this.collaborateur.date_naissance;
-      this.collaborateur.date_naissance =this.collaborateur.date_naissance.substring(8, 10) +"-" +this.collaborateur.date_naissance.substring(5, 7) +"-" +this.collaborateur.date_naissance.substring(0, 4);
-      
+      this.collaborateur.date_naissance =
+        this.collaborateur.date_naissance.substring(8, 10) +
+        "-" +
+        this.collaborateur.date_naissance.substring(5, 7) +
+        "-" +
+        this.collaborateur.date_naissance.substring(0, 4);
+
       if (this.collaborateur.isAdmin == true) this.collaborateur.isAdmin = 1;
       else this.collaborateur.isAdmin = 0;
 
-      this.collaborateur.id_entreprise = this.id_entreprise;//id_entreprise provenant du store
+      this.collaborateur.id_entreprise = this.id_entreprise; //id_entreprise provenant du store
       let payload = this.collaborateur;
       //return console.log(JSON.stringify(payload));
-      
+
       axios
-        .post("http://localhost:3000/addCollaborateur", qs.stringify(payload), config)
+        .post(
+          "http://localhost:3000/addCollaborateur",
+          qs.stringify(payload),
+          config
+        )
         .then(response => {
           this.successMessage("Le collaborateur a bien été ajouté !");
           console.log("Le collaborateur a bien été ajouté !");
-          if(response.data.error == false) 
-            document.location.reload(true);
+          if (response.data.error == false) document.location.reload(true);
         })
         .catch(error => {
-          console.log("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
-          this.errorMessage("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
           this.collaborateur.date_naissance = collaborateurDateNaissance;
-        })
+        });
     },
     openDialogNewCollaborateur: function() {
       this.isDialogNewCollaborateur = true;
@@ -431,24 +468,39 @@ export default {
       this.isDialogDeleteCollaborateur = false;
 
       axios
-        .delete("http://localhost:3000/deleteCollaborateur/"+this.collaborateurToDelete.id)
+        .delete(
+          "http://localhost:3000/deleteCollaborateur/" +
+            this.collaborateurToDelete.id
+        )
         .then(response => {
-          if(response.data.error == false){
-            console.log(response.data.message)
+          if (response.data.error == false) {
+            console.log(response.data.message);
             this.successMessage(
               "Le collaborateur " +
-                this.collaborateurToDelete.firstname +' '+this.collaborateurToDelete.lastname+
+                this.collaborateurToDelete.firstname +
+                " " +
+                this.collaborateurToDelete.lastname +
                 " a été supprimé avec succès"
             );
             setTimeout(() => {
-              document.location.reload(true);            
+              document.location.reload(true);
             }, 1500);
           }
         })
         .catch(error => {
-          console.log("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
-          this.errorMessage("ERROR " +JSON.stringify(error.response.status) +" : " +JSON.stringify(error.response.data.message));
-        })
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+        });
     },
     dialogDeleteCollaborateur: function(infos_collaborateur) {
       this.isDialogDeleteCollaborateur = true;
@@ -462,10 +514,14 @@ export default {
     },
 
     /*------------------------------------------------------ */
-    verifUserConnected: function(){
-      if((this.id_user != undefined && this.id_user !== 0) || (this.isAdmin != undefined && this.isAdmin !== 0) || (this.id_entreprise != undefined && this.id_entreprise !== 0)){
+    verifUserConnected: function() {
+      if (
+        (this.id_user != undefined && this.id_user !== 0) ||
+        (this.isAdmin != undefined && this.isAdmin !== 0) ||
+        (this.id_entreprise != undefined && this.id_entreprise !== 0)
+      ) {
         //console.log(this.isAdmin)
-      }else return this.$router.push({ name: "Connexion" });
+      } else return this.$router.push({ name: "Connexion" });
     },
     verifyResponseOk: function(responseData) {
       var tmpStr = JSON.stringify(responseData);

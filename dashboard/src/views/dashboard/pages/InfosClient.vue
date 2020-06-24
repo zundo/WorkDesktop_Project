@@ -88,7 +88,7 @@
                 </tr>
                 <tr>
                   <td>Code postal</td>
-                  <td>{{ client.codePostal }}</td>
+                  <td><span v-if="client.codePostal !== 0">{{ client.codePostal }}</span><span v-else>Inconnu</span></td>
                 </tr>
                 <tr>
                   <td>Pays</td>
