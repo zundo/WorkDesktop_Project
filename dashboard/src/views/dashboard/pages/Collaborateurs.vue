@@ -11,7 +11,7 @@
         <v-btn
           class="ml-auto"
           outlined
-          color="info"
+          color="blue"
           text
           @click="isDialogDateNaissanceOpen = false"
         >Ok</v-btn>
@@ -250,7 +250,7 @@
         :sort-desc="[false]"
         show-expand
         single-expand
-        item-key="lastname"
+        item-key="email"
         :expanded.sync="expanded"
       >
         <template v-slot:expanded-item="{ headers, item }">
@@ -380,7 +380,7 @@ export default {
       .get("http://localhost:3000/users/" + this.id_entreprise) //tous les users de l entreprise
       .then(response => {
         if (this.verifyResponseOk(response.data)) {
-          console.log(response.data);
+          //console.log(response.data);
           var users = response.data.users;
           users.forEach(user => {
             this.items.push(user);
@@ -406,7 +406,7 @@ export default {
             " : " +
             JSON.stringify(error.response.data.message)
         );
-        this.collaborateur.date_naissance = collaborateurDateNaissance;
+        //this.collaborateur.date_naissance = collaborateurDateNaissance;
       });
   },
   methods: {

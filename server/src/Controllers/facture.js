@@ -17,7 +17,7 @@ exports.addFacture = async(req, res) => {
         index.sendReturn(res, 401, { error: true, message: "L'id entreprise user n'existe pas" })
 
     if (data.id_client == 0 || data.id_client == null || data.id_client == undefined)
-        index.sendReturn(res, 401, { error: true, message: "L'id client n'existe pas" })
+        index.sendReturn(res, 401, { error: true, message: "Erreur, le client n'existe pas" })
 
     // Vérification de si les données sont bien présentes dans le body
     if (index.exist(data.titre) == false || index.exist(data.statut) == false || index.exist(data.date) == false ||

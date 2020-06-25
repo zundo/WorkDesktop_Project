@@ -3,7 +3,7 @@
     <v-dialog v-model="isDialogDateNaissanceOpen" width="300px" overlay-opacity="0.8">
       <v-date-picker
         scrollable
-        color="blue lighten-1"
+        color="indigo lighten-1"
         v-model="client.date_naissance"
         reactive
         show-current
@@ -11,7 +11,7 @@
         <v-btn
           class="ml-auto"
           outlined
-          color="info"
+          color="indigo"
           text
           @click="isDialogDateNaissanceOpen = false"
         >Ok</v-btn>
@@ -40,7 +40,7 @@
                       <v-row>
                         <v-col cols="11">
                           <v-text-field
-                            color="info"
+                            color="indigo"
                             label="Numéro de Siret*"
                             prepend-inner-icon="mdi-sort-numeric-variant"
                             clearable
@@ -72,7 +72,7 @@
                         <v-row class="mt-n3">
                           <v-col cols="12" md="6">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Nom de l'entreprise*"
                               v-model="entreprise.nom_ent"
                               prepend-inner-icon="mdi-face"
@@ -81,7 +81,7 @@
                           </v-col>
                           <v-col cols="12" md="6">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Numéro de Siret*"
                               v-model="entreprise.numSiret_ent"
                               prepend-inner-icon="mdi-sort-numeric-variant"
@@ -94,7 +94,7 @@
                         <v-row class="mt-n6">
                           <v-col cols="12" md="4">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Email de l'entreprise*"
                               v-model="entreprise.email_ent"
                               prepend-inner-icon="mdi-email-outline"
@@ -103,7 +103,7 @@
                           </v-col>
                           <v-col cols="12" md="4">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Téléphone de l'entreprise*"
                               v-model="entreprise.telephone_ent"
                               prepend-inner-icon="mdi-deskphone"
@@ -112,7 +112,7 @@
                           </v-col>
                           <v-col cols="12" md="4">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Site web entreprise"
                               v-model="entreprise.website_ent"
                               prepend-inner-icon="mdi-web"
@@ -123,7 +123,7 @@
                         <v-row class="mt-n4">
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Rue*"
                               v-model="entreprise.rue_ent"
                               prepend-inner-icon="mdi-walk"
@@ -132,7 +132,7 @@
                           </v-col>
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Ville*"
                               v-model="entreprise.ville_ent"
                               prepend-inner-icon="mdi-walk"
@@ -141,7 +141,7 @@
                           </v-col>
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Code Postal*"
                               v-model="entreprise.codePostal_ent"
                               prepend-inner-icon="mdi-walk"
@@ -150,7 +150,7 @@
                           </v-col>
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Pays*"
                               v-model="entreprise.pays_ent"
                               prepend-inner-icon="mdi-walk"
@@ -190,7 +190,7 @@
                         <v-row class="mt-n4">
                           <v-col cols="12" md="4">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Nom*"
                               v-model="client.lastname"
                               prepend-inner-icon="mdi-face"
@@ -199,7 +199,7 @@
                           </v-col>
                           <v-col cols="12" md="4">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Prénom*"
                               v-model="client.firstname"
                               prepend-inner-icon="mdi-face"
@@ -208,7 +208,7 @@
                           </v-col>
                           <v-col cols="12" md="4">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Numéro de téléphone*"
                               v-model="client.phone"
                               prepend-inner-icon="mdi-deskphone"
@@ -219,7 +219,7 @@
                         <v-row class="mt-n6">
                           <v-col cols="12" md="6">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Poste*"
                               v-model="client.poste"
                               prepend-inner-icon="mdi-badge-account-outline"
@@ -229,7 +229,7 @@
 
                           <v-col cols="12" md="6">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Email*"
                               v-model="client.email"
                               prepend-inner-icon="mdi-email-outline"
@@ -240,7 +240,7 @@
                         <v-row class="mt-n6">
                           <v-col cols="12" md="6">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Site Web"
                               v-model="client.website"
                               prepend-inner-icon="mdi-web"
@@ -249,7 +249,7 @@
                           </v-col>
                           <v-col cols="12" md="3">
                             <v-select
-                              color="info"
+                              color="indigo"
                               prepend-inner-icon="mdi-format-list-bulleted-type"
                               v-model="client.sexe"
                               :items="items_Sexe"
@@ -258,7 +258,7 @@
                           </v-col>
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               v-model="client.date_naissance"
                               label="Date de naissance*"
                               prepend-icon="mdi-calendar-outline"
@@ -271,7 +271,7 @@
                         <v-row class="mt-n6">
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Rue"
                               v-model="client.rue"
                               prepend-inner-icon="mdi-walk"
@@ -280,7 +280,7 @@
                           </v-col>
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Ville"
                               v-model="client.ville"
                               prepend-inner-icon="mdi-walk"
@@ -289,7 +289,7 @@
                           </v-col>
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Code Postal"
                               v-model="client.codePostal"
                               prepend-inner-icon="mdi-walk"
@@ -298,7 +298,7 @@
                           </v-col>
                           <v-col cols="12" md="3">
                             <v-text-field
-                              color="info"
+                              color="indigo"
                               label="Pays"
                               v-model="client.pays"
                               prepend-inner-icon="mdi-walk"
@@ -588,8 +588,8 @@ export default {
       };
 
       let clientDateNaissance = this.client.date_naissance;
-      console.log(clientDateNaissance)
-            console.log(this.client.date_naissance)
+      /*console.log(clientDateNaissance)
+            console.log(this.client.date_naissance)*/
 
       this.client.date_naissance =
         this.client.date_naissance.substring(8, 10) +
