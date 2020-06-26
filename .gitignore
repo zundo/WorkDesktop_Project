@@ -29,3 +29,4 @@ dashboard/dist_electron
 
 server/node_modules
 server/package-lock.json
+server/src/config/index.js

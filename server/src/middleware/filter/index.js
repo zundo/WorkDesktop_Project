@@ -52,6 +52,12 @@ exports.emailFormat = (data) => {
         return true
 }
 
+//Function vérification password
+exports.passwordFormat = (data) => {
+    let regexPassword = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})$/
+    return data.match(regexPassword) == null || data === undefined ? false : true
+}
+
 // Function vérification de si le zip est dans le bon format
 exports.zipFormat = (data) => {
     let regexZip = /^(([0-8][0-9])|(9[0-5]))[0-9]{3}$/

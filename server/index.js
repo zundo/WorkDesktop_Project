@@ -12,9 +12,9 @@ const express = require('express'),
     projetCtrl = require("./src/Controllers/projet"),
     ticketCtrl = require("./src/Controllers/ticket"),
     entrepriseCtrl = require("./src/Controllers/entreprise"),
-    calendrierCtrl = require("./src/Controllers/calendrier")
+    calendrierCtrl = require("./src/Controllers/calendrier"),
     /*---------------------------------------------------------- */
-app = express(),
+    app = express(),
     port = 3000;
 
 // parse application/x-www-form-urlencoded
@@ -45,9 +45,8 @@ app.get('/', (req, res) => {
 });
 
 /*------------------------------------------------------------- */
-/*app.get('/testApi/:siret', (req, res) => {
-    //console.log(req.params.siret);
-
+app.get('/testApi/:siret', (req, res) => {
+    console.log(req.params.siret);
     axios.get('https://entreprise.data.gouv.fr/api/sirene/v3/etablissements/' + req.params.siret)
         .then(function(response) {
             console.log(response.data);
@@ -60,7 +59,25 @@ app.get('/', (req, res) => {
             }
         })
         .catch(function(error) { console.log(error); })
-});*/
+
+    /*const token = jwt.sign({
+        exp: Math.floor(Date.now() / 1000) + (60 * 60) * 24 * 7,
+        data: 5
+    }, config.keyToken)
+
+    // verify a token symmetric
+    jwt.verify(token, config.keyToken, function(err, decoded) {
+        console.log(decoded.data)
+    });
+
+    res.setHeader('Content-Type', 'application/json')
+    try {
+        res.status(200).json({ token: token })
+    } catch (error) {
+        let sendError = { error: true, message: "Processing error" }
+        res.status(500).json(sendError)
+    }*/
+});
 
 app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
 app.post('/login', loginCtrl.login); //Login

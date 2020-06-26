@@ -48,6 +48,11 @@ exports.register = async(req, res) => {
                     error: true,
                     message: "L'une des données obligatoire ne sont pas conformes"
                 })
+            } else if (index.passwordFormat(data.password)) { //verify ?
+                index.sendReturn(res, 409, {
+                    error: true,
+                    message: "Le mot de passe doit contenir 6 caractères !"
+                })
             } else {
                 // Vérification de si l'email existe déjà
                 if (await index.emailExist(data.email)) {
