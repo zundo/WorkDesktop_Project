@@ -146,36 +146,7 @@
               </template>
             </v-item>
           </v-item-group>
-
-          <v-btn
-            block
-            class="mb-3"
-            :color="color"
-            @click="testAddAxios"
-            default
-            rel="noopener"
-          >
-            Axios post
-          </v-btn>
-
-          <v-btn
-            block
-            class="mb-3"
-            color="warning darken-1"
-            dark
-            default
-            rel="noopener"
-            @click="testDeleteAxios"          
-            >
-            Axios get
-          </v-btn>
-
-          <div class="my-12" />
-
-          <div>
-            <strong class="mb-3 d-inline-block">THANK YOU FOR SHARING!</strong>
-          </div>
-
+          <v-divider class="mt-5 secondary" />
         </v-card-text>
       </v-card>
     </v-menu>
@@ -190,9 +161,7 @@
 
   export default {
     name: 'DashboardCoreSettings',
-
     mixins: [Proxyable],
-
     data: () => ({
       scrim: 'rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)',
       scrims: [
@@ -252,38 +221,6 @@
       ...mapMutations({
         setBarImage: 'SET_BAR_IMAGE',
       }),
-
-      testAddAxios: function(){
-        const config = {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-          }
-        }      
-
-        axios
-          .post('http://localhost:3000/login',qs.stringify({ email: "mou@mou.mou", password:"mou" }),config)
-          .then(response => {
-            console.log(JSON.stringify(response.data))
-          })
-          .catch((error) => { 
-            console.log(error);
-            console.log("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message)); 
-          });
-      },
-
-      testDeleteAxios: function(){
-        axios
-          .get("http://localhost:3000/user")
-          .then(response => {
-              console.log(JSON.stringify(response.data));
-          })
-          .catch((error) => { 
-            console.log(error);
-            console.log("ERROR "+JSON.stringify(error.response.status) + " : " + JSON.stringify(error.response.data.message)); 
-          })
-          //.finally(() => console.log("API USER BON !"));
-      }
-
     },
   }
 </script>

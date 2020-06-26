@@ -3,28 +3,28 @@
     <v-dialog v-model="isDialogDateDebutOpen" width="300px" overlay-opacity="0.8">
       <v-date-picker
         scrollable
-        color="blue lighten-1"
+        color="red lighten-1"
         v-model="evenement.dateDebut"
         reactive
         show-current
       >
-        <v-btn class="ml-auto" outlined color="info" text @click="isDialogDateDebutOpen = false">Ok</v-btn>
+        <v-btn class="ml-auto" outlined color="red" text @click="isDialogDateDebutOpen = false">Ok</v-btn>
       </v-date-picker>
     </v-dialog>
     <v-dialog v-model="isDialogDateFinOpen" width="300px" overlay-opacity="0.8">
       <v-date-picker
         scrollable
-        color="blue lighten-1"
+        color="red lighten-1"
         v-model="evenement.dateFin"
         reactive
         show-current
       >
-        <v-btn class="ml-auto" outlined color="info" text @click="isDialogDateFinOpen = false">Ok</v-btn>
+        <v-btn class="ml-auto" outlined color="red" text @click="isDialogDateFinOpen = false">Ok</v-btn>
       </v-date-picker>
     </v-dialog>
     <v-dialog v-model="isDialogNewEvent" persistent max-width="1000px" overlay-opacity="0.8">
       <v-card class="px-6" outlined>
-        <v-card-title class="info--text">
+        <v-card-title class="red--text">
           Création d'un Evenement
           <v-icon aria-label="Close" @click="isDialogNewEvent = false">mdi-close</v-icon>
         </v-card-title>
@@ -34,7 +34,7 @@
             <v-row class="mt-n3">
               <v-col cols="12">
                 <v-text-field
-                  color="blue"
+                  color="red"
                   v-model="evenement.nomEvent"
                   label="Nom"
                   prepend-icon="mdi-clipboard-text-multiple"
@@ -47,7 +47,7 @@
             <v-row>
               <v-col cols="12" class="mt-n3">
                 <v-text-field
-                  color="blue"
+                  color="red"
                   v-model="evenement.dateDebut"
                   label="Date de début"
                   prepend-icon="mdi-calendar-outline"
@@ -61,7 +61,7 @@
             <v-row class="mt-n3">
               <v-col cols="12">
                 <v-text-field
-                  color="blue"
+                  color="red"
                   v-model="evenement.dateFin"
                   label="Date de fin"
                   prepend-icon="mdi-calendar-outline"
@@ -83,7 +83,7 @@
     <base-material-card
       icon="mdi-calendar"
       title="Calendrier"
-      color="blue"
+      color="red"
       inline
       class="px-5 py-3"
     >
@@ -93,7 +93,7 @@
             <v-toolbar flat>
               <v-toolbar-title>{{ dateDuJour }}</v-toolbar-title>
               <v-spacer />
-              <v-btn color="blue" class="mt-1" @click="isDialogNewEvent = true">
+              <v-btn color="red" class="mt-1" @click="isDialogNewEvent = true">
                 <v-icon left>mdi-plus-circle-outline</v-icon>Ajouter un événement
               </v-btn>
               <v-spacer />
@@ -109,11 +109,11 @@
 
               <v-spacer />
 
-              <v-btn @click="$refs.calendar.prev()" fab dense color="blue">
+              <v-btn @click="$refs.calendar.prev()" fab dense color="red">
                 <v-icon large>mdi-chevron-left</v-icon>
               </v-btn>
               <v-spacer />
-              <v-btn @click="$refs.calendar.next()" fab dense color="blue">
+              <v-btn @click="$refs.calendar.next()" fab dense color="red">
                 <v-icon large>mdi-chevron-right</v-icon>
               </v-btn>
             </v-toolbar>
@@ -124,7 +124,8 @@
                 v-model="calendar"
                 :events="events"
                 :type="type"
-                event-color="blue"
+                event-overlap-mode="column"
+                :event-color="getEventColor"
                 :now="dateDuJour"
               />
             </v-sheet>
@@ -150,7 +151,7 @@ export default {
       props: {
         color: {
           type: String,
-          default: "blue"
+          default: "red"
         },
         minWidth: {
           type: Number,
@@ -192,21 +193,24 @@ export default {
       {
         name: "Happy new year 2020",
         start: "2020-01-01",
-        end: "2020-01-01"
+        end: "2020-01-01",
+        color:"Orange"
       },
     ],
     type: "month",
-    types: ["month", "week", "day"]
+    types: ["month", "week", "day"],
+    colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange','deep-orange', 
+            'pink','red', 'light-blue', 'teal', 'amber','lime','blue-grey','brown'],
   }),
   mounted() {
     this.verifUserConnected();
 
     axios
-      .get("http://localhost:3000/evenements/"+this.id_entreprise)//tous les users de l entreprise
+      .get("http://localhost:3000/evenements/" + this.id_entreprise)//tous les users de l entreprise
       .then(response => {
-        //console.log(response.data.evenements)
         response.data.evenements.forEach(evenement => {
-          //delete evenement.id
+          evenement.name = evenement.name +' '+ evenement.firstname +' '+ evenement.lastname
+          evenement = Object.assign(evenement, {color: this.colors[this.rnd(0, this.colors.length - 1)]});
           this.events.push(evenement)
         });
       })
@@ -259,6 +263,12 @@ export default {
           this.evenement.dateDebut = eventDateDebut;
           this.evenement.dateFin = eventDateFin;
         })    
+    },
+    getEventColor (event) {
+      return event.color
+    },
+    rnd (a, b) {
+      return Math.floor((b - a + 1) * Math.random()) + a
     },
     /*------------------------------------------------------ */
     verifUserConnected: function(){

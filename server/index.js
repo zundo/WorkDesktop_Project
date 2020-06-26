@@ -12,9 +12,9 @@ const express = require('express'),
     projetCtrl = require("./src/Controllers/projet"),
     ticketCtrl = require("./src/Controllers/ticket"),
     entrepriseCtrl = require("./src/Controllers/entreprise"),
-    calendrierCtrl = require("./src/Controllers/calendrier"),
+    calendrierCtrl = require("./src/Controllers/calendrier")
     /*---------------------------------------------------------- */
-    app = express(),
+app = express(),
     port = 3000;
 
 // parse application/x-www-form-urlencoded

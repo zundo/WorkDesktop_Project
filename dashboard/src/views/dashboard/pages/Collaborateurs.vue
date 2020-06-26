@@ -348,10 +348,6 @@ export default {
         value: "phone"
       },
       {
-        text: "Site Web",
-        value: "site_web"
-      },
-      {
         //sortable: false,
         text: "Poste",
         value: "poste"

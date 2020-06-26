@@ -235,7 +235,7 @@
       </template>
 
       <v-row class="mt-8 mr-1">
-        <v-btn color="orange" @click="openDialogNewFacture" class="ml-3">
+        <v-btn color="orange" @click="openDialogNewFacture" class="ml-3" :disabled="!isAdmin">
           <v-icon left>mdi-bank-plus</v-icon>Créer une facture
         </v-btn>
         <v-text-field
@@ -267,11 +267,11 @@
       >
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
-            <v-btn small color="info" @click="PageInfosFacture(item)">
+            <v-btn small color="info" @click="PageInfosFacture(item)" :disabled="!isAdmin">
               <v-icon left>mdi-information-outline</v-icon>
               Informations {{ item.titre }}
             </v-btn>
-            <v-btn small color="red" @click="dialogDeleteFacture(item)" class="ml-3">
+            <v-btn small color="red" @click="dialogDeleteFacture(item)" :disabled="!isAdmin" class="ml-3">
               <v-icon left>mdi-delete-circle-outline</v-icon>
               Supprimer {{ item.titre }}
             </v-btn>

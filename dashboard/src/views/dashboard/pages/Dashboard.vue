@@ -173,20 +173,18 @@
           sub-text="Get More Space..."
         />
       </v-col>
-
       <v-col cols="12" md="6">
-        <base-material-card color="warning" class="px-5 py-3">
-          <template v-slot:heading>
-            <div class="display-2 font-weight-light">Employees Stats</div>
-
-            <div class="subtitle-1 font-weight-light">New employees on 15th September, 2016</div>
-          </template>
-          <v-card-text>
-            <v-data-table :headers="headers" :items="items" />
-          </v-card-text>
-        </base-material-card>
+        <collaborateur></collaborateur>
       </v-col>
       <v-col cols="12" md="6">
+        <facture></facture>
+      </v-col>
+      <v-col cols="12" md="12">
+        <callendrier></callendrier>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="12">
         <base-material-card class="px-5 py-3">
           <template v-slot:heading>
             <v-tabs v-model="tabs" background-color="transparent" slider-color="white">
@@ -202,7 +200,6 @@
               </v-tab>
             </v-tabs>
           </template>
-
           <v-tabs-items v-model="tabs" class="transparent">
             <v-tab-item v-for="n in 3" :key="n">
               <v-card-text>
@@ -230,11 +227,6 @@
         </base-material-card>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12" md="9">
-        <collaborateur></collaborateur>
-      </v-col>
-    </v-row>
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
       <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
       {{snackbarMessage}}
@@ -247,11 +239,15 @@
 
 <script>
 import collaborateur from './Collaborateurs'
+import callendrier from './Calendar'
+import facture from './Accounting'
 
 export default {
   name: "DashboardDashboard",
   components: {
-    collaborateur
+    collaborateur,
+    callendrier,
+    facture
   },
   data() {
     return {

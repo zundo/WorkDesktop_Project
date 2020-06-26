@@ -1,9 +1,9 @@
 <template>
-  <v-content>
+  <v-main>
     <router-view class='mb-10' />
 
     <dashboard-core-footer />
-  </v-content>
+  </v-main>
 </template>
 
 <script>
