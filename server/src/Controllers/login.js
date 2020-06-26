@@ -44,7 +44,7 @@ exports.login = (req, res) => {
                                     index.sendReturn(res, 401, { error: true, message: "Requête impossible" })
                                 } else {
                                     console.log("L'utilisateur a été authentifié succès")
-                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur a été authentifié succès", id_user: idUser, isAdmin: isAdmin, id_entreprise: id_entreprise });
+                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur a été authentifié succès", token: token, id_user: idUser, isAdmin: isAdmin, id_entreprise: id_entreprise });
                                 }
                             });
                         }

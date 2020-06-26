@@ -126,6 +126,7 @@ export default {
       setDrawer: "SET_DRAWER"
     }),
     deconnexion: function(){
+      localStorage.clear();
       this.$router.push({
         name: "Connexion",
       });

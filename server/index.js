@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 });
 
 /*------------------------------------------------------------- */
-app.get('/testApi/:siret', (req, res) => {
+/*app.get('/testApi/:siret', (req, res) => {
     console.log(req.params.siret);
     axios.get('https://entreprise.data.gouv.fr/api/sirene/v3/etablissements/' + req.params.siret)
         .then(function(response) {
@@ -60,7 +60,7 @@ app.get('/testApi/:siret', (req, res) => {
         })
         .catch(function(error) { console.log(error); })
 
-    /*const token = jwt.sign({
+    const token = jwt.sign({
         exp: Math.floor(Date.now() / 1000) + (60 * 60) * 24 * 7,
         data: 5
     }, config.keyToken)
@@ -76,8 +76,8 @@ app.get('/testApi/:siret', (req, res) => {
     } catch (error) {
         let sendError = { error: true, message: "Processing error" }
         res.status(500).json(sendError)
-    }*/
-});
+    }
+});*/
 
 app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
 app.post('/login', loginCtrl.login); //Login

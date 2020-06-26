@@ -468,7 +468,8 @@ export default {
   mounted() {
     //Appliquer sur toutes les pages du drawer
     //console.log('idUser: '+this.id_user)
-    if(this.id_user != undefined && this.id_user !== 0){
+
+    if(localStorage.getItem("token") != null/*this.id_user != undefined && this.id_user !== 0*/){
       console.log('idUser: '+this.id_user)
     }else return this.$router.push({ name: "Connexion" });
   },
