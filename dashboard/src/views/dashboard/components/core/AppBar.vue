@@ -105,6 +105,11 @@ export default {
   data: () => ({
     settings: [
       {
+        icon: "mdi-account",
+        title: "Connexion",
+        to: '/'
+      },
+      {
         icon: "mdi-handshake",
         title: "Support",
         to: '/support'
@@ -126,9 +131,13 @@ export default {
       setDrawer: "SET_DRAWER"
     }),
     deconnexion: function(){
+      this.$store.commit('SET_ID_ENTREPRISE', null);
+      this.$store.commit('SET_ID_USER', null);
+      this.$store.commit('SET_IS_ADMIN', null);
       localStorage.clear();
       this.$router.push({
         name: "Connexion",
+        params: { reloadLogOut: true }
       });
     },
   }

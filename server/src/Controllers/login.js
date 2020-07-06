@@ -29,7 +29,7 @@ exports.login = (req, res) => {
                             id_entreprise = results[0].id_entreprise;
 
                             const token = jwt.sign({
-                                exp: Math.floor(Date.now() / 1000) + (60 * 60) * 24 /** 7*/ , // 24H
+                                exp: Math.floor(Date.now() / 1000) + (60 * 60) /* * 24 * 7*/ , // 1H
                                 data: idUser
                             }, config.keyToken)
 

@@ -482,20 +482,23 @@ export default {
 
       let userDateNaissance = this.user.date_naissance;
       this.user.date_naissance = this.user.date_naissance.substring(8, 10) +'-' + this.user.date_naissance.substring(5, 7) +'-'+this.user.date_naissance.substring(0, 4);
-
       let payload = Object.assign(this.user, this.entreprise);
-      //return console.log(JSON.stringify(payload));
-
-      let id_user = null;
-      let isAdmin = null;
-      let id_entreprise = null;
-
+      var email = null;
+      
       axios
         .post("http://localhost:3000/register", qs.stringify(payload), config)
         .then(response => {
-          id_user = response.data.id_user;
-          isAdmin = response.data.isAdmin;
-          id_entreprise = response.data.id_entreprise;
+          email = response.data.email;
+          this.user.date_naissance = userDateNaissance;
+          if ((email == undefined || email.length == 0 || email == null)) 
+            return this.errorMessage("Erreur !")
+          else{
+            this.loading=true
+            this.$router.push({
+              name: "Connexion",
+              params: { email: email }
+            });  
+          }
         })
         .catch(error => {
           console.log(
@@ -513,20 +516,7 @@ export default {
           //throw error;
           this.user.date_naissance = userDateNaissance;
         })
-        .finally(() => {
-          if ((id_user != undefined && id_user.length != 0) || (id_entreprise != undefined && id_entreprise.length != 0) || (isAdmin != undefined && isAdmin.length != 0)){
-            this.loading=true
-            this.$store.commit('SET_ID_ENTREPRISE', id_entreprise);
-            this.$store.commit('SET_ID_USER', id_user);
-            this.$store.commit('SET_IS_ADMIN', isAdmin);
-            return this.$router.push({
-              name: "Accueil"
-              //params: { userId: id_user }
-            });            
-          }else{
-            this.user.date_naissance = userDateNaissance;
-          }
-        });
+        //.finally(() => {});
     },
     /*------------------------------------------------------ */
     infoMessage: function(message) {

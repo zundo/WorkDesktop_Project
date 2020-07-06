@@ -1,5 +1,10 @@
 <template>
   <v-container id="login" tag="section">
+        <v-overlay :absolute="isAbsolute"
+                  :opacity="opacity"
+                  :value="isOverlay">
+            <v-progress-circular color="warning" indeterminate size="80"></v-progress-circular>
+        </v-overlay>
     <v-dialog v-model="isDialogForgotPassword" width="400px" overlay-opacity="0.9">
       <v-card class="px-6" outlined>
         <v-card-title class="info--text">
@@ -97,7 +102,7 @@
 import qs from "qs";
 
 export default {
-  name: "PagesLogin",
+  name: "Login",
 
   components: {},
 
@@ -108,6 +113,9 @@ export default {
     /*-------------------------- */
     showPassword: false,
     isDialogForgotPassword:false,
+    opacity : 1,
+    isAbsolute : true,
+    isOverlay : false,
     /*socials: [
       {
         href: "#",
@@ -128,7 +136,12 @@ export default {
     login: "",
     password: ""
   }),
-  mounted() {},
+  mounted() {
+    this.isOverlay = true;
+    if(this.$route.params.reloadLogOut === true) document.location.reload(true);
+    this.login = (this.$route.params.email != undefined) || (this.$route.params.email == null) ? this.$route.params.email : "";
+    this.isOverlay = false;
+  },
   methods: {
     inscription: function() {
       this.$router.push({ name: "Inscription" });
@@ -144,7 +157,6 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
         }
       };
-
 
       let payload = {
         email:login,

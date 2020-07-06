@@ -362,6 +362,8 @@ export default {
   },
   mounted() {
     this.verifUserConnected();
+    if(this.id_entreprise == null || this.id_entreprise == undefined) return
+
     /*----------------------*/
     const requestFactures = axios.get(
       "http://localhost:3000/factures/" + this.id_entreprise

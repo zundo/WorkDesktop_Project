@@ -510,6 +510,8 @@ export default {
   mounted() {
     this.verifUserConnected();
     /*----------------------*/
+    
+    if(this.id_entreprise == null || this.id_entreprise == undefined) return
 
     axios
       .get("http://localhost:3000/clients/" + this.id_entreprise)

@@ -2,7 +2,9 @@ const express = require('express'),
     index = require('../middleware/filter/index'),
     bdd = require('../modele/index'),
     bcrypt = require('bcrypt'),
-    indexEmail = require('../middleware/filter/sendEmail')
+    indexEmail = require('../middleware/filter/sendEmail'),
+    jwt = require('jsonwebtoken'),
+    config = require('../config/index')
 
 exports.register = async(req, res) => {
     const data = req.body
@@ -133,7 +135,7 @@ exports.register = async(req, res) => {
                                 } else {
                                     console.log("L'utilisateur admin a bien été ajouté");
                                     //indexEmail.sendEmail(data.email.trim().toLowerCase(), Math.floor(100000 + Math.random() * 900000));
-                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur admin a bien été crée avec succès", id_user: results.insertId, isAdmin: true, id_entreprise: data.id_entreprise })
+                                    index.sendReturn(res, 201, { error: false, message: "L'utilisateur admin a bien été crée avec succès", email: data.email.trim().toLowerCase() })
                                 }
                             });
                         }

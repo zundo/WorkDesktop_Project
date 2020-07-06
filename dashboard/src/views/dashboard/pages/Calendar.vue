@@ -133,6 +133,13 @@
         </v-col>
       </v-row>
     </base-material-card>
+    <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
+      <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+      {{snackbarMessage}}
+      <v-btn dark icon @click="isSnackbarOpened = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -175,6 +182,10 @@ export default {
     }
   },*/
   data: () => ({
+    isSuccess: false,
+    isSnackbarOpened: false,
+    snackbarMessage: "",
+    /*-------------------------- */
     isDialogNewEvent: false,
     isDialogDateDebutOpen:false,
     isDialogDateFinOpen:false,
@@ -204,12 +215,13 @@ export default {
   }),
   mounted() {
     this.verifUserConnected();
+    if(this.id_entreprise == null || this.id_entreprise == undefined) return
 
     axios
       .get("http://localhost:3000/evenements/" + this.id_entreprise)//tous les users de l entreprise
       .then(response => {
         response.data.evenements.forEach(evenement => {
-          evenement.name = evenement.name +' '+ evenement.firstname +' '+ evenement.lastname
+          evenement.name = evenement.firstname +' '+ evenement.lastname +' : '+ evenement.name 
           evenement = Object.assign(evenement, {color: this.colors[this.rnd(0, this.colors.length - 1)]});
           this.events.push(evenement)
         });

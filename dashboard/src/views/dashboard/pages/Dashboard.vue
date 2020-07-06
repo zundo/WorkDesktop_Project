@@ -129,50 +129,6 @@
         </base-material-chart-card>
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          color="info"
-          icon="mdi-twitter"
-          title="Followers"
-          value="+245"
-          sub-icon="mdi-clock"
-          sub-text="Just Updated"
-        />
-      </v-col>
-
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          color="primary"
-          icon="mdi-poll"
-          title="Website Visits"
-          value="75.521"
-          sub-icon="mdi-tag"
-          sub-text="Tracked from Google Analytics"
-        />
-      </v-col>
-
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          color="success"
-          icon="mdi-store"
-          title="Revenue"
-          value="$ 34,245"
-          sub-icon="mdi-calendar"
-          sub-text="Last 24 Hours"
-        />
-      </v-col>
-
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          color="orange"
-          icon="mdi-sofa"
-          title="Bookings"
-          value="184"
-          sub-icon="mdi-alert"
-          sub-icon-color="red"
-          sub-text="Get More Space..."
-        />
-      </v-col>
       <v-col cols="12" md="6">
         <collaborateur></collaborateur>
       </v-col>
@@ -181,50 +137,6 @@
       </v-col>
       <v-col cols="12" md="12">
         <callendrier></callendrier>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" md="12">
-        <base-material-card class="px-5 py-3">
-          <template v-slot:heading>
-            <v-tabs v-model="tabs" background-color="transparent" slider-color="white">
-              <span class="subheading font-weight-light mx-3" style="align-self: center">Tasks:</span>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">mdi-bug</v-icon>Bugs
-              </v-tab>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">mdi-code-tags</v-icon>Website
-              </v-tab>
-              <v-tab>
-                <v-icon class="mr-2">mdi-cloud</v-icon>Server
-              </v-tab>
-            </v-tabs>
-          </template>
-          <v-tabs-items v-model="tabs" class="transparent">
-            <v-tab-item v-for="n in 3" :key="n">
-              <v-card-text>
-                <template v-for="(task, i) in tasks[tabs]">
-                  <v-row :key="i" align="center">
-                    <v-col cols="1">
-                      <v-list-item-action>
-                        <v-checkbox v-model="task.value" color="secondary" />
-                      </v-list-item-action>
-                    </v-col>
-
-                    <v-col cols="9">
-                      <div class="font-weight-light" v-text="task.text" />
-                    </v-col>
-
-                    <v-col cols="2" class="text-right">
-                      <v-icon class="mx-1">mdi-pencil</v-icon>
-                      <v-icon color="error" class="mx-1">mdi-close</v-icon>
-                    </v-col>
-                  </v-row>
-                </template>
-              </v-card-text>
-            </v-tab-item>
-          </v-tabs-items>
-        </base-material-card>
       </v-col>
     </v-row>
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
@@ -405,71 +317,11 @@ export default {
           salary: "$63,542"
         }
       ],
-      tabs: 0,
-      tasks: {
-        0: [
-          {
-            text:
-              'Sign contract for "What are conference organizers afraid of?"',
-            value: true
-          },
-          {
-            text:
-              "Lines From Great Russian Literature? Or E-mails From My Boss?",
-            value: false
-          },
-          {
-            text:
-              "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: false
-          },
-          {
-            text: "Create 4 Invisible User Experiences you Never Knew About",
-            value: true
-          }
-        ],
-        1: [
-          {
-            text:
-              "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: true
-          },
-          {
-            text:
-              'Sign contract for "What are conference organizers afraid of?"',
-            value: false
-          }
-        ],
-        2: [
-          {
-            text:
-              "Lines From Great Russian Literature? Or E-mails From My Boss?",
-            value: false
-          },
-          {
-            text:
-              "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: true
-          },
-          {
-            text:
-              'Sign contract for "What are conference organizers afraid of?"',
-            value: true
-          }
-        ]
-      },
-      list: {
-        0: false,
-        1: false,
-        2: false
-      }
+
     };
   },
   mounted() {
-    //Appliquer sur toutes les pages du drawer
-    //console.log('idUser: '+this.id_user)
-
-    if(localStorage.getItem("token") != null/*this.id_user != undefined && this.id_user !== 0*/){
+    if(this.id_user != undefined && this.id_user !== 0/*localStorage.getItem("token") != null*/){
       console.log('idUser: '+this.id_user)
     }else return this.$router.push({ name: "Connexion" });
   },
@@ -479,9 +331,6 @@ export default {
     },
   },
   methods: {
-    complete(index) {
-      this.list[index] = !this.list[index];
-    },
     /*------------------------------------------------------ */
     verifyResponseOk: function(responseData) {
       var tmpStr = JSON.stringify(responseData);

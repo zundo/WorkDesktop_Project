@@ -371,6 +371,8 @@ export default {
     this.verifUserConnected();
     /*----------------------*/
     //https://jsonplaceholder.typicode.com/users
+    
+    if(this.id_entreprise == null || this.id_entreprise == undefined) return
 
     axios
       .get("http://localhost:3000/users/" + this.id_entreprise) //tous les users de l entreprise
