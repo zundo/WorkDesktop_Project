@@ -265,6 +265,16 @@
             <v-btn
               :disabled="!isAdmin || item.isAdmin == 1"
               small
+              color="orange"
+              @click="editCollaborateur(item)"
+              class="ml-3"
+            >
+              <v-icon left>mdi-account-edit-outline</v-icon>
+              Modifier {{ item.firstname }}
+            </v-btn>
+            <v-btn
+              :disabled="!isAdmin || item.isAdmin == 1"
+              small
               color="red"
               @click="dialogDeleteCollaborateur(item)"
               class="ml-3"
@@ -507,10 +517,15 @@ export default {
     PageInfosCollaborateur: function(infos_collaborateur) {
       this.$router.push({
         name: "Informations-Collaborateur",
-        params: { infos_collaborateur: infos_collaborateur }
+        params: { isEdit:false, infos_collaborateur: infos_collaborateur }
       });
     },
-
+    editCollaborateur: function(infos_collaborateur){
+      this.$router.push({
+        name: "Informations-Collaborateur",
+        params: { isEdit:true, infos_collaborateur: infos_collaborateur }
+      });
+    },
     /*------------------------------------------------------ */
     verifUserConnected: function() {
       if (

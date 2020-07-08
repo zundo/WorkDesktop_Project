@@ -25,7 +25,6 @@ dashboard/*.sln
 dashboard/*.sw?
 
 #Electron-builder output
-dashboard/dist_electron
 
 server/node_modules
 server/package-lock.json

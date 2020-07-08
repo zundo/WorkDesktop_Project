@@ -127,6 +127,7 @@
                 event-overlap-mode="column"
                 :event-color="getEventColor"
                 :now="dateDuJour"
+                @click:event="myEvent"
               />
             </v-sheet>
           </v-card>
@@ -281,6 +282,9 @@ export default {
     },
     rnd (a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a
+    },
+    myEvent (day) { 
+      alert(JSON.stringify(day)) 
     },
     /*------------------------------------------------------ */
     verifUserConnected: function(){

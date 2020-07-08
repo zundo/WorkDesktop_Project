@@ -55,7 +55,9 @@
       </v-col>
 
       <v-col cols="12" md="4">
+        <v-skeleton-loader v-if="firstLoad" :loading="loading" type="table"></v-skeleton-loader>
         <base-material-card
+          v-else
           icon="mdi-domain" 
           title="Infos Entreprise"
           color="indigo"
