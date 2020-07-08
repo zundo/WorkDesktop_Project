@@ -140,11 +140,13 @@
       </v-col>
     </v-row>
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
-      <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
-      {{snackbarMessage}}
-      <v-btn dark icon @click="isSnackbarOpened = false">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
+      <div class="text-center display-1">
+        <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+        {{snackbarMessage}}
+        <v-btn dark icon @click="isSnackbarOpened = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </div>
     </v-snackbar>
   </v-container>
 </template>

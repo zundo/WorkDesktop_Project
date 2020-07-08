@@ -1,22 +1,18 @@
 <template>
   <v-container id="login" tag="section">
-        <v-overlay :absolute="isAbsolute"
-                  :opacity="opacity"
-                  :value="isOverlay">
-            <v-progress-circular color="warning" indeterminate size="80"></v-progress-circular>
-        </v-overlay>
+    <v-overlay :absolute="isAbsolute" :opacity="opacity" :value="isOverlay">
+      <v-progress-circular color="warning" indeterminate size="80"></v-progress-circular>
+    </v-overlay>
     <v-dialog v-model="isDialogForgotPassword" width="400px" overlay-opacity="0.9">
       <v-card class="px-6" outlined>
         <v-card-title class="info--text">
           Mot de passe oublié ?
           <v-icon aria-label="Close" @click="isDialogForgotPassword = false">mdi-close</v-icon>
         </v-card-title>
-                <v-col cols="12">
+        <v-col cols="12">
           <div class="text-center">
             <v-divider />
-            <v-row>
-              TODO
-            </v-row>
+            <v-row>TODO</v-row>
           </div>
         </v-col>
       </v-card>
@@ -77,23 +73,33 @@
                 />
               </v-col>
               <v-col cols="12" class="py-2">
-                <span @click="isDialogForgotPassword = true" style="cursor: pointer;" class="info--text display-1">Mot de passe oublié ?</span>
+                <span
+                  @click="isDialogForgotPassword = true"
+                  style="cursor: pointer;"
+                  class="info--text display-1"
+                >Mot de passe oublié ?</span>
               </v-col>
               <v-btn color="blue" @click="connexion(login,password)">
                 <v-icon left>mdi-lock-outline</v-icon>Connexion
               </v-btn>
             </v-card-text>
-              <span @click="inscription" style="cursor: pointer;" class="blue--text display-1">Inscription Administrateur</span>
+            <span
+              @click="inscription"
+              style="cursor: pointer;"
+              class="blue--text display-1"
+            >Inscription Administrateur</span>
           </base-material-card>
         </v-slide-y-transition>
       </v-col>
     </v-row>
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
-      <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
-      {{snackbarMessage}}
-      <v-btn dark icon @click="isSnackbarOpened = false">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
+      <div class="text-center display-1">
+        <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+        {{snackbarMessage}}
+        <v-btn dark icon @click="isSnackbarOpened = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </div>
     </v-snackbar>
   </v-container>
 </template>
@@ -112,10 +118,10 @@ export default {
     snackbarMessage: "",
     /*-------------------------- */
     showPassword: false,
-    isDialogForgotPassword:false,
-    opacity : 1,
-    isAbsolute : true,
-    isOverlay : false,
+    isDialogForgotPassword: false,
+    opacity: 1,
+    isAbsolute: true,
+    isOverlay: false,
     /*socials: [
       {
         href: "#",
@@ -138,8 +144,12 @@ export default {
   }),
   mounted() {
     this.isOverlay = true;
-    if(this.$route.params.reloadLogOut === true) document.location.reload(true);
-    this.login = (this.$route.params.email != undefined) || (this.$route.params.email == null) ? this.$route.params.email : "";
+    if (this.$route.params.reloadLogOut === true)
+      document.location.reload(true);
+    this.login =
+      this.$route.params.email != undefined || this.$route.params.email == null
+        ? this.$route.params.email
+        : "";
     this.isOverlay = false;
   },
   methods: {
@@ -159,8 +169,8 @@ export default {
       };
 
       let payload = {
-        email:login,
-        password:password
+        email: login,
+        password: password
       };
       //return console.log(JSON.stringify(payload));
 
@@ -192,20 +202,23 @@ export default {
           );
         })
         .finally(() => {
-          if ((token != undefined && token.length != 0 && token == null) || 
-          (id_user != undefined && id_user.length != 0) || 
-          (id_entreprise != undefined && id_entreprise.length != 0) || 
-          (isAdmin != undefined && isAdmin.length != 0)){
-            localStorage.setItem('token', token); // OU sessionStorage pour que les infos disparaisse à la fermeture du navigateur
-            if (localStorage.getItem("token") == null) return this.errorMessage("Token inconnu !")
-            this.$store.commit('SET_ID_ENTREPRISE', id_entreprise);
-            this.$store.commit('SET_ID_USER', id_user);
-            this.$store.commit('SET_IS_ADMIN', isAdmin);
+          if (
+            (token != undefined && token.length != 0 && token == null) ||
+            (id_user != undefined && id_user.length != 0) ||
+            (id_entreprise != undefined && id_entreprise.length != 0) ||
+            (isAdmin != undefined && isAdmin.length != 0)
+          ) {
+            localStorage.setItem("token", token); // OU sessionStorage pour que les infos disparaisse à la fermeture du navigateur
+            if (localStorage.getItem("token") == null)
+              return this.errorMessage("Token inconnu !");
+            this.$store.commit("SET_ID_ENTREPRISE", id_entreprise);
+            this.$store.commit("SET_ID_USER", id_user);
+            this.$store.commit("SET_IS_ADMIN", isAdmin);
             return this.$router.push({
-              name: "Accueil",
+              name: "Accueil"
               //params: { userId: id_user }
             });
-          };
+          }
         });
     },
     /*------------------------------------------------------ */
