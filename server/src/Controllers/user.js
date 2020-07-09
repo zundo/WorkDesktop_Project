@@ -13,7 +13,6 @@ exports.updateUtilisateur = async(req, res) => {
     index.verifId(req.params.id, res); //id_user
     const id_user = req.params.id;
     const data = req.body;
-    //console.log(data)
 
     // Vérification de si les données sont bien présentes dans le body
     let error = false
@@ -44,22 +43,52 @@ exports.updateUtilisateur = async(req, res) => {
             if (index.exist(data.site_web) == false) data.site_web = "Inconnu";
             if (index.exist(data.personne_contacter) == false) data.personne_contacter = "Inconnu";
 
-            // update de l'utilisateur en base de données
-            toUpdate = {
-                lastname: data.lastname.trim(),
-                firstname: data.firstname.trim(),
-                date_naissance: index.changeDateForSQL(data.date_naissance),
-                sexe: data.sexe.trim(),
-                rue: data.rue.trim(),
-                ville: data.ville.trim(),
-                codePostal: data.codePostal.trim(),
-                pays: data.pays.trim(),
-                site_web: data.site_web.trim(),
-                personne_contacter: data.personne_contacter.trim(),
-                phone: data.phone.trim(),
-                poste: data.poste.trim(),
-                updateAt: new Date()
-            };
+            if (index.exist(data.password) && data.password !== "") {
+                data.password = await new Promise(resolve => {
+                    bcrypt.genSalt(10, async(err, salt) => {
+                        return await bcrypt.hash(data.password, salt, (err, hash) => {
+                            resolve(hash)
+                        });
+                    });
+                });
+                // update de l'utilisateur en base de données
+                toUpdate = {
+                    lastname: data.lastname.trim(),
+                    firstname: data.firstname.trim(),
+                    date_naissance: index.changeDateForSQL(data.date_naissance),
+                    sexe: data.sexe.trim(),
+                    rue: data.rue.trim(),
+                    ville: data.ville.trim(),
+                    codePostal: data.codePostal.trim(),
+                    pays: data.pays.trim(),
+                    site_web: data.site_web.trim(),
+                    personne_contacter: data.personne_contacter.trim(),
+                    phone: data.phone.trim(),
+                    poste: data.poste.trim(),
+                    updateAt: new Date(),
+                    isAdmin: data.isAdmin,
+                    password: data.password
+                };
+            } else {
+                // update de l'utilisateur en base de données
+                toUpdate = {
+                    lastname: data.lastname.trim(),
+                    firstname: data.firstname.trim(),
+                    date_naissance: index.changeDateForSQL(data.date_naissance),
+                    sexe: data.sexe.trim(),
+                    rue: data.rue.trim(),
+                    ville: data.ville.trim(),
+                    codePostal: data.codePostal.trim(),
+                    pays: data.pays.trim(),
+                    site_web: data.site_web.trim(),
+                    personne_contacter: data.personne_contacter.trim(),
+                    phone: data.phone.trim(),
+                    poste: data.poste.trim(),
+                    updateAt: new Date(),
+                    isAdmin: data.isAdmin
+                };
+            }
+
             bdd.query("UPDATE `utilisateur` SET ? WHERE `utilisateur`.`id` = '" + id_user + "'", toUpdate, (error, results) => {
                 if (results.affectedRows != 0) {
                     index.sendReturn(res, 200, { error: false, message: "L'utilisateur a été modifiée avec succès" })

@@ -395,7 +395,7 @@ export default {
 
   data: () => ({
     etape: 1,
-    isinfo: false,
+    isSuccess: false,
     isSnackbarOpened: false,
     snackbarMessage: "",
     /*-------------------------- */

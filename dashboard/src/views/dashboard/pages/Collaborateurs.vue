@@ -383,8 +383,8 @@ export default {
     this.verifUserConnected();
     /*----------------------*/
     //https://jsonplaceholder.typicode.com/users
-    
-    if(this.id_entreprise == null || this.id_entreprise == undefined) return
+
+    if (this.id_entreprise == null || this.id_entreprise == undefined) return;
 
     axios
       .get("http://localhost:3000/users/" + this.id_entreprise) //tous les users de l entreprise
@@ -395,7 +395,6 @@ export default {
           users.forEach(user => {
             this.items.push(user);
           });
-          //console.log("data: "+JSON.stringify(this.items))
           setTimeout(() => {
             this.loading = false;
             this.firstLoad = false;
@@ -519,13 +518,19 @@ export default {
     PageInfosCollaborateur: function(infos_collaborateur) {
       this.$router.push({
         name: "Informations-Collaborateur",
-        params: { isEdit:false, infos_collaborateur: infos_collaborateur }
+        params: { isEdit: false, infos_collaborateur: infos_collaborateur }
       });
     },
-    editCollaborateur: function(infos_collaborateur){
+    editCollaborateur: function(infos_collaborateur) {
+      infos_collaborateur.date_naissance =
+        infos_collaborateur.date_naissance.substr(6, 4) +
+        "-" +
+        infos_collaborateur.date_naissance.substr(3, 2) +
+        "-" +
+        infos_collaborateur.date_naissance.substr(0, 2);
       this.$router.push({
         name: "Informations-Collaborateur",
-        params: { isEdit:true, infos_collaborateur: infos_collaborateur }
+        params: { isEdit: true, infos_collaborateur: infos_collaborateur }
       });
     },
     /*------------------------------------------------------ */

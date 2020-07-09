@@ -229,30 +229,15 @@
                     </v-btn>
                   </v-col>
                   <v-col md="4" class="ml-auto" v-if="!isUpdateUser">
-                    <v-btn
-                      small
-                      color="secondary"
-                      @click="isUpdateUser = true"
-                      class="mx-2"
-                    >
+                    <v-btn small color="secondary" @click="isUpdateUser = true" class="mx-2">
                       <v-icon left>mdi-account-edit-outline</v-icon>Modifier le Profil
                     </v-btn>
                   </v-col>
                   <v-col md="5" class="ml-auto" v-else>
-                    <v-btn
-                      small
-                      color="error"
-                      class="mx-2"
-                      @click="annulerUpdate"
-                    >
+                    <v-btn small color="error" class="mx-2" @click="annulerUpdate">
                       <v-icon left>mdi-close-circle-outline</v-icon>Annuler
                     </v-btn>
-                    <v-btn
-                      small
-                      color="success"
-                      class="mx-2"
-                      @click="saveUpdate"
-                    >
+                    <v-btn small color="success" class="mx-2" @click="saveUpdate">
                       <v-icon left>mdi-content-save-outline</v-icon>Sauvegarder
                     </v-btn>
                   </v-col>
@@ -379,6 +364,9 @@ export default {
         this.user.date_naissance.substring(5, 7) +
         "-" +
         this.user.date_naissance.substring(0, 4);
+
+      if (this.user.isAdmin == true) this.user.isAdmin = 1;
+      else this.user.isAdmin = 0;
 
       let payload = this.user;
       axios
