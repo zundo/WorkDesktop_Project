@@ -3,6 +3,12 @@ const express = require('express'),
     bdd = require('../modele/index'),
     bcrypt = require('bcrypt')
 
+exports.getCollaborateursByEnt = async(req, res) => {
+    index.verifId(req.params.id, res); //id_entreprise
+    // Récupération des users de l'entreprise
+    index.getCollaborateursByEntreprise(res, " WHERE id_entreprise = '" + req.params.id + "'");
+}
+
 exports.addCollaborateur = async(req, res) => {
     const data = req.body;
     // Vérification de si les données sont bien présentes dans le body

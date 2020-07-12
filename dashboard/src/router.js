@@ -27,8 +27,8 @@ export default new Router({
                 },
                 // Parametres email
                 {
-                    name: 'Paramètres-email',
-                    path: 'parametres/parametres-email',
+                    name: 'Paramètres-entreprise',
+                    path: 'parametres/parametres-entreprise',
                     component: () =>
                         import ('@/views/dashboard/pages/parametres/ParametresE'),
                 },

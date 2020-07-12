@@ -157,9 +157,3 @@ exports.editPasswordUtilisateur = async(req, res) => {
         });
     }
 }
-
-exports.getUsersByEnt = async(req, res) => {
-    index.verifId(req.params.id, res); //id_entreprise
-    // Récupération des users de l'entreprise
-    index.getUsersByEntreprise(res, " WHERE id_entreprise = '" + req.params.id + "'");
-}

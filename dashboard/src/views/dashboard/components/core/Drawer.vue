@@ -140,9 +140,9 @@
               to: 'parametres-generaux',
             },
             {
-              title: 'Paramètres email',
+              title: 'Paramètres entreprise',
               icon: 'mdi-cogs',
-              to: 'parametres-email',
+              to: 'parametres-entreprise',
             }
           ]
         },       

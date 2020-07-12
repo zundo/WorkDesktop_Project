@@ -82,11 +82,13 @@ app.get('/', (req, res) => {
 app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
 app.post('/login', loginCtrl.login); //Login
 
+/* Page parametre utilisateur unique */
 app.get('/user/:id', userCtrl.getUtilisateur); //recuperation l'utilisateur unique (user connecte)
 app.put('/user/:id', userCtrl.updateUtilisateur) // Update de l'utilisateur
 app.put('/userEditPass/:id', userCtrl.editPasswordUtilisateur) // modifier le mdp de l'utilisateur
 
-app.get('/users/:id', userCtrl.getUsersByEnt); //recuperation les users(collaborateurs) de l'entreprise
+/* Page collaborateurs de l'enteprise */
+app.get('/users/:id', collaborateurCtrl.getCollaborateursByEnt); //recuperation les users(collaborateurs) de l'entreprise
 app.post('/addCollaborateur', collaborateurCtrl.addCollaborateur); //Inscription collaborateurs
 app.delete('/deleteCollaborateur/:id', collaborateurCtrl.deleteCollaborateur); //Supprimer le collaborateur
 
@@ -111,7 +113,7 @@ app.post('/addTicket', ticketCtrl.addTicket); //Insertion ticket
 app.get('/cloreTicket/:id', ticketCtrl.cloreTicket); //clore le ticket
 app.put('/reponseTicket/:id', ticketCtrl.reponseTicket); //reponse du ticket
 
-app.get('/entreprises', entrepriseCtrl.getEntreprises); //recuperation des entreprises
+app.get('/entreprise/:id', entrepriseCtrl.getEntreprise); //recuperation de l'entreprise
 app.post('/addEntreprise', entrepriseCtrl.addEntreprise); //Insertion entreprise
 app.put('/updateEntreprise/:id', entrepriseCtrl.updateEntreprise); // update entreprise
 

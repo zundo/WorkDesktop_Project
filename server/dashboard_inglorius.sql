@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  sam. 11 juil. 2020 à 17:49
+-- Généré le :  Dim 12 juil. 2020 à 12:51
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS `calendrier`;
 CREATE TABLE IF NOT EXISTS `calendrier` (
   `id` int(32) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
+  `description` text NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `id_user` int(32) NOT NULL,
@@ -39,22 +40,23 @@ CREATE TABLE IF NOT EXISTS `calendrier` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   KEY `id_entreprise` (`id_entreprise`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `calendrier`
 --
 
-INSERT INTO `calendrier` (`id`, `name`, `start`, `end`, `id_user`, `id_entreprise`) VALUES
-(1, 'night', '2020-06-26 12:00:00', '2020-06-26 12:00:00', 1, 1),
-(2, 'cour', '2020-06-25 12:00:00', '2020-06-25 12:00:00', 1, 1),
-(3, 'tkt', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
-(4, 'pont', '2020-07-13 12:00:00', '2020-07-13 12:00:00', 1, 1),
-(5, 'autre', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
-(6, 'autre2', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
-(7, 'autre3', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
-(8, 'autre5', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
-(9, 'test', '2020-07-11 12:00:00', '2020-07-11 12:00:00', 1, 1);
+INSERT INTO `calendrier` (`id`, `name`, `description`, `start`, `end`, `id_user`, `id_entreprise`) VALUES
+(1, 'night', '', '2020-06-26 12:00:00', '2020-06-26 12:00:00', 1, 1),
+(2, 'cour', '', '2020-06-25 12:00:00', '2020-06-25 12:00:00', 1, 1),
+(3, 'tkt', '', '2020-07-09 12:00:00', '2020-07-09 12:00:00', 1, 1),
+(4, 'pont', '', '2020-07-13 12:00:00', '2020-07-14 12:00:00', 1, 1),
+(5, 'autre', '', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
+(6, 'autre2', '', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
+(7, 'autre3', '', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
+(8, 'autre5', '', '2020-07-06 12:00:00', '2020-07-06 12:00:00', 1, 1),
+(9, 'test', '', '2020-07-11 12:00:00', '2020-07-11 12:00:00', 1, 1),
+(10, 'testtevent', '', '2020-07-11 12:00:00', '2020-07-17 12:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -149,7 +151,15 @@ CREATE TABLE IF NOT EXISTS `facture` (
   PRIMARY KEY (`id_f`),
   KEY `id_user` (`id_utilisateur`),
   KEY `id_client` (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `facture`
+--
+
+INSERT INTO `facture` (`id_f`, `titre`, `statut`, `date`, `montant`, `description`, `id_utilisateur`, `id_client`) VALUES
+(3, 'mdr', 'Payé', '2020-05-14', '777.77', 'blague', 1, 2),
+(9, 'lololfacture', 'En attente', '2020-06-30', '12345.67', 'lololfacture blague lol', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -232,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id`, `token`, `email`, `password`, `lastname`, `firstname`, `date_naissance`, `sexe`, `rue`, `ville`, `codePostal`, `pays`, `site_web`, `personne_contacter`, `phone`, `poste`, `createdAt`, `updateAt`, `lastLogin`, `attempt`, `isAdmin`, `id_entreprise`) VALUES
-(1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQ0NzY1MTQsImRhdGEiOjEsImlhdCI6MTU5NDQ3MjkxNH0.N1qWQbMhTjhWPotri8VyzSeS0Q2EI4i3QiTq_iUJe58', 'lol@lol.com', '$2b$10$.iBCqwEkFWH4S2C7o1fnoeHD5XYNWB4uE5x6KIgCWpS3b6.0kahJu', 'lolnomm', 'lolprenom', '1988-09-17 12:00:00', 'Homme', 'azezaezae', 'azeazeaze', 92300, 'azeazezae', '', '', '0120456285', 'dev', '2020-06-26 16:34:15', '2020-07-11 19:28:48', '2020-07-11 15:08:35', 0, 1, 1),
+(1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQ0OTM4NjgsImRhdGEiOjEsImlhdCI6MTU5NDQ5MDI2OH0.3stqZX09VNnqqzdsO8jf79GRguoUQ3ITqtXjsWEjlJU', 'lol@lol.com', '$2b$10$.iBCqwEkFWH4S2C7o1fnoeHD5XYNWB4uE5x6KIgCWpS3b6.0kahJu', 'lolnomm', 'lolprenom', '1988-09-17 12:00:00', 'Homme', 'azezaezae', 'azeazeaze', 92300, 'azeazezae', '', '', '0120456285', 'dev', '2020-06-26 16:34:15', '2020-07-12 00:05:33', '2020-07-11 19:57:49', 0, 1, 1),
 (2, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQzMzA2NjgsImRhdGEiOjIsImlhdCI6MTU5NDMyNzA2OH0.D7fwnJXo52rR_1CmIINJRrhrCP8StdClks-hrSUNR2Y', 'mou@glail.com', '$2b$10$K9pMw9JbBEc/sNo9xM9kXOPH5at.KaHmcTQQwqg5TJ3uRjbLQv0kq', 'mouglailnomm', 'mouglailprenomm', '2020-07-03 12:00:00', 'Homme', '11', 'gonesse', 95500, 'France', '', '', '061234567', 'develop', '2020-07-03 20:15:37', '2020-07-11 18:04:13', '2020-07-09 22:37:48', 0, 0, 1),
 (4, NULL, 'test@test.com', '$2b$10$.v/DJuhvV/xm0vb5QV0YzurW5HUq6grSQ6WytcTyoVoaafC.GE8J2', 'testno', 'testpreno', '2020-07-03 12:00:00', 'Homme', 'testrue', 'testville', 95500, 'France', '', '', '0612345678', 'testeur', '2020-07-06 19:48:53', '2020-07-06 19:48:53', '2020-07-06 19:48:53', 0, 1, 4),
 (5, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQwNjIzMTgsImRhdGEiOjUsImlhdCI6MTU5NDA1ODcxOH0.rdpxNxNIBCDtuyTc9hYv7QkvqpMkeA5kitsId0hv6OE', 'mdr@mdr.mdr', '$2b$10$T/T8vKk4v56nNsJElGyAieoSz6M3f0AM.xDW64Ocel2QG8GlX3mLm', 'mdrnom', 'mdrprenom', '2020-05-06 12:00:00', 'Homme', '17 rue street', 'gonesse', 95500, 'France', '', '', '0612345678', 'Comedien', '2020-07-06 19:52:58', '2020-07-06 19:52:58', '2020-07-06 20:05:19', 0, 1, 5),
@@ -240,7 +250,7 @@ INSERT INTO `utilisateur` (`id`, `token`, `email`, `password`, `lastname`, `firs
 (7, NULL, 'ddd@ddd.com', '$2b$10$QWdLI.c7YQ8Xu2ZGuRYuOeYSm4jXEN4ZYTg5q8i5/oab2CVIeSvmi', 'ddd', 'ddd', '2020-07-06 12:00:00', 'Homme', 'dd', 'dd', 12345, 'dd', '', '', '0125346245', 'ddd', '2020-07-06 20:27:59', '2020-07-06 20:27:59', '2020-07-06 20:27:59', 0, 1, 7),
 (8, NULL, 'bbb@bbb.bbb', '$2b$10$geX1V/C6.IU50BXxXe010emZ3xWag8jK8xPfij5gKlEejKarFfMl2', 'bbb', 'bbb', '2020-07-06 12:00:00', 'Homme', 'bbb', 'bbb', 12345, 'bbb', '', '', '123', 'bbb', '2020-07-06 20:32:18', '2020-07-06 20:32:18', '2020-07-06 20:32:18', 0, 1, 8),
 (9, NULL, 'nnn@nnn.nn', '$2b$10$68sQq.Atylg/D5P.EuJlM.fkGgGREPvYV7UJdiaUr/jEfKFXi9QMC', 'nnn', 'nnn', '2020-07-06 12:00:00', 'Femme', 'nnn', 'nnn', 12345, 'nnn', '', '', '123456', 'nnn', '2020-07-06 20:36:29', '2020-07-06 20:36:29', '2020-07-06 20:36:29', 0, 1, 9),
-(10, NULL, 'new@new.com', '$2b$10$e15TDxsUJmL.x90QgLDHXukdNC9Bl3UenMZtE18jf8dZL39nWgtbG', 'newnewnom', 'newnewprenom', '2020-07-11 12:00:00', 'Homme', '11 rue', 'Goneesse', 95502, 'France', 'loli.com', '123', '1234567', 'newDev', '2020-07-11 18:38:51', '2020-07-11 19:10:01', '2020-07-11 18:38:51', 0, 0, 1);
+(10, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQ0OTM4MzAsImRhdGEiOjEwLCJpYXQiOjE1OTQ0OTAyMzB9.uGmGTS9lGhnZyppvv0vX3v8N0BiZyeT52aOjzYzwdNQ', 'new@new.com', '$2b$10$e15TDxsUJmL.x90QgLDHXukdNC9Bl3UenMZtE18jf8dZL39nWgtbG', 'newnewnom', 'newnewprenom', '2020-07-11 12:00:00', 'Homme', '11 rue', 'Goneesse', 95502, 'France', 'loli.com', '123', '1234567', 'newDev', '2020-07-11 18:38:51', '2020-07-11 19:10:01', '2020-07-11 19:57:11', 0, 0, 1);
 
 --
 -- Contraintes pour les tables déchargées

@@ -177,7 +177,6 @@ export default {
       let id_user = null;
       let isAdmin = null;
       let id_entreprise = null;
-      let token = null;
 
       axios
         .post("http://localhost:3000/login", qs.stringify(payload), config)
@@ -185,7 +184,7 @@ export default {
           id_user = response.data.id_user;
           isAdmin = response.data.isAdmin;
           id_entreprise = response.data.id_entreprise;
-          token = response.data.token;
+          localStorage.setItem("token", response.data.token)
         })
         .catch(error => {
           console.log(
@@ -202,15 +201,15 @@ export default {
           );
         })
         .finally(() => {
-          if (
-            (token != undefined && token.length != 0 && token == null) ||
-            (id_user != undefined && id_user.length != 0) ||
+          if ((id_user != undefined && id_user.length != 0) ||
             (id_entreprise != undefined && id_entreprise.length != 0) ||
             (isAdmin != undefined && isAdmin.length != 0)
           ) {
-            localStorage.setItem("token", token); // OU sessionStorage pour que les infos disparaisse à la fermeture du navigateur
+            //localStorage.setItem("token", token); // OU sessionStorage pour que les infos disparaisse à la fermeture du navigateur
             if (localStorage.getItem("token") == null)
               return this.errorMessage("Token inconnu !");
+
+            //return console.log(localStorage.getItem("token"))//
             this.$store.commit("SET_ID_ENTREPRISE", id_entreprise);
             this.$store.commit("SET_ID_USER", id_user);
             this.$store.commit("SET_IS_ADMIN", isAdmin);

@@ -173,8 +173,8 @@ exports.getUser = (res, where = "", port = 200, messageSend = "") => {
     });
 }
 
-// Function qui récupère tous les users de l'entreprise dans la table utilisateurs
-exports.getUsersByEntreprise = (res, where = "", port = 200, messageSend = "") => {
+// Function qui récupère tous les collaborateurs de l'entreprise dans la table utilisateurs
+exports.getCollaborateursByEntreprise = (res, where = "", port = 200, messageSend = "") => {
     bdd.query("SELECT utilisateur.*,entreprise.nom FROM `entreprise` LEFT JOIN `utilisateur` ON `utilisateur`.`id_entreprise` = `entreprise`.`id`" + where, (error, results, fields) => {
         // Si erreur dans la requête
         if (error) {

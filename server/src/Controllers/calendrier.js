@@ -39,6 +39,7 @@ exports.addEvenement = async(req, res) => {
         } else {
             toInsert = {
                 name: data.nomEvent.trim(),
+                description: index.exist(data.description) == false ? data.description = "" : data.description.trim(),
                 start: data.dateDebut + " 12:00:00",
                 end: data.dateFin + " 12:00:00",
                 id_user: data.id_user,
@@ -87,6 +88,7 @@ exports.updateEvenement = async(req, res) => {
             // update de l eveneent
             toUpdate = {
                 name: data.nomEvent.trim(),
+                description: index.exist(data.description) == false ? data.description = "" : data.description.trim(),
                 start: data.dateDebut + " 12:00:00",
                 end: data.dateFin + " 12:00:00",
             };

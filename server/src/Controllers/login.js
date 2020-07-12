@@ -30,7 +30,9 @@ exports.login = (req, res) => {
 
                             const token = jwt.sign({
                                 exp: Math.floor(Date.now() / 1000) + (60 * 60) /* * 24 * 7*/ , // 1H
-                                data: idUser
+                                idUser: idUser,
+                                isAdmin: isAdmin,
+                                id_entreprise: id_entreprise
                             }, config.keyToken)
 
                             toUpdate = {
@@ -39,11 +41,18 @@ exports.login = (req, res) => {
                                 attempt: 0
                             }
 
+                            /*jwt.verify(token, config.keyToken, function(err, decoded) {
+                                console.log(decoded.idUser) 
+                                console.log(decoded.isAdmin) 
+                                console.log(decoded.id_entreprise) 
+                            });*/
+
                             bdd.query("UPDATE `utilisateur` SET ? WHERE `utilisateur`.`id` = '" + results[0].id + "'", toUpdate, (error, results) => {
                                 if (error != null) {
                                     index.sendReturn(res, 401, { error: true, message: "Requête impossible" })
                                 } else {
-                                    console.log("L'utilisateur a été authentifié succès")
+                                    console.log("L'utilisateur a été authentifié succès");
+                                    //localStorage.setItem("token", token);
                                     index.sendReturn(res, 201, { error: false, message: "L'utilisateur a été authentifié succès", token: token, id_user: idUser, isAdmin: isAdmin, id_entreprise: id_entreprise });
                                 }
                             });

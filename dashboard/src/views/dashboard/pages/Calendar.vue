@@ -72,6 +72,18 @@
               </v-col>
             </v-row>
             <v-row>
+              <v-col cols="12">
+                <v-textarea
+                  outlined
+                  color="red"
+                  class="mt-n3"
+                  label="Description"
+                  v-model="evenement.description"
+                  prepend-icon="mdi-ballot-outline"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
               <v-col cols="12" class="mt-n3">
                 <v-text-field
                   color="red"
@@ -134,6 +146,19 @@
                   </v-col>
                 </v-row>
                 <v-row>
+                  <v-col cols="12">
+                    <v-textarea
+                      outlined
+                      color="red"
+                      class="mt-n3"
+                      label="Description"
+                      :disabled="!isEdit"
+                      v-model="infoEvenement.description"
+                      prepend-icon="mdi-ballot-outline"
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
                   <v-col cols="12" class="mt-n3">
                     <v-text-field
                       color="red"
@@ -174,7 +199,13 @@
               <v-divider class="my-4" />
               <v-row>
                 <div class="text-left">
-                  <v-btn outlined color="pink" text @click="isDialogDeleteEvenement=true;">Supprimer ?</v-btn>
+                  <v-btn
+                    outlined
+                    color="pink"
+                    text
+                    :disabled="(isAdmin != true && id_user != infoEvenement.id_user) && (isAdmin != true)"
+                    @click="isDialogDeleteEvenement=true;"
+                  >Supprimer ?</v-btn>
                 </div>
                 <v-spacer />
                 <div class="text-right">
@@ -190,7 +221,8 @@
                     outlined
                     color="orange"
                     text
-                    @click="isEdit =!isEdit"
+                    :disabled="(isAdmin != true && id_user != infoEvenement.id_user) && (isAdmin != true)"
+                    @click="isEdit = !isEdit"
                     v-if="!isEdit"
                   >Modification</v-btn>
                   <v-btn
@@ -198,6 +230,7 @@
                     outlined
                     color="yellow"
                     text
+                    :disabled="(isAdmin != true && id_user != infoEvenement.id_user) && (isAdmin != true)"
                     @click="isEdit =!isEdit"
                     v-else
                   >Annuler modification</v-btn>
@@ -206,6 +239,7 @@
                     outlined
                     color="success"
                     text
+                    :disabled="(isAdmin != true && id_user != infoEvenement.id_user) && (isAdmin != true)"
                     @click="saveModificationEvent"
                   >Sauvegarder</v-btn>
                 </div>
@@ -349,6 +383,7 @@ export default {
     events: [
       {
         name: "Happy new year 2020",
+        description: "lol",
         start: "2020-01-01",
         end: "2020-01-01",
         color: "Orange"
@@ -380,7 +415,7 @@ export default {
     isDialogEditDateDebutOpen: false,
     isDialogEditDateFinOpen: false,
     isEdit: false,
-    isDialogDeleteEvenement:false
+    isDialogDeleteEvenement: false
   }),
   mounted() {
     this.verifUserConnected();
@@ -413,6 +448,9 @@ export default {
     },
     id_entreprise() {
       return this.$store.state.id_entreprise;
+    },
+    isAdmin() {
+      return this.$store.state.isAdmin;
     }
   },
   methods: {
@@ -482,6 +520,7 @@ export default {
     },
     myEvent(day) {
       this.infoEvenement = day.eventParsed.input;
+      console.log(this.infoEvenement)
       this.isDialogEvenement = true;
     },
     saveModificationEvent: function() {
@@ -493,6 +532,7 @@ export default {
 
       let payload = {
         nomEvent: this.infoEvenement.name.split(":")[1].trim(),
+        description: this.infoEvenement.description,
         dateDebut: this.infoEvenement.start,
         dateFin: this.infoEvenement.end
       };
@@ -528,7 +568,7 @@ export default {
           );
         });
     },
-    deleteEvenement: function(){
+    deleteEvenement: function() {
       this.isDialogDeleteEvenement = false;
 
       axios
@@ -538,7 +578,9 @@ export default {
         .then(response => {
           if (response.data.error == false) {
             console.log(
-              "L'evenement " + this.infoEvenement.name.split(":")[1].trim() + " a été supprimé"
+              "L'evenement " +
+                this.infoEvenement.name.split(":")[1].trim() +
+                " a été supprimé"
             );
             this.successMessage(
               "L'evenement " +
@@ -563,7 +605,7 @@ export default {
               " : " +
               JSON.stringify(error.response.data.message)
           );
-        });    
+        });
     },
     /*------------------------------------------------------ */
     verifUserConnected: function() {

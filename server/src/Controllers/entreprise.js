@@ -3,9 +3,11 @@ const express = require('express'),
     bdd = require('../modele/index'),
     bcrypt = require('bcrypt')
 
-exports.getEntreprises = async(req, res) => {
+exports.getEntreprise = async(req, res) => {
+    index.verifId(req.params.id, res); //id entreprise
+
     // Récupération des entreprises
-    bdd.query("SELECT `entreprise`.* FROM `entreprise`", (error, results, fields) => {
+    bdd.query("SELECT `entreprise`.* FROM `entreprise` WHERE `entreprise`.`id` = '" + req.params.id + "'", (error, results, fields) => {
         // Si erreur dans la requête
         if (error) {
             console.log(error)
@@ -16,13 +18,13 @@ exports.getEntreprises = async(req, res) => {
             index.sendReturn(res, 500, { error: false, message: "Aucun résultat pour la requête" });
         // Si la liste des utilises est vide
         else if (results.length == 0)
-            index.sendReturn(res, 409, { error: true, message: "Aucune entreprises présente" })
+            index.sendReturn(res, 409, { error: true, message: "Aucune entreprise présente" })
         else {
             if (results.length > 0) {
                 //console.log(JSON.stringify(results));
                 index.sendReturn(res, 200, {
                     error: false,
-                    entreprises: results
+                    entreprise: results
                 })
             } else {
                 index.sendReturn(res, 401, {

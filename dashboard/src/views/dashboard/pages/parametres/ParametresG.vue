@@ -215,6 +215,12 @@
                   </div>
                 </v-col>
                 <v-row>
+                <span v-if="isUpdateUser" class="red--text">
+                  <li><u><strong>Note: N'oubliez pas d'enregistrer vos modifications</strong></u></li>
+                </span>
+                </v-row>
+                <v-divider class="my-4" />
+                <v-row>
                   <v-col md="3">
                     <v-btn
                       @click="isChangePasswordDialog = true"
@@ -234,7 +240,7 @@
                     </v-btn>
                   </v-col>
                   <v-col md="5" class="ml-auto" v-else>
-                    <v-btn small color="error" class="mx-2" @click="annulerUpdate">
+                    <v-btn small color="error" class="mx-2" @click="isUpdateUser = false">
                       <v-icon left>mdi-close-circle-outline</v-icon>Annuler
                     </v-btn>
                     <v-btn small color="success" class="mx-2" @click="saveUpdate">
@@ -382,7 +388,7 @@ export default {
               this.successMessage("Sauvegarde des modifications effectuée !");
             setTimeout(() => {
               document.location.reload(true);
-            }, 2000);
+            }, 1500);
           }
         })
         .catch(error => {
@@ -400,10 +406,6 @@ export default {
           );
           this.user.date_naissance = userDateNaissance;
         });
-    },
-    annulerUpdate: function() {
-      this.isUpdateUser = false;
-      //document.location.reload(true);
     },
     savePassword: function(old_passwordUser, passwordUser) {
       this.isChangePasswordDialog = false;
@@ -439,7 +441,7 @@ export default {
 
             setTimeout(() => {
               document.location.reload(true);
-            }, 2000);
+            }, 1500);
           }
         })
         .catch(error => {
