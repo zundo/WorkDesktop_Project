@@ -3,18 +3,36 @@ const express = require('express'),
     bdd = require('../modele/index'),
     bcrypt = require('bcrypt')
 
-exports.getFacturesByEnt = async(req, res) => {
-    index.verifId(req.params.id, res); //id_entreprise de l'entreprise
+exports.statutFacture = (req, res) => {
+    index.verifId(req.params.id, res); //id_f facture
 
-    // Récupération des clients de l'entreprise
-    index.getFacturesByEntreprise(res, " WHERE `facture`.`id_entreprise_utilisateur` = '" + req.params.id + "'");
+    toUpdate = {
+        statut: "Payé"
+    };
+
+    bdd.query("UPDATE `facture` SET ? WHERE `facture`.`id_f` = '" + req.params.id + "'", toUpdate, (error, results) => {
+        if (results.affectedRows != 0) {
+            index.sendReturn(res, 200, { error: false, message: "La facture a changé de statut avec succès" })
+        } else if (results.affectedRows == 0) {
+            index.sendReturn(res, 409, { error: true, message: "L'id envoyez n'existe pas" })
+        } else {
+            index.sendReturn(res, 400, { error: true, message: "Modification Impossible" })
+        }
+    });
+}
+
+exports.getFacturesByCollaborateur = async(req, res) => {
+    index.verifId(req.params.id, res); //id_user
+
+    // Récupération des factures de l'entreprise
+    index.getFacturesByCollaborateur(res, " WHERE `facture`.`id_utilisateur` = '" + req.params.id + "'");
 }
 
 exports.addFacture = async(req, res) => {
     const data = req.body;
 
-    if (data.id_entreprise_utilisateur == 0 || data.id_entreprise_utilisateur == null || data.id_entreprise_utilisateur == undefined)
-        index.sendReturn(res, 401, { error: true, message: "L'id entreprise user n'existe pas" })
+    if (data.id_utilisateur == 0 || data.id_utilisateur == null || data.id_utilisateur == undefined)
+        index.sendReturn(res, 401, { error: true, message: "L'id user n'existe pas" })
 
     if (data.id_client == 0 || data.id_client == null || data.id_client == undefined)
         index.sendReturn(res, 401, { error: true, message: "Erreur, le client n'existe pas" })
@@ -39,7 +57,7 @@ exports.addFacture = async(req, res) => {
                 date: index.changeDateForSQL(data.date),
                 montant: data.montant.trim(),
                 description: data.description.trim(),
-                id_entreprise_utilisateur: data.id_entreprise_utilisateur,
+                id_utilisateur: data.id_utilisateur,
                 id_client: data.id_client
             };
 
@@ -63,7 +81,7 @@ exports.updateFacture = async(req, res) => {
     index.verifId(req.params.id, res); //id du facture
     const id_facture = req.params.id;
 
-    if (id_facture == 0 || id_facture == null || id_facture == undefined) index.sendReturn(res, 401, { error: true, message: "L'id facture n'existe pas" })
+    if (id_facture == 0 || id_facture == null || id_facture == undefined) index.sendReturn(res, 401, { error: true, message: "La facture n'existe pas" })
 
     const data = req.body;
     // Vérification de si les données sont bien présentes dans le body
@@ -86,7 +104,8 @@ exports.updateFacture = async(req, res) => {
                 statut: data.statut.trim(),
                 date: index.changeDateForSQL(data.date),
                 montant: data.montant.trim(),
-                description: data.description.trim()
+                description: data.description.trim(),
+                id_client: data.id_client
             };
 
             bdd.query("UPDATE `facture` SET ? WHERE `facture`.`id_f` = '" + id_facture + "'", toUpdate, (error, results) => {

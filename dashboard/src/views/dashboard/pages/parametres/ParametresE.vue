@@ -71,7 +71,7 @@
 
 <script>
 export default {
-  name: "Parametres email",
+  name: "Parametres-email",
   data:()=>({
 
   }),

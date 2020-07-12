@@ -131,18 +131,13 @@
         },
         {
           group: '/parametres',
-          icon: 'mdi-cog-outline',
+          icon: 'mdi-cog-transfer',
           title: 'Paramètres',
           children: [
             {
               title: 'Paramètres généraux',
               icon: 'mdi-account-cog',
               to: 'parametres-generaux',
-            },
-            {
-              title: 'Paramètres système',
-              icon: 'mdi-cog-transfer',
-              to: 'parametres-systeme',
             },
             {
               title: 'Paramètres email',

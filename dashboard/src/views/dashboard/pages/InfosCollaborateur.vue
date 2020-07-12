@@ -3,7 +3,7 @@
     <v-dialog v-model="isDialogDateNaissanceOpen" width="300px" overlay-opacity="0.8">
       <v-date-picker
         scrollable
-        color="blue lighten-1"
+        color="info"
         v-model="collaborateur.date_naissance"
         reactive
         show-current
@@ -50,7 +50,8 @@
                   </tr>
                   <tr>
                     <td>Personne à contacter</td>
-                    <td>{{ collaborateur.personne_contacter }}</td>
+                    <td v-if="collaborateur.personne_contacter != ''">{{ collaborateur.personne_contacter }}</td>
+                    <td v-else>Inconnu</td>            
                   </tr>
                   <tr>
                     <td>Email</td>
@@ -141,7 +142,7 @@
                         <v-text-field
                           color="info"
                           label="Site Web"
-                          v-model="collaborateur.website"
+                          v-model="collaborateur.site_web"
                           prepend-inner-icon="mdi-web"
                           clearable
                         />
@@ -289,7 +290,8 @@
                 <v-col cols="12">
                   <h6 class="display-2 mb- grey--text">
                     <v-icon large left color="info">mdi-web</v-icon>Site Web:
-                    <a href="collaborateur.site_web">{{ collaborateur.site_web }}</a>
+                    <a href="collaborateur.site_web" v-if="collaborateur.site_web != ''">{{ collaborateur.site_web }}</a>
+                    <span v-else>Inconnu</span>
                   </h6>
                 </v-col>
                 <v-col cols="12">
@@ -354,8 +356,7 @@ export default {
     changePassword: false,
     isDialogDateNaissanceOpen: false,
     items_Sexe: ["Homme", "Femme"],
-    collaborateur: {},
-    menuDate: false
+    collaborateur: {}
   }),
   computed: {
     id_user() {
@@ -402,7 +403,7 @@ export default {
       else this.collaborateur.isAdmin = 0;
       
       let payload = this.collaborateur;
-
+      //return console.log(payload)
       axios
         .put(
           "http://localhost:3000/user/" + this.collaborateur.id,

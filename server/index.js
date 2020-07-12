@@ -95,10 +95,11 @@ app.post('/addClient', clientCtrl.addClient); //Inscription client
 app.delete('/deleteClient/:id', clientCtrl.deleteClient); //Supprimer le client
 app.put('/updateClient/:id', clientCtrl.updateClient); // Update du client
 
-app.get('/factures/:id', factureCtrl.getFacturesByEnt); //recuperation des factures de l'entreprise
+app.get('/factures/:id', factureCtrl.getFacturesByCollaborateur); //recuperation des factures de l'user
 app.post('/addFacture', factureCtrl.addFacture); //Insertion facture
 app.delete('/deleteFacture/:id', factureCtrl.deleteFacture); //Supprimer la facture
 app.put('/updateFacture/:id', factureCtrl.updateFacture); // update Facture
+app.get('/statutFacture/:id', factureCtrl.statutFacture); //clore la facture
 
 app.get('/projets/:id', projetCtrl.getProjetsByEnt); //recuperation des projets de l'entreprise
 app.post('/addProjet', projetCtrl.addProjet); //Insertion projet
@@ -116,6 +117,9 @@ app.put('/updateEntreprise/:id', entrepriseCtrl.updateEntreprise); // update ent
 
 app.get('/evenements/:id', calendrierCtrl.getEvenements); // recuperation evenements
 app.post('/addEvenement', calendrierCtrl.addEvenement); // insertion d'evenement
+app.delete('/deleteEvenement/:id', calendrierCtrl.deleteEvenement); //Supprimer le projet
+app.put('/updateEvenement/:id', calendrierCtrl.updateEvenement); //Supprimer le projet
+
 /*------------------------------------------------------------- */
 app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname + '/error.html'))

@@ -73,11 +73,6 @@ exports.register = async(req, res) => {
                         });
                     })
 
-                    if (index.exist(data.website) == false) data.website = "Inconnu";
-                    if (index.exist(data.personne_contacter) == false) data.personne_contacter = "Inconnu";
-
-                    if (index.exist(data.website_ent) == false) data.website_ent = "Inconnu";
-
                     toInsertEnt = {
                         numSiret: data.numSiret_ent,
                         nom: data.nom_ent.trim(),
@@ -87,7 +82,8 @@ exports.register = async(req, res) => {
                         pays: data.pays_ent.trim(),
                         email_entreprise: data.email_ent.trim().toLowerCase(),
                         telephone: data.telephone_ent.trim(),
-                        site_web: data.website_ent.trim()
+                        site_web: index.exist(data.website_ent) == false ? "" : data.website_ent.trim()
+
                     };
 
                     bdd.query("INSERT INTO entreprise SET ?", toInsertEnt, (error, resultsEnt) => {
@@ -117,8 +113,8 @@ exports.register = async(req, res) => {
                                 ville: data.ville.trim(),
                                 codePostal: data.codePostal.trim(),
                                 pays: data.pays.trim(),
-                                site_web: data.website.trim(),
-                                personne_contacter: data.personne_contacter.trim(),
+                                site_web: index.exist(data.website) == false ? "" : data.website.trim(),
+                                personne_contacter: index.exist(data.personne_contacter) == false ? "" : data.personne_contacter.trim(),
                                 phone: data.phone.trim(),
                                 poste: data.poste.trim(),
                                 id_entreprise: data.id_entreprise,

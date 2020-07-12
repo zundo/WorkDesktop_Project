@@ -42,8 +42,14 @@ exports.dateFormat = (data) => {
     else
         return true
 }
-
-// Function vérification de si l'email est dans le bon format
+exports.dateFormatEn = (data) => {
+        let regexDate = /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/
+        if (data.match(regexDate) == null)
+            return false
+        else
+            return true
+    }
+    // Function vérification de si l'email est dans le bon format
 exports.emailFormat = (data) => {
     let regexEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     if (data.match(regexEmail) == null)
@@ -243,9 +249,9 @@ exports.getClientsByEntreprise = (res, where = "", port = 200, messageSend = "")
     });
 }
 
-// Function qui récupère tous les factures de l'entreprise dans la table factures
-exports.getFacturesByEntreprise = (res, where = "", port = 200, messageSend = "") => {
-        bdd.query("SELECT `facture`.*, `clients`.* FROM `facture` LEFT JOIN `clients` ON `facture`.`id_client` = `clients`.`id`" + where, (error, results, fields) => {
+// Function qui récupère tous les factures de l'user
+exports.getFacturesByCollaborateur = (res, where = "", port = 200, messageSend = "") => {
+        bdd.query("SELECT `facture`.*, `clients`.`id`, `clients`.`email`, `clients`.`firstname`, `clients`.`lastname` FROM `facture` LEFT JOIN `clients` ON `facture`.`id_client` = `clients`.`id`" + where, (error, results, fields) => {
             // Si erreur dans la requête
             if (error) {
                 console.log(error)
@@ -260,8 +266,7 @@ exports.getFacturesByEntreprise = (res, where = "", port = 200, messageSend = ""
                         //delete item.id; // Suppression d'un elements
                         //delete item.id_entreprise_client; // Suppression d'un elements
                         //delete item.id_entreprise_utilisateur; // Suppression d'un elements
-                        item.date = changeDateForSend(JSON.stringify(item.date))
-                        item.date_naissance = changeDateForSend(JSON.stringify(item.date_naissance))
+                        item.date = JSON.stringify(item.date).substr(1, 10)
                         return item; // Retour le nouvel element item => results[i] = item
                     });
                     //console.log(JSON.stringify(results));

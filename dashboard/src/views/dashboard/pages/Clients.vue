@@ -382,13 +382,25 @@
       >
         <template v-slot:expanded-item="{ headers, item }">
           <td :colspan="headers.length">
-            <v-btn small color="blue" @click="PageInfosClient(item)">
+            <v-btn small outlined color="blue" @click="PageInfosClient(item)">
               <v-icon left>mdi-card-account-details-outline</v-icon>
               Informations M/Mme {{ item.lastname }}
             </v-btn>
             <v-btn
               :disabled="!isAdmin"
               small
+              outlined
+              @click="editClient(item)"
+              color="orange"
+              class="ml-3"
+            >
+              <v-icon left>mdi-account-edit-outline</v-icon>
+              Modifier M/Mme {{ item.lastname }}
+            </v-btn>
+            <v-btn
+              :disabled="!isAdmin"
+              small
+              outlined
               color="red"
               @click="dialogDeleteClient(item)"
               class="ml-3"
@@ -592,8 +604,6 @@ export default {
       };
 
       let clientDateNaissance = this.client.date_naissance;
-      /*console.log(clientDateNaissance)
-            console.log(this.client.date_naissance)*/
 
       this.client.date_naissance =
         this.client.date_naissance.substring(8, 10) +
@@ -679,10 +689,23 @@ export default {
     PageInfosClient: function(infos_client) {
       this.$router.push({
         name: "Informations-Client",
-        params: { infos_client: infos_client }
+        params: { isEdit: false, infos_client: infos_client }
       });
     },
-
+    editClient: function(infos_client){
+      infos_client.date_naissance =
+        infos_client.date_naissance.substr(6, 4) +
+        "-" +
+        infos_client.date_naissance.substr(3, 2) +
+        "-" +
+        infos_client.date_naissance.substr(0, 2);
+        infos_client.codePostal = infos_client.codePostal == 0 ? "" : infos_client.codePostal;
+        
+      this.$router.push({
+        name: "Informations-Client",
+        params: { isEdit: true, infos_client: infos_client }
+      });
+    },
     /*------------------------------------------------------ */
     verifUserConnected: function() {
       if (

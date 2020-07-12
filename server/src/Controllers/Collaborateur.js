@@ -46,8 +46,6 @@ exports.addCollaborateur = async(req, res) => {
                         });
                     });
                 })
-                if (index.exist(data.website) == false) data.website = "Inconnu";
-                if (index.exist(data.personne_contacter) == false) data.personne_contacter = "Inconnu";
 
                 if (data.id_entreprise == 0) index.sendReturn(res, 401, { error: true, message: "L'id entreprise n'existe pas" })
 
@@ -64,8 +62,8 @@ exports.addCollaborateur = async(req, res) => {
                     ville: data.ville.trim(),
                     codePostal: data.codePostal.trim(),
                     pays: data.pays.trim(),
-                    site_web: data.website.trim(),
-                    personne_contacter: data.personne_contacter.trim(),
+                    site_web: index.exist(data.website) == false ? "" : sdata.website.trim(),
+                    personne_contacter: index.exist(data.personne_contacter) == false ? "" : data.personne_contacter.trim(),
                     phone: data.phone.trim(),
                     poste: data.poste.trim(),
                     id_entreprise: data.id_entreprise,

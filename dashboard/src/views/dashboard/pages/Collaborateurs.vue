@@ -258,13 +258,14 @@
             <v-chip color="purple lighten-1" v-if="item.isAdmin">Admin</v-chip>
           </th>
           <td :colspan="headers.length">
-            <v-btn small color="blue" @click="PageInfosCollaborateur(item)">
+            <v-btn small color="blue" outlined @click="PageInfosCollaborateur(item)">
               <v-icon left>mdi-card-account-details-outline</v-icon>
               Informations {{ item.firstname }}
             </v-btn>
             <v-btn
               :disabled="!isAdmin || item.isAdmin == 1"
               small
+              outlined
               color="orange"
               @click="editCollaborateur(item)"
               class="ml-3"
@@ -275,6 +276,7 @@
             <v-btn
               :disabled="!isAdmin || item.isAdmin == 1"
               small
+              outlined
               color="red"
               @click="dialogDeleteCollaborateur(item)"
               class="ml-3"

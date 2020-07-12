@@ -60,8 +60,6 @@ exports.addEntreprise = async(req, res) => {
                 message: "L'une des données obligatoire ne sont pas conformes (entreprise)"
             });
         } else {
-            if (index.exist(data.website_ent) == false) data.website_ent = "Inconnu";
-
             toInsertEnt = {
                 numSiret: data.numSiret_ent,
                 nom: data.nom_ent.trim(),
@@ -71,7 +69,7 @@ exports.addEntreprise = async(req, res) => {
                 pays: data.pays_ent.trim(),
                 email_entreprise: data.email_ent.trim().toLowerCase(),
                 telephone: data.telephone_ent.trim(),
-                site_web: data.website_ent.trim()
+                site_web: index.exist(data.website_ent) == false ? "" : data.website_ent.trim()
             };
 
             bdd.query("INSERT INTO entreprise SET ?", toInsertEnt, (error, results) => {
@@ -120,8 +118,6 @@ exports.updateEntreprise = async(req, res) => {
                 message: "L'une des données obligatoire ne sont pas conformes (entreprise)"
             });
         } else {
-            if (index.exist(data.website_ent) == false) data.website_ent = "Inconnu";
-
             toUpdateEnt = {
                 numSiret: data.numSiret_ent,
                 nom: data.nom_ent.trim(),
@@ -131,7 +127,7 @@ exports.updateEntreprise = async(req, res) => {
                 pays: data.pays_ent.trim(),
                 email_entreprise: data.email_ent.trim().toLowerCase(),
                 telephone: data.telephone_ent.trim(),
-                site_web: data.website_ent.trim()
+                site_web: index.exist(data.website_ent) == false ? "" : data.website_ent.trim()
             };
 
             bdd.query("UPDATE `entreprise` SET ? WHERE `entreprise`.`id` = '" + id_entreprise + "'", toUpdateEnt, (error, results) => {

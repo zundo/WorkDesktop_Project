@@ -40,9 +40,6 @@ exports.updateUtilisateur = async(req, res) => {
                 message: "L'une des données obligatoire ne sont pas conformes"
             })
         } else {
-            if (index.exist(data.site_web) == false) data.site_web = "Inconnu";
-            if (index.exist(data.personne_contacter) == false) data.personne_contacter = "Inconnu";
-
             if (index.exist(data.password) && data.password !== "") {
                 data.password = await new Promise(resolve => {
                     bcrypt.genSalt(10, async(err, salt) => {
@@ -61,8 +58,8 @@ exports.updateUtilisateur = async(req, res) => {
                     ville: data.ville.trim(),
                     codePostal: data.codePostal.trim(),
                     pays: data.pays.trim(),
-                    site_web: data.site_web.trim(),
-                    personne_contacter: data.personne_contacter.trim(),
+                    site_web: index.exist(data.site_web) == false ? "" : data.site_web.trim(),
+                    personne_contacter: index.exist(data.personne_contacter) == false ? "" : data.personne_contacter.trim(),
                     phone: data.phone.trim(),
                     poste: data.poste.trim(),
                     updateAt: new Date(),

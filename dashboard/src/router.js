@@ -25,13 +25,6 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/parametres/ParametresG'),
                 },
-                // Parametres systeme
-                {
-                    name: 'Paramètres-système',
-                    path: 'parametres/parametres-systeme',
-                    component: () =>
-                        import ('@/views/dashboard/pages/parametres/ParametresS'),
-                },
                 // Parametres email
                 {
                     name: 'Paramètres-email',
