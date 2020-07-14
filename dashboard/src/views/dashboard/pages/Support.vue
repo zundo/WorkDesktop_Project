@@ -90,6 +90,16 @@
         </base-material-card>
       </v-col>
     </v-row>
+    <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
+      <div class="text-center display-1">
+        <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+        <v-icon v-else color="white">mdi-checkbox-marked-circle-outline</v-icon>
+        {{snackbarMessage}}
+        <v-btn dark icon @click="isSnackbarOpened = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </div>
+    </v-snackbar>
   </v-container>
 </template>
 

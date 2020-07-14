@@ -375,8 +375,8 @@
         :search.sync="search"
         :sort-by="['nom']"
         :sort-desc="[false]"
-        multi-sort
         show-expand
+        item-key="id"
         single-expand
         :expanded.sync="expanded"
       >
@@ -421,6 +421,7 @@
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
       <div class="text-center display-1">
         <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+        <v-icon v-else color="white">mdi-checkbox-marked-circle-outline</v-icon>
         {{snackbarMessage}}
         <v-btn dark icon @click="isSnackbarOpened = false">
           <v-icon>mdi-close</v-icon>
@@ -536,7 +537,7 @@ export default {
           clients.forEach(client => {
             this.items.push(client);
           });
-          //console.log(this.items);
+          console.log(this.items);
           setTimeout(() => {
             this.loading = false;
             this.firstLoad = false;

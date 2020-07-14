@@ -297,8 +297,8 @@ exports.getProjetsByEntreprise = (res, where = "", port = 200, messageSend = "")
         else {
             if (results.length >= 0) {
                 results.map(item => {
-                    item.date_debut = changeDateForSend(JSON.stringify(item.date_debut))
-                    item.date_fin = changeDateForSend(JSON.stringify(item.date_fin))
+                    item.date_debutProjet = JSON.stringify(item.date_debutProjet).substr(1, 10);
+                    item.date_finProjet = JSON.stringify(item.date_finProjet).substr(1, 10);
                     return item; // Retour le nouvel element item => results[i] = item
                 });
                 //console.log(JSON.stringify(results));

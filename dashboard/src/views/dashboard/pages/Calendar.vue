@@ -314,6 +314,7 @@
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
       <div class="text-center display-1">
         <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+        <v-icon v-else color="white">mdi-checkbox-marked-circle-outline</v-icon>
         {{snackbarMessage}}
         <v-btn dark icon @click="isSnackbarOpened = false">
           <v-icon>mdi-close</v-icon>
@@ -463,21 +464,6 @@ export default {
         }
       };
 
-      /*let eventDateDebut = this.evenement.dateDebut;
-      let eventDateFin = this.evenement.dateFin;
-      this.evenement.dateDebut =
-        this.evenement.dateDebut.substring(8, 10) +
-        "-" +
-        this.evenement.dateDebut.substring(5, 7) +
-        "-" +
-        this.evenement.dateDebut.substring(0, 4);
-      this.evenement.dateFin =
-        this.evenement.dateFin.substring(8, 10) +
-        "-" +
-        this.evenement.dateFin.substring(5, 7) +
-        "-" +
-        this.evenement.dateFin.substring(0, 4);*/
-
       this.evenement.id_entreprise = this.id_entreprise; //id_entreprise provenant du store
       this.evenement.id_user = this.id_user; //id_user provenant du store
 
@@ -543,7 +529,7 @@ export default {
           "http://localhost:3000/updateEvenement/" + this.infoEvenement.id,
           qs.stringify(payload),
           config
-        ) //update du collaborateur
+        )
         .then(response => {
           if (this.verifyResponseOk(response.data)) {
             if (response.data.error == false)

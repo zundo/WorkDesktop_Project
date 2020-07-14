@@ -300,7 +300,7 @@
     </v-dialog>
     <base-material-card color="orange" icon="mdi-bank" inline class="px-5 py-3">
       <template v-slot:after-heading>
-        <div class="display-2 font-weight-light">Factures</div>
+        <div class="display-2 font-weight-light">Factures personnelle</div>
       </template>
 
       <v-row class="mt-8 mr-1">
@@ -369,6 +369,7 @@
     <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
       <div class="text-center display-1">
         <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+        <v-icon v-else color="white">mdi-checkbox-marked-circle-outline</v-icon>
         {{snackbarMessage}}
         <v-btn dark icon @click="isSnackbarOpened = false">
           <v-icon>mdi-close</v-icon>

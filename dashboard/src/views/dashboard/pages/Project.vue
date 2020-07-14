@@ -1,499 +1,556 @@
 <template>
   <v-container id="project" tag="section" fluid>
-  <base-material-card color="error" icon="mdi-clipboard-text-multiple" inline class="px-5 py-3">
-    <template v-slot:after-heading>
-      <div class="display-2 font-weight-light">Projet</div>
-    </template>
-    <v-row justify="center">
-      <v-col
-        cols="12"
-        lg="4"
+    <v-dialog v-model="isDialogNewDateDebutOpen" width="300px" overlay-opacity="0.8">
+      <v-date-picker
+        scrollable
+        color="success lighten-1"
+        v-model="newProjet.date_debutProjet"
+        reactive
+        show-current
       >
-        <base-material-chart-card
-          :data="dailySalesChart.data"
-          :options="dailySalesChart.options"
-          color="success"
-          type="Line"
-          class="px-4 py-3"
-        >
-          <h4 class="display-1 font-weight-light mt-2">
-            Rounded Line Chart
-          </h4>
-
-          <div class="grey--text font-weight-light">
-            Line Chart
-          </div>
-        </base-material-chart-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="4"
+        <v-btn
+          class="ml-auto"
+          outlined
+          color="red"
+          text
+          @click="isDialogNewDateDebutOpen = false"
+        >Ok</v-btn>
+      </v-date-picker>
+    </v-dialog>
+    <v-dialog v-model="isDialogNewDateFinOpen" width="300px" overlay-opacity="0.8">
+      <v-date-picker
+        scrollable
+        color="success lighten-1"
+        v-model="newProjet.date_finProjet"
+        reactive
+        show-current
       >
-        <base-material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
-          color="orange darken-1"
-          type="Line"
-          class="px-4 py-3"
-        >
-          <h4 class="display-1 font-weight-light mt-2">
-            Line Chart With Points
-          </h4>
+        <v-btn class="ml-auto" outlined color="red" text @click="isDialogNewDateFinOpen = false">Ok</v-btn>
+      </v-date-picker>
+    </v-dialog>
 
-          <div class="grey--text font-weight-light">
-            Straight Lines Chart
-          </div>
-        </base-material-chart-card>
-      </v-col>
+    <v-dialog v-model="isDialogNewProjet" persistent max-width="1000px">
+      <v-card class="px-6">
+        <v-card-title class="success--text">
+          Créer un projet
+          <v-divider class="my-5" />
+          <v-icon aria-label="Close" @click="isDialogNewProjet = false">mdi-close</v-icon>
+        </v-card-title>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  outlined
+                  v-model="newProjet.nomProjet"
+                  label="Nom du projet"
+                  class="mt-n3"
+                  color="success"
+                  prepend-icon="mdi-alphabetical"
+                />
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  class="mt-n3"
+                  color="success"
+                  v-model="newProjet.date_debutProjet"
+                  label="Date de debut"
+                  prepend-icon="mdi-calendar-outline"
+                  maxlength="10"
+                  hint="AAAA/MM/JJ"
+                  outlined
+                  @click:prepend="isDialogNewDateDebutOpen = true"
+                />
+              </v-col>
 
-      <v-col
-        cols="12"
-        lg="4"
-      >
-        <base-material-chart-card
-          :data="dataCompletedTasksChart.data"
-          :options="dataCompletedTasksChart.options"
-          color="indigo"
-          type="Bar"
-          class="px-4 py-3"
-        >
-          <h4 class="display-1 font-weight-light mt-2">
-            Simple Bar Chart
-          </h4>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  class="mt-n3"
+                  color="success"
+                  v-model="newProjet.date_finProjet"
+                  label="Date de fin"
+                  prepend-icon="mdi-calendar-outline"
+                  maxlength="10"
+                  hint="AAAA/MM/JJ"
+                  outlined
+                  @click:prepend="isDialogNewDateFinOpen = true"
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-textarea
+                  outlined
+                  color="success"
+                  class="mt-n3"
+                  label="Description"
+                  v-model="newProjet.descriptionProjet"
+                  prepend-icon="mdi-ballot-outline"
+                />
+              </v-col>
 
-          <div class="grey--text font-weight-light">
-            Last Last Campaign Performance
-          </div>
-        </base-material-chart-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="6"
-      >
-        <base-material-card
-          id="coloured-line"
-          color="info"
-          icon="mdi-chart-timeline-variant"
-          class="px-4 py-3"
-        >
-          <template v-slot:after-heading>
-            <div class="display-1 mt-2 font-weight-light">
-              Coloured Line Chart
-              <span class="subtitle-1">— Rounded</span>
-            </div>
-          </template>
-
-          <chartist
-            :data="colouredLine.data"
-            :options="colouredLine.options"
-            type="Line"
-            style="max-height: 150px;"
-            class="mt-3"
-          />
-        </base-material-card>
-        <div class="py-3" />
-        <base-material-card
-          id="coloured-line"
-          color="error"
-          icon="mdi-chart-timeline-variant"
-          class="px-4 py-3"
-        >
-          <template v-slot:after-heading>
-            <div class="display-1 font-weight-light mt-2">
-              Coloured Line Chart
-              <span class="subtitle-1">— Multiple</span>
-            </div>
-          </template>
-
-          <chartist
-            :data="multipleLine.data"
-            :options="multipleLine.options"
-            type="Line"
-            style="max-height: 150px;"
-            class="mt-3"
-          />
-        </base-material-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        lg="6"
-      >
-        <base-material-card
-          id="multiple-bar"
-          color="secondary"
-          icon="mdi-poll-box"
-          class="px-4 py-3"
-        >
-          <template v-slot:after-heading>
-            <div class="display-1 mt-2 font-weight-light">
-              Multiple Bars Chart
-              <span class="subtitle-1">— Bar Chart</span>
-            </div>
-          </template>
-
-          <chartist
-            :data="multipleBar.data"
-            :options="multipleBar.options"
-            type="Bar"
-            style="max-height: 150px;"
-            class="mt-3"
-          />
-        </base-material-card>
-        <div class="py-3" />
-
-        <base-material-card
-          id="pie"
-          color="#E91E63"
-          icon="mdi-chart-pie"
-          title="Pie Chart"
-          class="px-4 py-3"
-        >
-          <chartist
-            :data="pie.data"
-            :options="pie.options"
-            type="Pie"
-            style="max-height: 250px;"
-          />
-
-          <v-divider class="ma-3" />
-
-          <div class="px-3">
-            <div class="body-2 text-uppercase grey--text font-weight-bold mb-3">
-              Legend
-            </div>
-
-            <v-row
-              align="center"
-              class="ma-0"
-            >
-              <v-avatar
-                class="mr-1"
-                color="info"
-                size="12"
-              />
-
-              <span class="mr-3 font-weight-light">Apple</span>
-
-              <v-avatar
-                class="mr-1"
-                color="warning"
-                size="12"
-              />
-
-              <span class="mr-3 font-weight-light">Samsung</span>
-
-              <v-avatar
-                class="mr-1"
-                color="red"
-                size="12"
-              />
-
-              <span class="mr-3 font-weight-light">Windows Phone</span>
+              <v-col cols="12" class="text-right">
+                <v-btn
+                  class="mr-1"
+                  outlined
+                  color="error"
+                  text
+                  @click="isDialogNewProjet = false"
+                >Fermer</v-btn>
+                <v-btn outlined color="success" text @click="saveNewProjet">Sauvegarder</v-btn>
+              </v-col>
             </v-row>
-          </div>
-        </base-material-card>
-      </v-col>
-    </v-row>
-  </base-material-card>
+          </v-container>
+        </v-form>
+      </v-card>
+    </v-dialog>
+    <v-dialog dark v-model="isDialogDeleteProjet" width="500" overlay-opacity="0.8">
+      <v-card>
+        <v-card-title>Supprimer le projet {{ projetToDelete.nomProjet }} ?</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="isDialogDeleteProjet=false" class="mx-2" fab dark>
+            <v-icon dark>mdi-close</v-icon>
+          </v-btn>
+          <v-btn @click="deleteProjet" class="mx-2" fab color="green darken-1">
+            <v-icon dark>mdi-check-bold</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <base-material-card color="success" icon="mdi-clipboard-text-multiple" inline class="px-5 py-3">
+      <template v-slot:after-heading>
+        <div class="display-2 font-weight-light">Projets</div>
+      </template>
+
+      <v-row class="mt-8 mr-1">
+        <v-btn color="success" @click="isDialogNewProjet = true;" class="ml-3">
+          <v-icon left>mdi-clipboard-plus-outline</v-icon>Créer un projet
+        </v-btn>
+        <v-text-field
+          v-model="search"
+          prepend-icon="mdi-magnify"
+          class="ml-auto"
+          label="Recherche"
+          color="primary"
+          hide-details
+          single-line
+          style="max-width: 250px;"
+          clearable
+        />
+      </v-row>
+      <v-divider class="mt-6" />
+
+      <v-skeleton-loader v-if="firstLoad" :loading="loading" type="table"></v-skeleton-loader>
+      <v-data-table
+        v-else
+        :headers="headers"
+        :items="items"
+        :search.sync="search"
+        :sort-by="['nomProjet']"
+        :sort-desc="[false]"
+        show-expand
+        single-expand
+        item-key="id"
+        :expanded.sync="expanded"
+      >
+        <template v-slot:expanded-item="{ headers, item }">
+          <td :colspan="headers.length" class="py-4">
+            <v-row v-if="isEdit">
+              <v-col cols="12" md="4">
+                <v-text-field
+                  outlined
+                  v-model="item.nomProjet"
+                  label="Nom du projet"
+                  class="mt-n3"
+                  color="success"
+                  append-icon="mdi-alphabetical"
+                  :disabled="!isEdit || item.id_user != id_user"
+                />
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  class="mt-n3"
+                  color="success"
+                  v-model="item.date_debutProjet"
+                  label="Date de debut"
+                  append-icon="mdi-calendar-outline"
+                  maxlength="10"
+                  hint="AAAA/MM/JJ"
+                  :disabled="!isEdit || item.id_user != id_user"
+                  outlined
+                />
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  class="mt-n3"
+                  color="success"
+                  v-model="item.date_finProjet"
+                  label="Date de fin"
+                  append-icon="mdi-calendar-outline"
+                  maxlength="10"
+                  hint="AAAA/MM/JJ"
+                  :disabled="!isEdit || item.id_user != id_user "
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-textarea
+              label="Description"
+              outlined
+              v-model="item.descriptionProjet"
+              :disabled="!isEdit || item.id_user != id_user"
+            ></v-textarea>
+            <span v-if="isEdit && item.id_user == id_user" class="red--text">
+              <li>
+                <u>
+                  <strong>Note: N'oubliez pas d'enregistrer vos modifications</strong>
+                </u>
+              </li>
+            </span>
+            <v-divider class="my-2" />
+            <v-col cols="12">
+              <v-row>
+                <div class="text-left">
+                  <v-btn
+                    small
+                    class="ml-1"
+                    outlined
+                    color="orange"
+                    text
+                    :disabled="id_user != item.id_user"
+                    @click="isEdit =!isEdit"
+                    v-if="!isEdit"
+                  >
+                    <v-icon left>mdi-pencil-outline</v-icon>
+                    Modifier {{ item.nomProjet }}
+                  </v-btn>
+                  <v-btn
+                    :disabled="id_user != item.id_user"
+                    small
+                    outlined
+                    color="yellow"
+                    text
+                    @click="isEdit =!isEdit"
+                    v-else
+                  >
+                    <v-icon left>mdi-pencil-off-outline</v-icon>Annuler modification
+                  </v-btn>
+                  <v-btn
+                    small
+                    v-if="isEdit"
+                    outlined
+                    color="success"
+                    text
+                    class="ml-1"
+                    :disabled="id_user != item.id_user"
+                    @click="updateProjet(item)"
+                  >
+                    <v-icon left>mdi-content-save-outline</v-icon>Sauvegarder
+                  </v-btn>
+                </div>
+                <v-spacer />
+
+                <div class="text-right">
+                  <v-btn
+                    small
+                    color="red"
+                    outlined
+                    :disabled="id_user != item.id_user"
+                    @click="dialogDeleteProjet(item)"
+                    class="ml-3"
+                  >
+                    <v-icon left>mdi-delete-outline</v-icon>
+                    Supprimer {{ item.nomProjet }}
+                  </v-btn>
+                </div>
+              </v-row>
+            </v-col>
+          </td>
+        </template>
+        <div
+          slot="no-results"
+          :value="true"
+          icon="warning"
+          class="error--text"
+        >La recherche "{{ search }}" inconnu.</div>
+      </v-data-table>
+    </base-material-card>
+    <v-snackbar v-model="isSnackbarOpened" :color="isSuccess ? 'success' : 'error'">
+      <div class="text-center display-1">
+        <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
+        <v-icon v-else color="white">mdi-checkbox-marked-circle-outline</v-icon>
+        {{snackbarMessage}}
+        <v-btn dark icon @click="isSnackbarOpened = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </div>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
-  export default {
-    name: 'Project',
-    data() {
-      return {
-        colouredLine: {
-          data: {
-            labels: ["'06", "'07", "'08", "'09", "'10", "'11", "'12", "'13", "'14", "'15"],
-            series: [
-              [275, 500, 290, 55, 700, 700, 500, 750, 630, 900, 930]
-            ],
-          },
-          options: {
-            low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0
-            }
-          }
-        },
-        dailySalesChart: {
-          data: {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [
-              [12, 17, 7, 17, 23, 18, 38]
-            ]
-          },
-          options: {
-            low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0
-            },
-            showPoint: false
-          }
-        },
-        dataCompletedTasksChart: {
-          data: {
-            labels: ['12am', '3pm', '6pm', '9pm', '12pm', '3am', '6am', '9am'],
-            series: [
-              [230, 750, 450, 300, 280, 240, 200, 190]
-            ]
-          },
-          options: {
-            low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0
-            }
-          }
-        },
-        emailsSubscriptionChart: {
-          data: {
-            labels: ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De'],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+import qs from "qs";
 
-            ]
-          },
-          options: {
-            lineSmooth: this.$chartist.Interpolation.none(),
-            axisX: {
-              showGrid: false
-            },
-            low: 0,
-            high: 1000,
-            chartPadding: {
-              top: 0,
-              right: 5,
-              bottom: 0,
-              left: 0
-            }
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc(value) {
-                  return value[0]
-                }
-              }
-            }]
-          ]
-        },
-        multipleBar: {
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-              [400, 200, 250, 575, 450, 300, 285, 370, 370, 410, 620, 690]
-            ]
-          },
-          options: {
-            seriesBarDistance: 10,
-            lineSmooth: this.$chartist.Interpolation.none(),
-            axisX: {
-              showGrid: false
-            },
-            low: 0,
-            high: 900,
-            chartPadding: {
-              top: 0,
-              right: 5,
-              bottom: 0,
-              left: 0
-            }
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc(value) {
-                  return value[0]
-                }
-              }
-            }]
-          ]
-        },
-        multipleLine: {
-          data: {
-            labels: ["'06", "'07", "'08", "'09", "'10", "'11", "'12", "'13", "'14", "'15"],
-            series: [
-              [275, 500, 290, 55, 700, 700, 500, 750, 630, 900, 930],
-              [575, 600, 490, 75, 300, 400, 700, 450, 130, 200, 330],
-              [575, 300, 890, 155, 640, 540, 800, 250, 230, 400, 630]
-            ]
-          },
-          options: {
-            low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0
-            }
-          }
-        },
-        pie: {
-          data: {
-            series: [62, 32, 6]
-          },
-          options: {
-            labelInterpolationFnc: (value) => `${value}%`
-          }
-        },
-        headers: [
-          {
-            sortable: false,
-            text: 'ID',
-            value: 'id'
-          },
-          {
-            sortable: false,
-            text: 'Name',
-            value: 'name'
-          },
-          {
-            sortable: false,
-            text: 'Salary',
-            value: 'salary',
-            align: 'right'
-          },
-          {
-            sortable: false,
-            text: 'Country',
-            value: 'country',
-            align: 'right'
-          },
-          {
-            sortable: false,
-            text: 'City',
-            value: 'city',
-            align: 'right'
-          }
-        ],
-        items: [
-          {
-            id: 1,
-            name: 'Dakota Rice',
-            country: 'Niger',
-            city: 'Oud-Tunrhout',
-            salary: '$35,738'
-          },
-          {
-            id: 2,
-            name: 'Minerva Hooper',
-            country: 'Curaçao',
-            city: 'Sinaai-Waas',
-            salary: '$23,738'
-          },
-          {
-            id: 3,
-            name: 'Sage Rodriguez',
-            country: 'Netherlands',
-            city: 'Overland Park',
-            salary: '$56,142'
-          },
-          {
-            id: 4,
-            name: 'Philip Chanley',
-            country: 'Korea, South',
-            city: 'Gloucester',
-            salary: '$38,735'
-          },
-          {
-            id: 5,
-            name: 'Doris Greene',
-            country: 'Malawi',
-            city: 'Feldkirchen in Kārnten',
-            salary: '$63,542'
-          }
-        ],
-        dropDownItems: [
-        {
-          id: 1,
-          text: "Dakota Rice",
+export default {
+  name: "Project",
 
-
-        },
-        {
-          id: 2,
-          text: "Minerva Hooper",
-
-        },
-        {
-          id: 3,
-          text: "Sage Rodriguez",
-
-        },
-        {
-          id: 4,
-          text: "Philip Chanley",
-
-        },
-        {
-          id: 5,
-          text: "Doris Greene",
-        }
-      ],
-        tabs: 0,
-        list: {
-          0: false,
-          1: false,
-          2: false
-        }
-      }
+  data: () => ({
+    isSuccess: false,
+    isSnackbarOpened: false,
+    snackbarMessage: "",
+    /*-------------------------- */
+    newProjet: {
+      nomProjet: "",
+      descriptionProjet: "",
+      date_debutProjet: new Date().toISOString().substr(0, 10),
+      date_finProjet: new Date().toISOString().substr(0, 10),
+      id_user: null,
+      id_entreprise: null
     },
-    mounted() {
-      if(this.id_user != undefined && this.id_user !== 0){
-        console.log('idUser: '+this.id_user)
-      }else return this.$router.push({ name: "Connexion" });
+    newFacture: {
+      titre: "",
+      statut: "En attente",
+      date: new Date().toISOString().substr(0, 10),
+      montant: "",
+      description: "",
+      id_entreprise_utilisateur: "",
+      id_client: ""
     },
-    computed: {
-      id_user() {
-          return this.$store.state.id_user
+    facture: {
+      titre: "",
+      statut: "En attente",
+      date: new Date().toISOString().substr(0, 10),
+      montant: "",
+      description: "",
+      id_entreprise_utilisateur: "",
+      id_client: ""
+    },
+    isDialogNewDateDebutOpen: false,
+    isDialogNewDateFinOpen: false,
+    isDialogDateDebutOpen: false,
+    isDialogDateFinOpen: false,
+    isDialogNewProjet: false,
+    isDialogDeleteProjet: false,
+    isDialogFacture: false,
+    projetToDelete: [],
+    expanded: [],
+    loading: true,
+    firstLoad: true,
+    headers: [
+      {
+        text: "Nom projet",
+        value: "nomProjet"
       },
-    },
-    methods: {
-      complete(index) {
-        this.list[index] = !this.list[index]
+      {
+        text: "Date début",
+        value: "date_debutProjet"
+      },
+      {
+        text: "Date fin",
+        value: "date_finProjet"
+      },
+      {
+        text: "Collaborateur M/Mme",
+        value: "lastname"
       }
+    ],
+    items: [],
+    listeClients: [],
+    isEdit: false,
+    search: undefined
+  }),
+  computed: {
+    id_user() {
+      return this.$store.state.id_user;
+    },
+    id_entreprise() {
+      return this.$store.state.id_entreprise;
+    },
+    isAdmin() {
+      return this.$store.state.isAdmin;
+    }
+  },
+  mounted() {
+    this.verifUserConnected();
+    /*----------------------*/
+    if (this.id_entreprise == null || this.id_entreprise == undefined) return;
+
+    axios
+      .get("http://localhost:3000/projets/" + this.id_entreprise)
+      .then(response => {
+        if (this.verifyResponseOk(response.data)) {
+          //console.log(response.data)
+          var projets = response.data.projets;
+          projets.forEach(projet => {
+            this.items.push(projet);
+          });
+          setTimeout(() => {
+            this.loading = false;
+            this.firstLoad = false;
+          }, 1000);
+        }
+      })
+      .catch(error => {
+        console.log(
+          "ERROR " +
+            JSON.stringify(error.response.status) +
+            " : " +
+            JSON.stringify(error.response.data.message)
+        );
+        this.errorMessage(
+          "ERROR " +
+            JSON.stringify(error.response.status) +
+            " : " +
+            JSON.stringify(error.response.data.message)
+        );
+      });
+  },
+  methods: {
+    saveNewProjet: function() {
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }
+      };
+
+      this.newProjet.id_user = this.id_user;
+      this.newProjet.id_entreprise = this.id_entreprise;
+
+      axios
+        .post(
+          "http://localhost:3000/addProjet",
+          qs.stringify(this.newProjet),
+          config
+        )
+        .then(response => {
+          this.successMessage("Le projet a bien été ajouté !");
+          this.isDialogNewProjet = false;
+          if (response.data.error == false) document.location.reload(true);
+        })
+        .catch(error => {
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+        });
+    },
+    updateProjet: function(item = null) {
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }
+      };
+      //return console.log(item)
+
+      axios
+        .put(
+          "http://localhost:3000/updateProjet/" + item.id,
+          qs.stringify(item), //update du projet choisis
+          config
+        )
+        .then(response => {
+          if (this.verifyResponseOk(response.data)) {
+            if (response.data.error == false)
+              this.successMessage("Sauvegarde des modifications effectuée !");
+            setTimeout(() => {
+              document.location.reload(true);
+            }, 1000);
+          }
+        })
+        .catch(error => {
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+        });
+    },
+    deleteProjet: function() {
+      this.isDialogDeleteProjet = false;
+      axios
+        .delete("http://localhost:3000/deleteProjet/" + this.projetToDelete.id)
+        .then(response => {
+          if (response.data.error == false) {
+            console.log(
+              "Le projet " + this.projetToDelete.nomProjet + " a été supprimé"
+            );
+            this.successMessage(
+              "Le projet " +
+                this.projetToDelete.nomProjet +
+                " a été supprimé avec succès"
+            );
+            setTimeout(() => {
+              document.location.reload(true);
+            }, 1000);
+          }
+        })
+        .catch(error => {
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+        });
+    },
+    dialogDeleteProjet: function(infos_projet = null) {
+      this.isDialogDeleteProjet = true;
+      this.projetToDelete = infos_projet;
+    },
+    /*pageInfosFacture: function(infos_facture, isEdit = false) {
+      this.isEdit = isEdit;
+      this.facture = infos_facture;
+      this.isDialogFacture = true;
+    },*/
+    /*------------------------------------------------------ */
+    verifUserConnected: function() {
+      if (
+        (this.id_user != undefined && this.id_user !== 0) ||
+        (this.isAdmin != undefined && this.isAdmin !== 0) ||
+        (this.id_entreprise != undefined && this.id_entreprise !== 0)
+      ) {
+        //console.log(this.isAdmin)
+      } else return this.$router.push({ name: "Connexion" });
+    },
+    verifyResponseOk: function(responseData) {
+      var tmpStr = JSON.stringify(responseData);
+      if (tmpStr.startsWith('"Error:')) {
+        this.errorMessage(responseData.substring(7)); // suppress "Error:
+        return false;
+      }
+      return true;
+    },
+    successMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isSuccess = true;
+      this.isSnackbarOpened = true;
+    },
+    errorMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isSuccess = false;
+      this.isSnackbarOpened = true;
     }
   }
+};
 </script>
-
-<style lang="sass">
-  #coloured-line
-    .ct-series-a .ct-line,
-    .ct-series-a .ct-point
-      stroke: #00cae3 !important
-
-  #multiple-bar
-    .ct-series-a .ct-bar
-      stroke: #00cae3 !important
-
-    .ct-series-b .ct-bar
-      stroke: #f44336 !important
-
-  #pie
-    .ct-series-a .ct-slice-pie
-      fill: #00cae3 !important
-
-    .ct-series-b .ct-slice-pie
-      fill: #f44336 !important
-</style>

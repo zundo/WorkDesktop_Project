@@ -101,7 +101,7 @@ app.get('/factures/:id', factureCtrl.getFacturesByCollaborateur); //recuperation
 app.post('/addFacture', factureCtrl.addFacture); //Insertion facture
 app.delete('/deleteFacture/:id', factureCtrl.deleteFacture); //Supprimer la facture
 app.put('/updateFacture/:id', factureCtrl.updateFacture); // update Facture
-app.get('/statutFacture/:id', factureCtrl.statutFacture); //clore la facture
+app.get('/statutFacture/:id', factureCtrl.statutFacture); //changer le statut de la facture
 
 app.get('/projets/:id', projetCtrl.getProjetsByEnt); //recuperation des projets de l'entreprise
 app.post('/addProjet', projetCtrl.addProjet); //Insertion projet

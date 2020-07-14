@@ -26,17 +26,22 @@ exports.addProjet = async(req, res) => {
             message: "L'une ou plusieurs données obligatoire sont manquantes"
         })
     } else {
-        if (index.textFormat(data.nomProjet) == false || index.dateFormat(data.date_debutProjet) == false || index.dateFormat(data.date_finProjet) == false) {
+        if (index.textFormat(data.nomProjet) == false || index.dateFormatEn(data.date_debutProjet) == false || index.dateFormatEn(data.date_finProjet) == false) {
             index.sendReturn(res, 409, {
                 error: true,
                 message: "L'une des données obligatoire ne sont pas conformes"
+            })
+        } else if (data.date_debutProjet > data.date_finProjet) {
+            index.sendReturn(res, 409, {
+                error: true,
+                message: "La date de début ne peut pas être supérieur à la date de fin"
             })
         } else {
             toInsert = {
                 nomProjet: data.nomProjet.trim(),
                 descriptionProjet: data.descriptionProjet.trim(),
-                date_debutProjet: index.changeDateForSQL(data.date_debutProjet),
-                date_finProjet: index.changeDateForSQL(data.date_finProjet),
+                date_debutProjet: data.date_debutProjet + " 12:00:00",
+                date_finProjet: data.date_finProjet + " 12:00:00",
                 id_user: data.id_user,
                 id_entreprise: data.id_entreprise
             };
@@ -71,18 +76,23 @@ exports.updateProjet = async(req, res) => {
             message: "L'une ou plusieurs données obligatoire sont manquantes"
         })
     } else {
-        if (index.textFormat(data.nomProjet) == false || index.dateFormat(data.date_debutProjet) == false || index.dateFormat(data.date_finProjet) == false) {
+        if (index.textFormat(data.nomProjet) == false || index.dateFormatEn(data.date_debutProjet) == false || index.dateFormatEn(data.date_finProjet) == false) {
             index.sendReturn(res, 409, {
                 error: true,
                 message: "L'une des données obligatoire ne sont pas conformes"
+            })
+        } else if (data.date_debutProjet > data.date_finProjet) {
+            index.sendReturn(res, 409, {
+                error: true,
+                message: "La date de début ne peut pas être supérieur à la date de fin"
             })
         } else {
             // update de projet en base de données
             toUpdate = {
                 nomProjet: data.nomProjet.trim(),
                 descriptionProjet: data.descriptionProjet.trim(),
-                date_debutProjet: index.changeDateForSQL(data.date_debutProjet),
-                date_finProjet: index.changeDateForSQL(data.date_finProjet),
+                date_debutProjet: data.date_debutProjet + " 12:00:00",
+                date_finProjet: data.date_finProjet + " 12:00:00",
             };
 
             bdd.query("UPDATE `projet` SET ? WHERE `projet`.`id` = '" + id_projet + "'", toUpdate, (error, results) => {
