@@ -13,6 +13,8 @@ const express = require('express'),
     ticketCtrl = require("./src/Controllers/ticket"),
     entrepriseCtrl = require("./src/Controllers/entreprise"),
     calendrierCtrl = require("./src/Controllers/calendrier"),
+    supportCtrl = require("./src/Controllers/support"),
+
     /*---------------------------------------------------------- */
     app = express(),
     port = 3000;
@@ -82,6 +84,8 @@ app.get('/', (req, res) => {
 app.post('/register', registerCtrl.register); //Inscription Utilisateur ADMIN
 app.post('/login', loginCtrl.login); //Login
 
+app.post('/mailSupport', supportCtrl.sendMailSupport); //envoi mail au support
+
 /* Page parametre utilisateur unique */
 app.get('/user/:id', userCtrl.getUtilisateur); //recuperation l'utilisateur unique (user connecte)
 app.put('/user/:id', userCtrl.updateUtilisateur) // Update de l'utilisateur
@@ -108,7 +112,7 @@ app.post('/addProjet', projetCtrl.addProjet); //Insertion projet
 app.delete('/deleteProjet/:id', projetCtrl.deleteProjet); //Supprimer le projet
 app.put('/updateProjet/:id', projetCtrl.updateProjet); // update projet
 
-app.get('/tickets/:id', ticketCtrl.getTicketsByEnt); //recuperation des projets de l'entreprise
+app.get('/tickets/:id', ticketCtrl.getTicketsByEnt); //recuperation des tickets de l'entreprise
 app.post('/addTicket', ticketCtrl.addTicket); //Insertion ticket
 app.get('/cloreTicket/:id', ticketCtrl.cloreTicket); //clore le ticket
 app.put('/reponseTicket/:id', ticketCtrl.reponseTicket); //reponse du ticket

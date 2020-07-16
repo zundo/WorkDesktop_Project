@@ -145,8 +145,13 @@
               to: 'parametres-entreprise',
             }
           ]
-        },       
+        },  
         {
+          title: 'Ticket',
+          icon: 'mdi-text-box-outline',
+          to: '/ticket',
+        },
+        /*{
           title: 'icons',
           icon: 'mdi-chart-bubble',
           to: '/icons',
@@ -170,7 +175,7 @@
           title: 'Tabs',
           icon: 'mdi-arrange-send-backward',
           to: '/tabs',
-        },
+        },*/
       ],
     }),
 

@@ -369,6 +369,9 @@
                 </v-btn>
               </v-stepper-content>
             </v-stepper>
+            <v-btn text color="amber" class="mt-2" to="/" outlined>
+              <v-icon left>mdi-arrow-left-circle-outline</v-icon>Retour connexion
+            </v-btn>
           </base-material-card>
         </v-slide-y-transition>
       </v-col>

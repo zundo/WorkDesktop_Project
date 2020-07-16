@@ -13,6 +13,8 @@ Vue.config.productionTip = false
 
 Vue.use(qs) // querystringify
 
+export const bus = new Vue();
+
 new Vue({
     router,
     store,

@@ -10,7 +10,19 @@ export default new Router({
             path: '/',
             component: () =>
                 import ('@/views/dashboard/Index'),
-            children: [
+            children: [{
+                    name: 'Connexion',
+                    path: '',
+                    component: () =>
+                        import ('@/views/dashboard/pages/Login')
+                },
+                //Inscription
+                {
+                    name: 'Inscription',
+                    path: 'register',
+                    component: () =>
+                        import ('@/views/dashboard/pages/Register')
+                },
                 // Dashboard
                 {
                     name: 'Accueil',
@@ -57,12 +69,19 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/Calendar'),
                 },
-                // Upgrade
+                // Support
                 {
                     name: 'Support',
                     path: 'support',
                     component: () =>
                         import ('@/views/dashboard/pages/Support'),
+                },
+                // Ticket
+                {
+                    name: 'Ticket',
+                    path: 'ticket',
+                    component: () =>
+                        import ('@/views/dashboard/pages/Ticket'),
                 },
                 // buttons
                 {
@@ -104,18 +123,6 @@ export default new Router({
                     path: 'clients/infosclient',
                     component: () =>
                         import ('@/views/dashboard/pages/InfosClient')
-                },
-                {
-                    name: 'Connexion',
-                    path: '',
-                    component: () =>
-                        import ('@/views/dashboard/pages/Login')
-                },
-                {
-                    name: 'Inscription',
-                    path: 'register',
-                    component: () =>
-                        import ('@/views/dashboard/pages/Register')
                 },
                 {
                     name: 'Collaborateurs',

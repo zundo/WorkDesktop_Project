@@ -3,14 +3,13 @@
     <v-row>
       <v-col cols="12" lg="6" md="6">
         <base-material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
-          color="#E91E63"
+          :data="dataCompletedTasksChart.data"
+          :options="dataCompletedTasksChart.options"
           hover-reveal
-          type="Bar"
+          color="success"
+          type="Line"
         >
-          <h4 class="card-title font-weight-light mt-2 ml-2">Données Gestionnaire</h4>
+          <h3 class="card-title font-weight-light mt-2 ml-2">Données Gestionnaire</h3>
           <p class="d-inline-flex font-weight-light ml-2 mt-1">Entreprise</p>
           <template v-slot:actions>
             <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
@@ -20,13 +19,14 @@
       </v-col>
       <v-col cols="12" lg="6" md="6">
         <base-material-chart-card
-          :data="dataCompletedTasksChart.data"
-          :options="dataCompletedTasksChart.options"
+          :data="emailsSubscriptionChart.data"
+          :options="emailsSubscriptionChart.options"
+          :responsive-options="emailsSubscriptionChart.responsiveOptions"
+          color="#E91E63"
           hover-reveal
-          color="success"
-          type="Line"
+          type="Bar"
         >
-          <h3 class="card-title font-weight-light mt-2 ml-2">Données Gestionnaire</h3>
+          <h4 class="card-title font-weight-light mt-2 ml-2">Données Gestionnaire</h4>
           <p class="d-inline-flex font-weight-light ml-2 mt-1">Entreprise</p>
           <template v-slot:actions>
             <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
@@ -54,7 +54,7 @@
       <div class="text-center display-1">
         <v-icon v-if="!isSuccess" color="white">mdi-alert-outline</v-icon>
         <v-icon v-else color="white">mdi-checkbox-marked-circle-outline</v-icon>
-        {{snackbarMessage}}
+        {{ snackbarMessage }}
         <v-btn dark icon @click="isSnackbarOpened = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -69,6 +69,7 @@ import callendrier from "./Calendar";
 import facture from "./Accounting";
 import client from "./Clients";
 import projet from "./Project";
+import { bus } from "../../../main";
 
 export default {
   name: "DashboardDashboard",
@@ -85,25 +86,17 @@ export default {
       isSnackbarOpened: false,
       snackbarMessage: "",
       /*-------------------------- */
-      pie: {
-        data: {
-          series: [62, 32, 6]
-        },
-        options: {
-          labelInterpolationFnc: value => `${value}%`
-        }
-      },
       dataCompletedTasksChart: {
         data: {
           labels: ["Collaborateurs", "Clients", "Factures", "Projets"],
-          series: [[9, 4, 8, 6]]
+          series: [[Math.floor(Math.random() * Math.floor(100)), Math.floor(Math.random() * Math.floor(100)), Math.floor(Math.random() * Math.floor(100)), Math.floor(Math.random() * Math.floor(100))]]
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
             tension: 0
           }),
           low: 0,
-          high: 20,
+          high: 100,
           chartPadding: {
             top: 0,
             right: 0,
@@ -114,15 +107,15 @@ export default {
       },
       emailsSubscriptionChart: {
         data: {
-          labels: ["Collaborateurs", "Clients", "Factures", "Projets"],
-          series: [[9, 4, 8, 6]]
+          labels: ["Tickets", "Evenements", "Entreprises inscrits"],
+          series: [[Math.floor(Math.random() * Math.floor(100)), Math.floor(Math.random() * Math.floor(100)), Math.floor(Math.random() * Math.floor(100))]]
         },
         options: {
           axisX: {
             showGrid: false
           },
           low: 0,
-          high: 20,
+          high: 100,
           chartPadding: {
             top: 0,
             right: 5,
@@ -159,6 +152,12 @@ export default {
       return this.$store.state.id_user;
     }
   },
+  /*created() {
+    bus.$on("nb",(data) => {
+      this.nbCollaborateur = data;
+      console.log(this.nbCollaborateur)
+    })
+  },*/
   methods: {
     /*------------------------------------------------------ */
     verifyResponseOk: function(responseData) {

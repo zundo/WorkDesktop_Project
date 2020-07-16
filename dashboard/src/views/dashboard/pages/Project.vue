@@ -307,24 +307,6 @@ export default {
       id_user: null,
       id_entreprise: null
     },
-    newFacture: {
-      titre: "",
-      statut: "En attente",
-      date: new Date().toISOString().substr(0, 10),
-      montant: "",
-      description: "",
-      id_entreprise_utilisateur: "",
-      id_client: ""
-    },
-    facture: {
-      titre: "",
-      statut: "En attente",
-      date: new Date().toISOString().substr(0, 10),
-      montant: "",
-      description: "",
-      id_entreprise_utilisateur: "",
-      id_client: ""
-    },
     isDialogNewDateDebutOpen: false,
     isDialogNewDateFinOpen: false,
     isDialogDateDebutOpen: false,
@@ -518,11 +500,6 @@ export default {
       this.isDialogDeleteProjet = true;
       this.projetToDelete = infos_projet;
     },
-    /*pageInfosFacture: function(infos_facture, isEdit = false) {
-      this.isEdit = isEdit;
-      this.facture = infos_facture;
-      this.isDialogFacture = true;
-    },*/
     /*------------------------------------------------------ */
     verifUserConnected: function() {
       if (

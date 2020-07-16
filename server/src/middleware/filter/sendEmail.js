@@ -5,7 +5,7 @@ exports.sendEmail = (email, code) => {
         service: 'gmail',
         auth: {
             user: 'robot.enjeux@gmail.com',
-            pass: ''
+            pass: '' //mdp a ajouté
         }
     });
 

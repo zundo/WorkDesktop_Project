@@ -223,7 +223,7 @@
       </template>
 
       <v-row class="mt-8 mr-1">
-        <v-btn color="info" @click="openDialogNewCollaborateur" class="ml-3" :disabled="!isAdmin">
+        <v-btn color="info" @click="isDialogNewCollaborateur=true" class="ml-3" :disabled="!isAdmin">
           <v-icon left>mdi-account-plus-outline</v-icon>Nouveau Collaborateur
         </v-btn>
         <v-text-field
@@ -309,6 +309,7 @@
 
 <script>
 import qs from "qs";
+import { bus } from "../../../main";
 
 export default {
   name: "Collaborateurs",
@@ -369,8 +370,15 @@ export default {
       }
     ],
     items: [],
-    search: undefined
+    search: undefined,
+    nbCollaborateur: null
   }),
+  props: {
+    /*text: {
+      type: Boolean,
+      default: false,
+    },*/
+  },
   computed: {
     id_user() {
       return this.$store.state.id_user;
@@ -398,6 +406,7 @@ export default {
           users.forEach(user => {
             this.items.push(user);
           });
+          //bus.$emit("nb",users.length);
           setTimeout(() => {
             this.loading = false;
             this.firstLoad = false;
@@ -471,10 +480,6 @@ export default {
           );
           this.collaborateur.date_naissance = collaborateurDateNaissance;
         });
-    },
-    openDialogNewCollaborateur: function() {
-      this.isDialogNewCollaborateur = true;
-      //mettre les valeurs des inputs du dialog a vide
     },
     deleteCollaborateur: function() {
       this.isDialogDeleteCollaborateur = false;

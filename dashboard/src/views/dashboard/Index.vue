@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <dashboard-core-app-bar v-model="expandOnHover"/>
+    <dashboard-core-app-bar v-if="id_user != null" v-model="expandOnHover"/>
 
-    <dashboard-core-drawer />
+    <dashboard-core-drawer v-if="id_user != null"/>
 
     <dashboard-core-view />
 
-    <dashboard-core-settings v-model="expandOnHover" />
+    <dashboard-core-settings v-if="id_user != null" v-model="expandOnHover" />
   </v-app>
 </template>
 
@@ -27,6 +27,10 @@
     created() {
       this.$vuetify.theme.dark = true;
     },
-
+    computed: {
+      id_user() {
+        return this.$store.state.id_user;
+      },
+    },
   }
 </script>

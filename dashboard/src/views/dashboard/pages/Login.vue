@@ -36,20 +36,6 @@
             </template>
 
             <v-card-text class="text-center">
-              <!--<v-btn
-                v-for="(social, i) in socials"
-                :key="i"
-                :href="social.href"
-                :color="social.iconColor"
-                class="ma-1"
-                depressed
-                fab
-                small
-                rel="noopener"
-                target="_blank"
-              >
-                <v-icon v-text="social.icon" />
-              </v-btn>-->
               <v-col cols="12" class="py-2">
                 <v-text-field
                   color="blue"
@@ -107,6 +93,7 @@
 
 <script>
 import qs from "qs";
+import { bus } from "../../../main";
 
 export default {
   name: "Login",
@@ -123,34 +110,14 @@ export default {
     opacity: 1,
     isAbsolute: true,
     isOverlay: false,
-    /*socials: [
-      {
-        href: "#",
-        icon: "mdi-facebook",
-        iconColor: "#3B5998"
-      },
-      {
-        href: "#",
-        icon: "mdi-twitter",
-        iconColor: "#1DA1F2"
-      },
-      {
-        href: "#",
-        icon: "mdi-google",
-        iconColor: "#ea4c89"
-      }
-    ],*/
     login: "",
     password: ""
   }),
   mounted() {
     this.isOverlay = true;
     if (this.$route.params.reloadLogOut === true)
-      document.location.reload(true);
-    this.login =
-      this.$route.params.email != undefined || this.$route.params.email == null
-        ? this.$route.params.email
-        : "";
+      //document.location.reload(true);
+    this.login = this.$route.params.email != undefined || this.$route.params.email == null ? this.$route.params.email: "";
     this.isOverlay = false;
   },
   methods: {
@@ -162,6 +129,8 @@ export default {
         return this.errorMessage("Identifiant vide !");
       if (password == null || password == "")
         return this.errorMessage("Mot de passe vide !");
+
+      this.isOverlay = true;
 
       const config = {
         headers: {
@@ -200,6 +169,7 @@ export default {
               " : " +
               JSON.stringify(error.response.data.message)
           );
+          this.isOverlay = false;
         })
         .finally(() => {
           if ((id_user != undefined && id_user.length != 0) ||
@@ -210,10 +180,10 @@ export default {
             if (localStorage.getItem("token") == null)
               return this.errorMessage("Token inconnu !");
 
-            //return console.log(localStorage.getItem("token"))//
             this.$store.commit("SET_ID_ENTREPRISE", id_entreprise);
             this.$store.commit("SET_ID_USER", id_user);
             this.$store.commit("SET_IS_ADMIN", isAdmin);
+            this.isOverlay = false;
             return this.$router.push({
               name: "Accueil"
               //params: { userId: id_user }

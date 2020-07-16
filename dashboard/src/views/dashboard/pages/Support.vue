@@ -4,7 +4,9 @@
       <v-col cols="12" md="4">
         <base-material-card color="primary">
           <template v-slot:heading>
-            <div class="display-3 font-weight-light mb-4"><v-icon large>mdi-account-group</v-icon> L' équipe Inglorius</div>
+            <div class="display-3 font-weight-light mb-4">
+              <v-icon left large>mdi-account-group</v-icon>L' équipe Inglorius
+            </div>
 
             <div class="subtitle-1 font-weight-light">
               Le formulaire ci-contre est à votre disposition pour toutes demandes d’informations.
@@ -13,7 +15,9 @@
           </template>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="primary"><v-icon left>mdi-walk</v-icon>ADRESSE</v-chip>
+              <v-chip color="primary">
+                <v-icon left>mdi-walk</v-icon>ADRESSE
+              </v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
@@ -22,16 +26,20 @@
           </v-col>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="primary"><v-icon left>mdi-deskphone</v-icon>TÉLÉPHONE</v-chip>
+              <v-chip color="primary">
+                <v-icon left>mdi-deskphone</v-icon>TÉLÉPHONE
+              </v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
-              <base-card class="pa-1">01.23.45.67.78</base-card>
+              <base-card class="pa-1">01.23.45.67.89</base-card>
             </div>
           </v-col>
           <v-col cols="12">
             <div class="font-weight-light mb-3 mt-3">
-              <v-chip color="primary"><v-icon left>mdi-account-check</v-icon>SUPPORT</v-chip>
+              <v-chip color="primary">
+                <v-icon left>mdi-account-check</v-icon>SUPPORT
+              </v-chip>
             </div>
 
             <div class="subtitle-1 font-weight-light">
@@ -47,42 +55,32 @@
             <v-container class="py-0">
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-text-field class="purple-input" label="Nom*" />
+                  <v-text-field clearable v-model="contact.nom" label="Nom*" />
                 </v-col>
 
                 <v-col cols="12" md="6">
-                  <v-text-field label="Prénom*" class="purple-input" />
+                  <v-text-field clearable v-model="contact.prenom" label="Prénom*" />
                 </v-col>
 
-                <v-col cols="12" md="6">
-                  <v-text-field label="Adresse E-mail*" class="purple-input" />
+                <v-col cols="12" md="6" class="mt-n5">
+                  <v-text-field clearable v-model="contact.email" label="Adresse E-mail*" />
                 </v-col>
 
-                <v-col cols="12" md="6">
-                  <v-text-field label="Numero de téléphone*" class="purple-input" />
+                <v-col cols="12" md="6" class="mt-n5">
+                  <v-text-field clearable v-model="contact.numero_tel" label="Numero de téléphone*" />
                 </v-col>
 
-                <v-col cols="12" md="6">
-                  <v-text-field label="Société" class="purple-input" />
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field label="Poste occupé" class="purple-input" />
+                <v-col cols="12" class="mt-n5">
+                  <v-text-field clearable v-model="contact.objet" label="Objet*" />
                 </v-col>
 
-                <v-col cols="12">
-                  <v-text-field label="Objet*" class="purple-input" />
+                <v-col cols="12" class="mt-n5">
+                  <v-textarea clearable v-model="contact.message" label="Comment pouvons-nous vous aider ?*" />
                 </v-col>
-
-                <v-col cols="12">
-                  <v-textarea
-                    class="purple-input"
-                    label="Comment pouvons-nous vous aider ?*"
-                    v-model="content"
-                  />
-                </v-col>
+                <small>*Veuillez remplir les champs</small>
 
                 <v-col cols="12" class="text-right">
-                  <v-btn color="primary" class="mr-0">Envoyer</v-btn>
+                  <v-btn color="primary" class="mr-0" @click="sendMailSupport(contact)"><v-icon color="white" left>mdi-checkbox-marked-circle-outline</v-icon>Envoyer</v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -104,22 +102,81 @@
 </template>
 
 <script>
+import qs from "qs";
+
 export default {
   name: "DashboardDashboard",
   data() {
     return {
-      content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-    }
+    isSuccess: false,
+    isSnackbarOpened: false,
+    snackbarMessage: "",
+    /*-------------------------- */
+      contact:{
+        nom:"",
+        prenom:"",
+        email:"",
+        numero_tel:"",
+        objet:"",
+        message:""
+      }
+    };
   },
   mounted() {
-    if(this.id_user != undefined && this.id_user !== 0){
-      console.log('idUser: '+this.id_user)
-    }else return this.$router.push({ name: "Connexion" });
+    if (this.id_user != undefined && this.id_user !== 0) {
+      console.log("idUser: " + this.id_user);
+    } else return this.$router.push({ name: "Connexion" });
   },
   computed: {
     id_user() {
-        return this.$store.state.id_user
+      return this.$store.state.id_user;
+    }
+  },
+  methods: {
+    sendMailSupport: function(contact){
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }
+      };
+      return this.errorMessage("IN PROGRESS");
+      axios
+        .post(
+          "http://localhost:3000/mailSupport",
+          qs.stringify(contact),
+          config
+        )
+        .then(response => {
+          this.successMessage("Le mail au support a bien été envoyer !");
+          console.log("Le mail au support a bien été envoyer !");
+          if (response.data.error == false) document.location.reload(true);
+        })
+        .catch(error => {
+          console.log(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+          this.errorMessage(
+            "ERROR " +
+              JSON.stringify(error.response.status) +
+              " : " +
+              JSON.stringify(error.response.data.message)
+          );
+        });      
     },
+    /*------------------------------------------------------ */
+    infoMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isinfo = true;
+      this.isSnackbarOpened = true;
+    },
+    errorMessage: function(message) {
+      this.snackbarMessage = message;
+      this.isinfo = false;
+      this.isSnackbarOpened = true;
+    }
   },
 };
 </script>

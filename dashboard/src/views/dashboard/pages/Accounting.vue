@@ -479,7 +479,6 @@ export default {
           responseClients.data.clients.forEach(client => {
             this.listeClients.push(client);
           });
-          //console.log("listeclient: ",this.listeClients)
           setTimeout(() => {
             this.loading = false;
             this.firstLoad = false;

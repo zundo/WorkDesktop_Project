@@ -94,7 +94,8 @@ exports.cloreTicket = async(req, res) => {
     index.verifId(req.params.id, res); //id du ticket
 
     toUpdate = {
-        status: "Résolu"
+        status: "Résolu",
+        reponseSupport: "Le ticket a été Résolu ou Fermé",
     };
 
     bdd.query("UPDATE `ticket` SET ? WHERE `ticket`.`id` = '" + req.params.id + "'", toUpdate, (error, results) => {
