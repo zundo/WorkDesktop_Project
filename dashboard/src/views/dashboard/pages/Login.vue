@@ -6,13 +6,12 @@
     <v-dialog v-model="isDialogForgotPassword" width="400px" overlay-opacity="0.9">
       <v-card class="px-6" outlined>
         <v-card-title class="info--text">
-          Mot de passe oublié ?
+          Mot de passe oublié ? (In progress)
           <v-icon aria-label="Close" @click="isDialogForgotPassword = false">mdi-close</v-icon>
         </v-card-title>
         <v-col cols="12">
           <div class="text-center">
-            <v-divider />
-            <v-row>TODO</v-row>
+            IN PROGRESS, vous pouvez réinitialisé le mot de passe en contactant l'admin de votre entreprise
           </div>
         </v-col>
       </v-card>

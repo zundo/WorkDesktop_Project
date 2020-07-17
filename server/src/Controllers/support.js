@@ -17,7 +17,7 @@ exports.sendMailSupport = async(req, res) => {
                 message: "L'une des données obligatoire ne sont pas conformes"
             });
         } else {
-            async function main() {
+            /*async function main() {
                 let testAccount = await nodemailer.createTestAccount();
                 let transporter = nodemailer.createTransport({
                     host: "smtp.ethereal.email",
@@ -36,8 +36,8 @@ exports.sendMailSupport = async(req, res) => {
                 });
                 console.log("Message sent: %s", info.messageId);
                 console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-            }
-            main().catch(console.error);
+        }
+        main().catch(console.error);*/
 
             /*var transporter = nodemailer.createTransport({
                 service: 'gmail',
