@@ -1,3 +1,4 @@
+import { MatDividerModule } from '@angular/material/divider';
 import { SharedModule } from './../../shared/shared.module';
 import { TicketComponent } from './../../modules/ticket/ticket.component';
 import { RouterModule } from '@angular/router';
@@ -5,6 +6,7 @@ import { DashboardComponent } from './../../modules/dashboard/dashboard.componen
 import { DefaultComponent } from './default.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 
@@ -17,7 +19,9 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    MatSidenavModule,
+    SharedModule,
+    MatDividerModule
   ]
 })
 export class DefaultModule { }
