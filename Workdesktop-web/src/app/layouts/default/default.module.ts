@@ -1,3 +1,5 @@
+import { MatCardModule } from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDividerModule } from '@angular/material/divider';
 import { SharedModule } from './../../shared/shared.module';
 import { TicketComponent } from './../../modules/ticket/ticket.component';
@@ -21,7 +23,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     RouterModule,
     MatSidenavModule,
     SharedModule,
-    MatDividerModule
+    MatDividerModule,
+    FlexLayoutModule,
+    MatCardModule
   ]
 })
 export class DefaultModule { }
