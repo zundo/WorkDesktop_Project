@@ -12,6 +12,7 @@ export class AreaComponent implements OnInit {
   chartOptions: {};
 
   Highcharts = Highcharts;
+  
 
   constructor() { }
 
@@ -60,10 +61,10 @@ export class AreaComponent implements OnInit {
           }
       },
       credits: {
-        eneble: false,
+        enabled: false,
       },
       exporting: {
-        enable: true,
+        enabled: true,
       },
       series: [{
           name: 'Application-web',

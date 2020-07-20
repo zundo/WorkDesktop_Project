@@ -1,3 +1,4 @@
+import { DashboardService } from './../../modules/dashboard.service';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDividerModule } from '@angular/material/divider';
@@ -9,6 +10,8 @@ import { DefaultComponent } from './default.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -25,7 +28,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     SharedModule,
     MatDividerModule,
     FlexLayoutModule,
-    MatCardModule
+    MatCardModule,
+    MatPaginatorModule,
+    MatTableModule
+  ],
+  providers: [
+    DashboardService
   ]
 })
 export class DefaultModule { }
