@@ -51,7 +51,7 @@ export class CardComponent implements OnInit {
     },
     xAxis: {
       labels: {
-        enabled: false,
+        enabled: true,
       },
       title: {
         text: null,
@@ -62,7 +62,10 @@ export class CardComponent implements OnInit {
     },
     yAxis: {
       labels: {
-        enabled: false,
+        enabled: true,
+      },
+      formatter: function () {
+        return this.value / 1000;
       },
       title: {
         text: null,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 
@@ -10,6 +10,8 @@ import HC_exporting from 'highcharts/modules/exporting';
 export class AreaComponent implements OnInit {
 
   chartOptions: {};
+
+  @Input() data = []
 
   Highcharts = Highcharts;
   
@@ -39,11 +41,8 @@ export class AreaComponent implements OnInit {
           title: {
               text: "en Milliers d'€"
           },
-          labels: {
-              formatter: function () {
-                  return this.value / 1000;
-              }
-          }
+          categories: ['0','10', '20', '30', '40'],
+          tickmarkPlacement: 'on',
       },
       tooltip: {
           split: true,
