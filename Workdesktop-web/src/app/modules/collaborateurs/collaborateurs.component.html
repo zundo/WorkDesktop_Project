@@ -8,21 +8,21 @@
     <table mat-table [dataSource]="dataSource">
 
         <!-- Position Column -->
-        <ng-container matColumnDef="sujet">
+        <ng-container matColumnDef="nom">
             <th mat-header-cell *matHeaderCellDef> Sujet </th>
-            <td mat-cell *matCellDef="let element"> {{element.sujet}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="theme">
+        <ng-container matColumnDef="prenom">
             <th mat-header-cell *matHeaderCellDef> Thème </th>
-            <td mat-cell *matCellDef="let element"> {{element.theme}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="statut">
+        <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef> Statut </th>
-            <td mat-cell *matCellDef="let element"> {{element.statut}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
         <!-- Symbol Column -->

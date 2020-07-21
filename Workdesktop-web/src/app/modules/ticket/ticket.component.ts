@@ -4,21 +4,21 @@ import { MatPaginator } from '@angular/material/paginator';
 
 export interface PeriodicElement {
   theme: string;
-  sujet: number;
+  sujet: string;
   statut: string;
   collaborateur_mMme: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {sujet: 1, theme: 'Hydrogen', statut: 'H', collaborateur_mMme: 'Moi'},
-  {sujet: 2, theme: 'Helium', statut: 'He', collaborateur_mMme: 'Moi'},
-  {sujet: 3, theme: 'Lithium', statut: 'Li', collaborateur_mMme: 'Moi'},
-  {sujet: 4, theme: 'Beryllium', statut: 'Be', collaborateur_mMme: 'Moi'},
-  {sujet: 5, theme: 'Boron', statut: 'B', collaborateur_mMme: 'Moi'},
-  {sujet: 6, theme: 'Helium', statut: 'He', collaborateur_mMme: 'Moi'},
-  {sujet: 7, theme: 'Lithium', statut: 'Li', collaborateur_mMme: 'Moi'},
-  {sujet: 8, theme: 'Beryllium', statut: 'Be', collaborateur_mMme: 'Moi'},
-  {sujet: 9, theme: 'Boron', statut: 'B', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 1', theme: 'Hydrogen', statut: 'H', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 2', theme: 'Helium', statut: 'He', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 1', theme: 'Lithium', statut: 'Li', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 3', theme: 'Beryllium', statut: 'Be', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 1', theme: 'Boron', statut: 'B', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 3', theme: 'Helium', statut: 'He', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 1', theme: 'Lithium', statut: 'Li', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 5', theme: 'Beryllium', statut: 'Be', collaborateur_mMme: 'Moi'},
+  {sujet: 'Projet 4', theme: 'Boron', statut: 'B', collaborateur_mMme: 'Moi'},
 ];
 
 @Component({
