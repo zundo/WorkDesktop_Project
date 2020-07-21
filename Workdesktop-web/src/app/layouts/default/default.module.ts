@@ -1,3 +1,7 @@
+import { LoginComponent } from '../../modules/login/login.component';
+import { CollaborateursComponent } from '../../modules/collaborateurs/collaborateurs.component';
+import { ProjetsComponent } from '../../modules/projets/projets.component';
+import { MatIconModule } from '@angular/material/icon';
 import { DashboardService } from './../../modules/dashboard.service';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -19,7 +23,11 @@ import { MatTableModule } from '@angular/material/table';
   declarations: [
     DefaultComponent,
     DashboardComponent,
-    TicketComponent
+    TicketComponent,
+    ProjetsComponent,
+    CollaborateursComponent,
+    LoginComponent
+
   ],
   imports: [
     CommonModule,
@@ -30,7 +38,8 @@ import { MatTableModule } from '@angular/material/table';
     FlexLayoutModule,
     MatCardModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatIconModule
   ],
   providers: [
     DashboardService
