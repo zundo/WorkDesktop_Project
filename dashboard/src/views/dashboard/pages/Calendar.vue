@@ -523,7 +523,7 @@ export default {
         dateDebut: this.infoEvenement.start,
         dateFin: this.infoEvenement.end
       };
-      return console.log(payload)
+      //return console.log(payload)
 
       axios
         .put(
