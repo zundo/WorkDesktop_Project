@@ -137,7 +137,7 @@
                   <v-col cols="12">
                     <v-text-field
                       color="red"
-                      v-model="infoEvenement.name.split(': ')[1]"
+                      v-model="infoEvenement.name"
                       label="Nom"
                       prepend-icon="mdi-clipboard-text-multiple"
                       maxlength="20"
@@ -506,6 +506,7 @@ export default {
     },
     myEvent(day) {
       this.infoEvenement = day.eventParsed.input;
+      this.infoEvenement.name = this.infoEvenement.name.split(':')[1].trim();
       console.log(this.infoEvenement)
       this.isDialogEvenement = true;
     },
@@ -517,12 +518,12 @@ export default {
       };
 
       let payload = {
-        nomEvent: this.infoEvenement.name.split(":")[1].trim(),
+        nomEvent: this.infoEvenement.name,
         description: this.infoEvenement.description,
         dateDebut: this.infoEvenement.start,
         dateFin: this.infoEvenement.end
       };
-      //return console.log(infoEvenement)
+      //return console.log(payload)
 
       axios
         .put(
